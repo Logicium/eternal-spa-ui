@@ -1,0 +1,120 @@
+<script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router'
+import HelloWorld from './components/HelloWorld.vue'
+import MenuIcon from "@/components/icons/MenuIcon.vue";
+import {onMounted, ref} from "vue";
+
+const colorChange = ref(false);
+onMounted(()=>{
+  window.addEventListener('scroll', updateScroll);
+})
+
+const updateScroll = function (){
+  let scrollPosition = window.scrollY
+  colorChange.value = ( scrollPosition <= 100 );
+}
+
+
+</script>
+
+<template>
+
+    <div class="wrapper">
+
+      <nav :class="colorChange ? '' : 'colorChange' ">
+
+        <RouterLink to="/"><div class="appIcon"/></RouterLink>
+        <RouterLink to="/services">Services</RouterLink>
+        <RouterLink to="/events">Events</RouterLink>
+        <RouterLink to="/contact">Podcast</RouterLink>
+        <div class="buttons">
+          <div class="menuBtn"><MenuIcon/></div>
+          <RouterLink to="/book" class="cta">Book Appointment</RouterLink>
+        </div>
+      </nav>
+
+      <RouterView />
+
+    </div>
+
+</template>
+
+<style lang="scss" scoped>
+
+@import "assets/Colors";
+
+.appIcon{
+  background-color: $tertiary;
+  border-radius: 50%;
+  height: 45px;
+  width: 45px;
+}
+
+.wrapper{
+  width: 100%;
+}
+
+.buttons{
+  display: flex;
+  justify-content: space-between;
+}
+
+.menuBtn{
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 45px;
+  width: 45px;
+  color: $primary;
+  background-color: $quaternary;
+  border-radius: 6px;
+  margin-right: 2vw;
+}
+
+.cta{
+  border-radius: 6px;
+  padding: 1vw;
+  display: flex;
+  align-items: center;
+  height: 45px;
+  color: $primary;
+  background-color: $quaternary;
+}
+
+nav{
+  padding: 2rem;
+  display: flex;
+  color: white;
+  position: fixed;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  z-index: 2;
+  transition: 0.5s;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+nav a{
+  color: $quaternary;
+}
+
+.colorChange{
+  background-color: $secondary;
+  transition: 0.5s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+}
+
+
+
+
+</style>

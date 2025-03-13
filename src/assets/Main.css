@@ -1,0 +1,13 @@
+@import './base.css';
+#app {
+  font-weight: normal;
+  font-family: "Montserrat", serif;
+  background: #FFF2F2;
+}
+
+a {
+  color: #B59194;
+  text-decoration: none;
+}
+
+/*# sourceMappingURL=Main.css.map */
