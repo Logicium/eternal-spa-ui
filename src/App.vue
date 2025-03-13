@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 import MenuIcon from "@/components/icons/MenuIcon.vue";
 import {onMounted, ref} from "vue";
+import Footer from "@/components/Footer.vue";
 
 const colorChange = ref(false);
 onMounted(()=>{
@@ -34,6 +34,8 @@ const updateScroll = function (){
       </nav>
 
       <RouterView />
+
+      <Footer/>
 
     </div>
 
@@ -104,17 +106,5 @@ nav a{
   background-color: $secondary;
   transition: 0.5s;
 }
-
-@keyframes fadein {
-  from {
-    opacity: 0;
-  }
-  to{
-    opacity: 1;
-  }
-}
-
-
-
 
 </style>

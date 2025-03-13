@@ -48,7 +48,9 @@ import Service from "@/components/Service.vue";
 
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+
+@import "../assets/Keyframes";
 
 .serviceDesc{
   grid-column: span 2;
@@ -72,7 +74,7 @@ import Service from "@/components/Service.vue";
   position: relative;
   display: grid;
   grid-template-columns: 10vw 10vw 10vw 10vw;
-  grid-template-rows: repeat(12,20vh);
+  grid-template-rows: repeat(9,20vh);
   grid-column-gap: 10vw;
 }
 
@@ -88,17 +90,19 @@ import Service from "@/components/Service.vue";
   text-align: center;
   width: 60%;
   font-size: calc(12px + 3vw);
+  margin-bottom: 2rem;
   z-index: 1;
 }
 
 .titleWrap{
   width: 100%;
-  height: 80vh;
+  height: 70vh;
+  margin-bottom: 2rem;
 }
 
 .title{
   position: absolute;
-  top: 30%;
+  top: 25%;
   font-size: calc(12px + 7vw);
   text-align: center;
   mix-blend-mode: difference;
@@ -111,6 +115,15 @@ import Service from "@/components/Service.vue";
   display: flex;
   justify-content: center;
   height: 50vh;
+  animation: fadein 3s ease-in-out;
+}
+
+.heroVideo{
+  position: absolute;
+  width: 100%;
+  height: 60vh;
+  z-index: 0;
+  object-fit: cover;
 }
 
 .parallax{
@@ -135,49 +148,5 @@ import Service from "@/components/Service.vue";
   animation-name: parallax-3;
 }
 
-.heroVideo{
-  position: absolute;
-  width: 100%;
-  height: 60vh;
-  z-index: 0;
-  object-fit: cover;
-}
-
-@keyframes parallax{
-  from{
-    transform: translateY(20%);
-  }
-  to{
-    transform: translateY(-100%);
-  }
-
-}
-
-@keyframes parallax-1{
-  from{
-    transform: translateY(30%);
-  }
-  to{
-    transform: translateY(-50%);
-  }
-}
-
-@keyframes parallax-2{
-  from{
-    transform: translateY(60%);
-  }
-  to{
-    transform: translateY(-40%);
-  }
-}
-
-@keyframes parallax-3{
-  from{
-    transform: translateY(100%);
-  }
-  to{
-    transform: translateY(-20%);
-  }
-}
 
 </style>

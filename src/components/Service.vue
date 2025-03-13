@@ -1,17 +1,39 @@
 <script setup lang="ts">
 
-import {computed} from "vue";
+import {computed, onMounted, ref, useTemplateRef} from "vue";
 
 const props = defineProps(['name','image','offset']);
 
 const imageUrl = computed(()=> 'url("'+props.image+'")').value;
 
+ const serviceRef = useTemplateRef('serviceRef');
+//const serviceRef = ref<HTMLElement|null>(null);
+
+const reveal = ref(false);
+
+function isInView() {
+
+  if(serviceRef.value){
+    let box = serviceRef.value.getBoundingClientRect();
+    let isShown = (box.top < window.innerHeight && box.bottom >= 0);
+    reveal.value = isShown;
+  }
+
+}
+
+onMounted(()=>{
+
+    window.addEventListener('scroll',isInView);
+
+});
+
+
 </script>
 
 <template>
 <!--  :style="{ gridRow: offset ? '4 / 8' : 'span 3'}"-->
-  <div class="service" >
-    <div class="serviceImg"/>
+  <div class="service">
+    <div class="serviceImg" ref="serviceRef" :class=" reveal ? 'reveal':'' "/>
     <div class="serviceInfo">
 
       <div class="nameWrap">
@@ -32,7 +54,6 @@ const imageUrl = computed(()=> 'url("'+props.image+'")').value;
 
 @import "../assets/Colors";
 
-
 .nameWrap{
   display: flex;
   flex-direction: column;
@@ -40,6 +61,11 @@ const imageUrl = computed(()=> 'url("'+props.image+'")').value;
 }
 .price{
 
+}
+
+.reveal{
+  opacity: 1 !important;
+  transition: opacity 2s linear;
 }
 
 .name{
@@ -51,6 +77,7 @@ const imageUrl = computed(()=> 'url("'+props.image+'")').value;
   background-position: 100% 100%;
   background-image: v-bind(imageUrl);
   height: 80%;
+  opacity: 0;
 }
 
 .service{
