@@ -6,13 +6,24 @@
 
 <div class="footer">
 
+  <div class="heroImage">
+    <div class="ctaWrap">
+      <div class="ctaText">Sign up to earn reward points and manage your bookings.</div>
+      <div class="cta">
+        <input type="email" placeholder="Email">
+        <div class="button">SIGN UP</div>
+      </div>
+    </div>
+
+  </div>
+
   <div class="links">
 
     <div class="navigation">
       <div class="name">NAVIGATION</div>
       <div>Home</div>
       <div>Services</div>
-      <div>Vendors</div>
+      <div>Specialists</div>
       <div>Podcast</div>
     </div>
 
@@ -32,13 +43,12 @@
 
   </div>
 
-  <div class="ctaWrap">
-    <div class="ctaText">Sign up to earn reward points and get notified of new events.</div>
-    <div class="cta">
-      <input type="email" placeholder="Email">
-      <div class="button">SIGN UP</div>
-    </div>
+  <div class="disclaimers">
+    <div>2025 Chappel House </div>
+    <div>All Rights Reserved</div>
   </div>
+
+
 
 </div>
 
@@ -46,6 +56,24 @@
 
 <style lang="scss" scoped>
 @import "../assets/Colors";
+
+.heroImage{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  height: 30vh;
+  background-image: url("public/salt1.jpg");
+  border-radius: 6px;
+  color: $primary;
+  background-size: cover;
+  background-position: 100% 100%;
+}
+
+.disclaimers{
+  display: flex;
+  width: 60%;
+  justify-content: space-between;
+}
 
 .footer{
   padding-bottom: 2rem;
@@ -65,9 +93,11 @@
   margin-top: 1rem;
   margin-bottom: 1rem;
   font-size: 3vw;
+  text-align: center;
 }
 
 .cta{
+  margin-top: 2rem;
   display: flex;
   justify-content: space-between;
 }
@@ -78,6 +108,7 @@
 
 .links{
   margin-top: 2rem;
+  margin-bottom: 2rem;
   display: flex;
   width: 60%;
   justify-content: space-between;
@@ -101,6 +132,8 @@ input{
   width: 80%;
   border-radius: 6px;
   border: none;
+  font-family: "Outfit", sans-serif;
+  font-size: 16px;
 }
 
 </style>

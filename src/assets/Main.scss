@@ -2,8 +2,10 @@
 @import './Colors';
 
 #app {
-  font-weight: normal;
-  font-family: "Montserrat", serif;
+  font-family: "Outfit", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+
   background: $primary;
 
   //background: linear-gradient(217deg, rgba(140, 222, 202, 0.8), rgba(255,0,0,0) 70.71%),

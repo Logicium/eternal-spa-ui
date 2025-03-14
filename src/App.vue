@@ -4,7 +4,7 @@ import MenuIcon from "@/components/icons/MenuIcon.vue";
 import {onMounted, ref} from "vue";
 import Footer from "@/components/Footer.vue";
 
-const colorChange = ref(false);
+const colorChange = ref(true);
 onMounted(()=>{
   window.addEventListener('scroll', updateScroll);
 })
@@ -24,13 +24,14 @@ const updateScroll = function (){
       <nav :class="colorChange ? '' : 'colorChange' ">
 
         <RouterLink to="/"><div class="appIcon"/></RouterLink>
-        <RouterLink to="/services">Services</RouterLink>
-        <RouterLink to="/events">Events</RouterLink>
-        <RouterLink to="/contact">Podcast</RouterLink>
+<!--        <RouterLink to="/services">Services</RouterLink>-->
+<!--        <RouterLink to="/events">Events</RouterLink>-->
+<!--        <RouterLink to="/contact">Podcast</RouterLink>-->
         <div class="buttons">
           <div class="menuBtn"><MenuIcon/></div>
           <RouterLink to="/book" class="cta">Book Appointment</RouterLink>
         </div>
+
       </nav>
 
       <RouterView />
@@ -46,7 +47,7 @@ const updateScroll = function (){
 @import "assets/Colors";
 
 .appIcon{
-  background-color: $tertiary;
+  background-color: $primary;
   border-radius: 50%;
   height: 45px;
   width: 45px;
@@ -80,14 +81,14 @@ const updateScroll = function (){
   display: flex;
   align-items: center;
   height: 45px;
-  color: $primary;
+  color: $primary !important;
   background-color: $quaternary;
 }
 
 nav{
+  font-weight: 500;
   padding: 2rem;
   display: flex;
-  color: white;
   position: fixed;
   justify-content: space-between;
   align-items: center;
@@ -99,12 +100,16 @@ nav{
 }
 
 nav a{
-  color: $quaternary;
+  color: $primary;
 }
 
 .colorChange{
   background-color: $secondary;
   transition: 0.5s;
+}
+
+.colorChange a{
+  color: $quaternary;
 }
 
 </style>
