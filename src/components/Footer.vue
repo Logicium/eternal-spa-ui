@@ -62,7 +62,7 @@
   display: flex;
   justify-content: center;
   height: 30vh;
-  background-image: url("public/salt1.jpg");
+  background-image: url("/salt1.jpg");
   border-radius: 6px;
   color: $primary;
   background-size: cover;

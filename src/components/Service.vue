@@ -38,11 +38,10 @@ onMounted(()=>{
 
       <div class="nameWrap">
         <div class="name">{{name}}</div>
-        <div class="price">From $29</div>
       </div>
 
       <div class="button">
-        <div>BOOK</div>
+        <div>LEARN MORE</div>
       </div>
 
     </div>
@@ -58,9 +57,6 @@ onMounted(()=>{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-.price{
-
 }
 
 .reveal{

@@ -11,7 +11,7 @@ import Service from "@/components/Service.vue";
         <div class="titleInner">ETERNAL SPA & WELLNESS CENTER</div>
       </div>
       <div class="heroWrap">
-        <video class="heroVideo parallax" src="../../public/spa0.mp4" autoplay muted loop></video>
+        <video class="heroVideo parallax" src="/spa0.mp4" autoplay muted loop></video>
       </div>
     </div>
 
@@ -27,9 +27,9 @@ import Service from "@/components/Service.vue";
           <div class="inner"> {{data.about1}}</div>
         </div>
 
-        <Service name="Massage Therapy" image="../../public/massage1.jpg" :offset="false" style="grid-row: span 3"/>
+        <Service name="Massage Therapy" image="/massage1.jpg" :offset="false" style="grid-row: span 3"/>
 
-        <Service name="Salt Bath" image="./../public/salt1.jpg" :offset="true" style="grid-row: span 3"/>
+        <Service name="Salt Bath" image="/salt1.jpg" :offset="true" style="grid-row: span 3"/>
 
         <div class="serviceDesc parallax-2">
           <div class="inner">{{data.about2}}</div>
@@ -39,7 +39,7 @@ import Service from "@/components/Service.vue";
           <div class="inner">{{data.about3}}</div>
         </div>
 
-        <Service name="Red Light Therapy"  image="../../public/light-therapy.jpg" style="grid-row: span 3"/>
+        <Service name="Red Light Therapy"  image="/light-therapy.jpg" style="grid-row: span 3"/>
 
 
       </div>
