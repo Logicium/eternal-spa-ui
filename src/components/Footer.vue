@@ -44,7 +44,7 @@
   </div>
 
   <div class="disclaimers">
-    <div>2025 Chappel House </div>
+    <div>©2025 Chappel House </div>
     <div>All Rights Reserved</div>
   </div>
 
@@ -61,7 +61,8 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  height: 30vh;
+  align-items: center;
+  padding-bottom: 2rem;
   background-image: url("/salt1.jpg");
   border-radius: 6px;
   color: $primary;

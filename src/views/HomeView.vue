@@ -75,7 +75,7 @@ import Service from "@/components/Service.vue";
 .serviceGrid{
   position: relative;
   display: grid;
-  grid-template-columns: 10vw 10vw 10vw 10vw;
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(9,20vh);
   grid-column-gap: 10vw;
 }

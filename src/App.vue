@@ -29,7 +29,7 @@ const updateScroll = function (){
 <!--        <RouterLink to="/contact">Podcast</RouterLink>-->
         <div class="buttons">
           <div class="menuBtn"><MenuIcon/></div>
-          <RouterLink to="/book" class="cta">Book Appointment</RouterLink>
+          <RouterLink to="/services" class="cta">Book Appointment</RouterLink>
         </div>
 
       </nav>
