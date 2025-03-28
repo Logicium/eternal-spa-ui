@@ -65,7 +65,7 @@ onMounted(()=>{
 }
 
 .name{
-  font-weight: 600;
+  font-size: 3vw;
 }
 
 .serviceImg{
@@ -88,11 +88,12 @@ onMounted(()=>{
   display: flex;
   width: 100%;
   justify-content: space-between;
+  align-items: center;
 }
 
 .button{
   display: flex;
-  height: 4vw;
+  height: 45px;
   border-radius: 6px;
   color: $primary;
   background-color: $quaternary;

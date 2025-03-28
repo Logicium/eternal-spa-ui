@@ -14,36 +14,42 @@ const active = ref(false);
 
     <div class="servicePreview">
 
-      <div class="infoRow">
-        <div class="serviceName">{{name}}</div>
-        <div class="serviceControl" @click="active=!active">+</div>
-      </div>
+      <div  :class="active ? 'imagePanel expand' : 'imagePanel' ">
 
-      <div class="serviceDesc">{{desc}}</div>
+        <div :class="active ? 'fullImage fadeIn' : 'fullImage' "></div>
 
-      <div :class="active ? 'serviceImage active':'serviceImage'">
+        <div class="infoRow">
+          <div class="serviceName">{{name}}</div>
+          <div class="serviceControl" @click="active=!active">+</div>
+        </div>
 
-        <div class="options">
+        <div class="serviceDesc">{{desc}}</div>
+
+        <div :class="active ? 'fadeIn options' : 'options' ">
+
           <div class="option">
-            <div class="optionName">30 Minute Session</div>
-            <div class="optionPrice">$49</div>
+            <div>30 Minute Session</div>
+            <div>A full 30 minute session that will work the tissues and stimulate circulation.</div>
             <div class="bookBtn">Book Session</div>
           </div>
 
           <div class="option">
-            <div class="optionName">60 Minute Session</div>
-            <div class="optionPrice">$79</div>
+            <div>30 Minute Session</div>
+            <div>A full 30 minute session that will work the tissues and stimulate circulation.</div>
             <div class="bookBtn">Book Session</div>
           </div>
+
+          <div class="option">
+            <div>30 Minute Session</div>
+            <div>A full 30 minute session that will work the tissues and stimulate circulation.</div>
+            <div class="bookBtn">Book Session</div>
+          </div>
+
         </div>
 
       </div>
 
     </div>
-
-
-
-
 
   </div>
 
@@ -54,10 +60,30 @@ const active = ref(false);
 @import "../assets/Colors";
 @import "../assets/Keyframes";
 
+.fullImage{
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 25px;
+  background-size: cover;
+  background-position: 100% 50%;
+  background-image: v-bind(imageUrl);
+  animation: 1s fadeout forwards;
+}
+
+
+.imagePanel{
+  position: relative;
+  animation: 1s collapse forwards, reverseColors 1s forwards;
+  height: fit-content;
+}
+
 .infoRow{
   width: 100%;
   display: flex;
   justify-content: space-between;
+  position: relative;
 }
 
 
@@ -79,6 +105,7 @@ const active = ref(false);
 }
 
 .servicePreview{
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 80%;
@@ -89,6 +116,8 @@ const active = ref(false);
 .serviceDesc{
   margin-top: 2vw;
   width: 80%;
+  position: relative;
+  z-index: 1;
 }
 
 .serviceTitle{
@@ -102,21 +131,20 @@ const active = ref(false);
 }
 
 .options{
+  color: $quaternary;
   display: flex;
-  justify-content: space-evenly;
-  align-items: end;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
-  height: 100%;
-  animation: fadein 1s forwards;
+  animation: fadeRemove .25s forwards;
 }
 
 .option{
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   padding: 1vw;
-  background-color: $secondary;
-  width: 15vw;
+  background-color: $primary;
+  width: 20vw;
   min-height: 30%;
 }
 
@@ -134,7 +162,6 @@ const active = ref(false);
 }
 
 .serviceImage{
-  margin-top: 2vw;
   border-radius: 6px;
   background-size: cover;
   background-position: 100% 50%;
@@ -142,42 +169,68 @@ const active = ref(false);
   animation: collapse 1s forwards;
 }
 
-.active{
-   padding: 2vw;
-   height: 50vh;
-   display: flex;
-   justify-content: space-evenly;
-   align-items: center;
-   border-radius: 6px;
-   background-size: cover;
-   background-position: 100% 50%;
-   background-image: v-bind(imageUrl);
-   animation: expand 1s forwards;
- }
+.expand{
+  animation: expand 1s forwards, colorChange 1s forwards;
+}
+
+.fadeIn{
+  animation: 1s fadein forwards;
+}
+
+.fadeOut{
+  animation: 1s fadeout forwards;
+}
 
 @keyframes expand {
   from{
-    margin-top: 0;
-    opacity: 0;
-    height: 0;
+    height: calc-size(auto, size);
   }
   to{
-    margin-top: 2vw;
-    opacity: 1;
     height: 50vh;
   }
 }
 
 @keyframes collapse {
   from{
-    margin-top: 2vw;
     height: 50vh;
-    opacity: 1;
-    display: flex;
   }
   to{
-    margin-top: 0;
-    height: 0;
+    height: calc-size(auto, size);
+  }
+}
+
+@keyframes colorChange{
+  from{
+    color: $quaternary;
+  }
+  to{
+    color: $primary;
+  }
+}
+
+@keyframes reverseColors{
+  from{
+    color: $primary;
+  }
+  to{
+    color: $quaternary;
+  }
+}
+
+@keyframes fadeEnter {
+  from {
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+}
+
+@keyframes fadeRemove {
+  from {
+    opacity: 1;
+  }
+  to{
     opacity: 0;
     display: none;
   }
