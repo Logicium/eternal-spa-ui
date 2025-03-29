@@ -58,11 +58,13 @@ import Service from "@/components/Service.vue";
   grid-column: span 2;
   grid-row: span 3;
   display: flex;
+  justify-content: center;
   height: 100%;
 }
 
 .inner{
   align-self: center;
+  width: 60%;
 }
 .home{
   width: 100%;

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 
 import {computed, ref} from "vue";
+import PlusIcon from "@/assets/icons/PlusIcon.vue";
+import MinusIcon from "@/assets/icons/MinusIcon.vue";
 
 const props = defineProps(['name','image','desc']);
 const imageUrl = computed(()=> 'url("'+props.image+'")').value;
@@ -19,33 +21,45 @@ const active = ref(false);
         <div :class="active ? 'fullImage fadeIn' : 'fullImage' "></div>
 
         <div class="infoRow">
+
           <div class="serviceName">{{name}}</div>
-          <div class="serviceControl" @click="active=!active">+</div>
+
+          <div class="serviceControl" @click="active=!active">
+            <div :class=" !active ? 'plus rotateIn':'plus' "><PlusIcon/></div>
+            <div :class=" active ? 'minus rotateIn':'minus' "><MinusIcon/></div>
+          </div>
+
         </div>
 
         <div class="serviceDesc">{{desc}}</div>
 
-        <div :class="active ? 'fadeIn options' : 'options' ">
+        <div class="optionsWrap">
 
-          <div class="option">
-            <div>30 Minute Session</div>
-            <div>A full 30 minute session that will work the tissues and stimulate circulation.</div>
-            <div class="bookBtn">Book Session</div>
-          </div>
+          <div :class="active ? 'fadeIn options' : 'options' ">
 
-          <div class="option">
-            <div>30 Minute Session</div>
-            <div>A full 30 minute session that will work the tissues and stimulate circulation.</div>
-            <div class="bookBtn">Book Session</div>
-          </div>
+            <div class="option">
+              <div class="optionName">30 Minute Session</div>
+              <div>A full 30 minute session that will work the tissues and stimulate circulation.</div>
+              <div class="bookBtn">Book Session</div>
+            </div>
 
-          <div class="option">
-            <div>30 Minute Session</div>
-            <div>A full 30 minute session that will work the tissues and stimulate circulation.</div>
-            <div class="bookBtn">Book Session</div>
+            <div class="option">
+              <div class="optionName">60 Minute Session</div>
+              <div>A full 30 minute session that will work the tissues and stimulate circulation.</div>
+              <div class="bookBtn">Book Session</div>
+            </div>
+
+            <div class="option">
+              <div class="optionName">90 Minute Session</div>
+              <div>A full 30 minute session that will work the tissues and stimulate circulation.</div>
+              <div class="bookBtn">Book Session</div>
+            </div>
+
           </div>
 
         </div>
+
+
 
       </div>
 
@@ -60,20 +74,36 @@ const active = ref(false);
 @import "../assets/Colors";
 @import "../assets/Keyframes";
 
+.plus,.minus{
+  position: absolute;
+  opacity: 0;
+  transform:rotate(0deg);
+  transition: transform 1s linear,opacity 1s linear;
+}
+
+.rotateIn{
+  transform:rotate(180deg);
+  transition: transform 1s linear,opacity 1s linear;
+  opacity: 1;
+}
+
 .fullImage{
   position: absolute;
   z-index: 0;
   width: 100%;
   height: 100%;
-  border-radius: 25px;
+  border-radius: 6px;
   background-size: cover;
   background-position: 100% 50%;
   background-image: v-bind(imageUrl);
   animation: 1s fadeout forwards;
+  filter: sepia(30%) brightness(80%);
 }
 
 
 .imagePanel{
+  display: flex;
+  flex-direction: column;
   position: relative;
   animation: 1s collapse forwards, reverseColors 1s forwards;
   height: fit-content;
@@ -83,6 +113,7 @@ const active = ref(false);
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   position: relative;
 }
 
@@ -94,6 +125,7 @@ const active = ref(false);
 }
 
 .serviceControl{
+  margin-right: 2vw;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -102,6 +134,7 @@ const active = ref(false);
   width: 45px;
   border-radius: 50%;
   background-color: $secondary;
+  font-size: 30px;
 }
 
 .servicePreview{
@@ -114,6 +147,7 @@ const active = ref(false);
 }
 
 .serviceDesc{
+  padding-left: 2vw;
   margin-top: 2vw;
   width: 80%;
   position: relative;
@@ -127,15 +161,23 @@ const active = ref(false);
 }
 
 .serviceName{
+  padding-left: 2vw;
   font-size: 3vw;
 }
 
-.options{
-  color: $quaternary;
+.optionsWrap{
   display: flex;
-  justify-content: space-between;
+  height: 100%;
   align-items: center;
+}
+
+.options{
   width: 100%;
+  position: absolute;
+  color: $primary;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
   animation: fadeRemove .25s forwards;
 }
 
@@ -143,14 +185,22 @@ const active = ref(false);
   display: flex;
   flex-direction: column;
   padding: 1vw;
-  background-color: $primary;
+  border: 2px solid $primary;
   width: 20vw;
-  min-height: 30%;
+  height: 100%;
+}
+
+.optionName{
+  font-weight: 500;
+  margin-bottom: 1vw;
+
 }
 
 .bookBtn{
+  margin-top: 1vw;
   cursor: pointer;
   display: flex;
+  align-self: center;
   align-items: center;
   justify-content: center;
   height: 45px;
@@ -235,7 +285,6 @@ const active = ref(false);
     display: none;
   }
 }
-
 
 
 </style>

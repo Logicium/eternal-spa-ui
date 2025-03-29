@@ -16,7 +16,7 @@ const data = {
     },
     {
       "name": "Salt Bath",
-      "image": "/spa1.jpg",
+      "image": "/salt1.jpg",
       "desc": "Salt baths utilize mineral-rich salts to relax muscles, detoxify the body, and soothe skin conditions, providing a calming and therapeutic experience."
     },
     {
@@ -26,12 +26,12 @@ const data = {
     },
     {
       "name": "Hormone Replacement Therapy",
-      "image": "/spa2.jpg",
+      "image": "/spa1.jpg",
       "desc": "Hormone Replacement Therapy aims to balance hormone levels, alleviating symptoms associated with hormonal imbalances and improving quality of life."
     },
     {
       "name": "Acupuncture",
-      "image": "/salt1.jpg",
+      "image": "/spa2.jpg",
       "desc": "Acupuncture is a traditional Chinese medicine technique that involves inserting thin needles into specific points on the body to stimulate healing and relieve pain."
     },
     {
