@@ -6,7 +6,7 @@ import data from "@/data.ts";
 
 <template>
 
-  <div class="serviceHeader">
+  <div class="header">
     OUR SERVICES
   </div>
 
@@ -28,7 +28,7 @@ import data from "@/data.ts";
   padding: 2vw;
 }
 
-.serviceHeader{
+.header{
   letter-spacing: 2.5vw;
   background-size: cover;
   color: $primary;
@@ -37,7 +37,7 @@ import data from "@/data.ts";
   justify-content: center;
   align-items: center;
   display: flex;
-  height: 20vh;
+  height: 25vh;
   font-size: calc(12px + 4vw);
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
