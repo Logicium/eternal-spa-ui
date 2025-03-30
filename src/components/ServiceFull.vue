@@ -78,12 +78,12 @@ const active = ref(false);
   position: absolute;
   opacity: 0;
   transform:rotate(0deg);
-  transition: transform 1s linear,opacity 1s linear;
+  transition: transform 1s ease,opacity 1s ease;
 }
 
 .rotateIn{
   transform:rotate(180deg);
-  transition: transform 1s linear,opacity 1s linear;
+  transition: transform 1s ease,opacity 1s ease;
   opacity: 1;
 }
 

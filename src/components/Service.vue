@@ -41,7 +41,8 @@ onMounted(()=>{
       </div>
 
       <div class="button">
-        <div>LEARN MORE</div>
+        LEARN MORE
+        <div></div>
       </div>
 
     </div>

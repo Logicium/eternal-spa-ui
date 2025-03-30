@@ -7,6 +7,7 @@ import FacebookIcon from "@/components/icons/FacebookIcon.vue";
 import InstaIcon from "@/components/icons/InstaIcon.vue";
 import ShareIcon from "@/components/icons/ShareIcon.vue";
 import CloseIcon from "@/components/icons/CloseIcon.vue";
+import YTIcon from "@/components/icons/YTIcon.vue";
 
 const colorChange = ref(true);
 const toggleMenu = ref(false);
@@ -33,15 +34,18 @@ const resetMenu = function (){
     <div class="fullWrap">
 
       <div :class=" toggleMenu ? 'fullNav show' : 'fullNav' ">
-        <RouterLink to="/" @click="resetMenu">Home</RouterLink>
-        <RouterLink to="/about" @click="resetMenu">About</RouterLink>
-        <RouterLink to="/services" @click="resetMenu">Services</RouterLink>
-        <RouterLink to="/events" @click="resetMenu">Events</RouterLink>
-        <RouterLink to="/contact" @click="resetMenu">Podcast</RouterLink>
+        <div class="links">
+          <RouterLink to="/" @click="resetMenu">Home</RouterLink>
+          <RouterLink to="/about" @click="resetMenu">About</RouterLink>
+          <RouterLink to="/services" @click="resetMenu">Services</RouterLink>
+          <RouterLink to="/events" @click="resetMenu">Events</RouterLink>
+          <RouterLink to="/contact" @click="resetMenu">Podcast</RouterLink>
+        </div>
+
         <div class="socials">
           <div class="icon"><FacebookIcon/></div>
           <div class="icon"><InstaIcon/></div>
-          <div class="icon"><ShareIcon/></div>
+          <div class="icon"><YTIcon/></div>
         </div>
       </div>
     </div>
@@ -53,7 +57,7 @@ const resetMenu = function (){
         <div :class=" !toggleMenu ? 'menuIcon rotateIn' : 'menuIcon'"><MenuIcon/></div>
         <div :class=" toggleMenu ? 'menuIcon rotateIn' : 'menuIcon'"><CloseIcon/></div>
       </div>
-      <RouterLink to="/services" class="cta">Book Appointment</RouterLink>
+      <RouterLink to="/services" class="cta" @click="resetMenu">Book Appointment</RouterLink>
     </div>
 
   </nav>
@@ -64,8 +68,14 @@ const resetMenu = function (){
 
 @import "../assets/Colors";
 
+.links{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .socials{
-  margin-top: auto;
+
   padding: 2rem;
   display: flex;
   width: 40%;
@@ -106,8 +116,6 @@ const resetMenu = function (){
   color: $primary;
   opacity:0;
   transition: 1s;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
 }
 
 .show{
@@ -171,12 +179,12 @@ nav a{
   justify-content: center;
   opacity: 0;
   transform:rotate(0deg);
-  transition: transform 1s linear,opacity 1s linear;
+  transition: transform 1s ease,opacity 1s ease;
 }
 
 .rotateIn{
   transform:rotate(180deg);
-  transition: transform 1s linear,opacity 1s linear;
+  transition: transform 1s ease,opacity 1s ease;
   opacity: 1;
 }
 
@@ -193,6 +201,15 @@ nav a{
 
 .colorChange{
   background-color: $secondary;
+  transition: 0.5s;
+}
+
+.links a{
+  transition: 0.5s;
+}
+
+.links a:hover{
+  color: $quaternary;
   transition: 0.5s;
 }
 //
