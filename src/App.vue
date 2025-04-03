@@ -21,7 +21,7 @@ import NavMenu from "@/components/NavMenu.vue";
 
 <style lang="scss" scoped>
 
-@import "assets/Colors";
+@use "assets/Colors";
 
 .wrapper{
   width: 100%;

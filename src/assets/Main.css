@@ -1,4 +1,4 @@
-@import './base.css';
+@use './base.css';
 #app {
   font-family: "Outfit", sans-serif;
   font-weight: 400;

@@ -1,5 +1,8 @@
 <script setup lang="ts">
 
+import FacebookIcon from "@/components/icons/FacebookIcon.vue";
+import YTIcon from "@/components/icons/YTIcon.vue";
+import InstaIcon from "@/components/icons/InstaIcon.vue";
 </script>
 
 <template>
@@ -17,36 +20,46 @@
 
   </div>
 
+
   <div class="links">
 
-    <div class="navigation">
-      <div class="name">NAVIGATION</div>
-      <div>Home</div>
-      <div>Services</div>
-      <div>Specialists</div>
-      <div>Podcast</div>
+    <div>
+      <div class="name">CONTACT</div>
+      <div>+1 719 256 1024</div>
+      <div>sales@eternalspa.com</div>
     </div>
 
-    <div class="socials">
-      <div class="name">SOCIAL</div>
-      <div>Facebook</div>
-      <div>Instagram</div>
-      <div>Messenger</div>
+    <div>
+      <div class="name">HOURS</div>
+      <div>Mon - Fri: 10AM - 8PM</div>
+      <div>Sat - Sun: 10AM - 5PM</div>
+
     </div>
 
-    <div class="resources">
-      <div class="name">RESOURCES</div>
-      <div>About</div>
-      <div>Contact</div>
-      <div>Terms of Service</div>
+    <div>
+      <div class="name">LOCATION</div>
+      <div>1020 Main Street</div>
+      <div>Trinidad, CO 81082</div>
     </div>
 
+  </div>
+
+  <div class="socials">
+    <div class="icon"><FacebookIcon/></div>
+    <div class="icon"><InstaIcon/></div>
+    <div class="icon"><YTIcon/></div>
   </div>
 
   <div class="disclaimers">
-    <div>©2025 Chappel House </div>
-    <div>All Rights Reserved</div>
+    <div class="policy">
+      <div class="link">Contact</div>
+      <div class="link">Privacy Policy</div>
+      <div class="link">Terms of Use</div>
+    </div>
+    <div>© All Rights Reserved</div>
   </div>
+
+
 
 
 
@@ -70,10 +83,35 @@
   background-position: 100% 100%;
 }
 
+.policy{
+  display: flex;
+}
+
+.socials{
+  padding-bottom: 2rem;
+  display: flex;
+  width: 25rem;
+  justify-content: space-evenly;
+}
+
+.icon{
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  width: 45px;
+  background-color: $primary;
+  color: $quaternary;
+  transition: 0.5s;
+}
+
 .disclaimers{
   display: flex;
+  flex-direction: column;
   width: 60%;
-  justify-content: space-between;
+  align-items: center;
 }
 
 .footer{
@@ -114,6 +152,24 @@
   width: 60%;
   justify-content: space-between;
 }
+
+.link{
+  cursor: pointer;
+  margin: 0.5rem;
+  transition: 0.5s;
+}
+
+.link:hover{
+  font-weight: 500;
+  transition: 0.5s;
+}
+
+.icon:hover{
+  background-color: $quaternary;
+  color: $primary;
+  transition: 0.5s;
+}
+
 
 .button{
   cursor: pointer;

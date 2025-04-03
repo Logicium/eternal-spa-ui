@@ -34,6 +34,7 @@ const resetMenu = function (){
     <div class="fullWrap">
 
       <div :class=" toggleMenu ? 'fullNav show' : 'fullNav' ">
+
         <div class="links">
           <RouterLink to="/" @click="resetMenu">Home</RouterLink>
           <RouterLink to="/about" @click="resetMenu">About</RouterLink>
@@ -47,7 +48,13 @@ const resetMenu = function (){
           <div class="icon"><InstaIcon/></div>
           <div class="icon"><YTIcon/></div>
         </div>
+
+        <div class="disclaimers">
+          <div>© All rights reserved</div>
+        </div>
+
       </div>
+
     </div>
 
     <RouterLink to="/" @click="resetMenu"><div class="appIcon"/></RouterLink>
@@ -68,6 +75,10 @@ const resetMenu = function (){
 
 @import "../assets/Colors";
 
+.disclaimers{
+  font-size: 18px;
+}
+
 .links{
   display: flex;
   flex-direction: column;
@@ -75,10 +86,9 @@ const resetMenu = function (){
 }
 
 .socials{
-
   padding: 2rem;
   display: flex;
-  width: 40%;
+  width: 25rem;
   justify-content: space-evenly;
 }
 
@@ -92,6 +102,7 @@ const resetMenu = function (){
   width: 45px;
   background-color: $primary;
   color: $quaternary;
+  transition: 0.5s;
 }
 
 .fullWrap{
@@ -106,7 +117,7 @@ const resetMenu = function (){
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  font-size: 3vw;
+  font-size: calc(12px + 3vw);
   position: relative;
   height: 100vh;
   width: 100%;
@@ -212,6 +223,13 @@ nav a{
   color: $quaternary;
   transition: 0.5s;
 }
+
+.icon:hover{
+  background-color: $quaternary;
+  color: $primary;
+  transition: 0.5s;
+}
+
 //
 //.colorChange a{
 //  color: $quaternary;
