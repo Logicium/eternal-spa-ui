@@ -11,7 +11,7 @@ const data = {
   "services": [
     {
       "name": "Red Light Therapy",
-      "image": "/light-therapy.jpg",
+      "image": "/light-therapy2.jpg",
       "desc": "Red Light Therapy uses low-level red light wavelengths to stimulate cellular function, promoting healing, reducing inflammation, and improving skin health."
     },
     {
@@ -26,35 +26,56 @@ const data = {
     },
     {
       "name": "Hormone Replacement Therapy",
-      "image": "/spa1.jpg",
+      "image": "/hrt3.jpg",
       "desc": "Hormone Replacement Therapy aims to balance hormone levels, alleviating symptoms associated with hormonal imbalances and improving quality of life."
     },
     {
       "name": "Acupuncture",
-      "image": "/spa2.jpg",
+      "image": "/acupuncture1.jpg",
       "desc": "Acupuncture is a traditional Chinese medicine technique that involves inserting thin needles into specific points on the body to stimulate healing and relieve pain."
     },
     {
       "name": "Pulse Electronic Magnetic Frequency",
-      "image": "/salt1.jpg",
+      "image": "/pemf1.jpg",
       "desc": "Pulse Electronic Magnetic Frequency therapy uses electromagnetic fields to stimulate cellular repair, reduce pain, and improve circulation."
     },
     {
       "name": "Float Tank Service",
-      "image": "/salt1.jpg",
+      "image": "/float-tank1.jpg",
       "desc": "Float Tank Service involves floating in a sensory deprivation tank filled with Epsom salt water, promoting deep relaxation and stress reduction."
     },
     {
       "name": "Sound Therapy",
-      "image": "/salt1.jpg",
+      "image": "/sound-therapy3.jpg",
       "desc": "Sound Therapy uses specific frequencies and vibrations of sound to promote relaxation, reduce stress, and improve mental and emotional well-being."
     },
     {
-      "name": "Hyperbaric Oxygen Therapy",
+      "name": "Hyperbaric Oxygen Treatment",
       "image": "/salt1.jpg",
       "desc": "Hyperbaric Oxygen Therapy involves breathing pure oxygen in a pressurized chamber, enhancing the body's natural healing process and promoting tissue repair."
     }
+  ],
+
+  podcasts:[
+    {
+      name:"",
+      desc:"",
+      uploadDate:"",
+      guests:[],
+      file:""
+    }
+  ],
+
+  events:[
+    {
+      name:"",
+      desc:"",
+      location:"",
+      time:"",
+      image:""
+    }
   ]
+
 }
 
 export default data;

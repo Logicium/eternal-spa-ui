@@ -7,7 +7,7 @@ import data from "@/data.ts";
 <template>
 
   <div class="header">
-    OUR SERVICES
+    SERVICES
   </div>
 
   <div class="services">

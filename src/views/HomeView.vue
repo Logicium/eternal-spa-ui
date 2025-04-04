@@ -24,22 +24,28 @@ import Service from "@/components/Service.vue";
       <div class="serviceGrid">
 
         <div class="serviceDesc parallax-1">
+          <div class="innerTitle">Bespoke Experiences</div>
           <div class="inner"> {{data.about1}}</div>
+          <div class="button">Learn More</div>
         </div>
 
-        <Service name="Massage Therapy" image="/massage1.jpg" :offset="false" style="grid-row: span 3"/>
+        <Service image="/massage2.jpg" :offset="false" style="grid-row: span 3"/>
 
-        <Service name="Salt Bath" image="/salt1.jpg" :offset="true" style="grid-row: span 3"/>
+        <Service image="/reception2.jpg" :offset="true" style="grid-row: span 3"/>
 
         <div class="serviceDesc parallax-2">
+          <div class="innerTitle">Licenced Specialists</div>
           <div class="inner">{{data.about2}}</div>
+          <div class="button">Learn More</div>
         </div>
 
         <div class="serviceDesc parallax-3" style="{grid-column: 1/3;}">
+          <div class="innerTitle">Wellness Lifestyle</div>
           <div class="inner">{{data.about3}}</div>
+          <div class="button">Learn More</div>
         </div>
 
-        <Service name="Red Light Therapy"  image="/light-therapy.jpg" style="grid-row: span 3"/>
+        <Service image="/spa-room1.jpg" style="grid-row: span 3"/>
 
 
       </div>
@@ -57,14 +63,18 @@ import Service from "@/components/Service.vue";
 .serviceDesc{
   grid-column: span 2;
   grid-row: span 3;
+  padding: 4rem;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   height: 100%;
 }
+.innerTitle{
+  font-size: calc(12px + 3vw);
+}
 
 .inner{
-  align-self: center;
-  width: 60%;
+  width: 70%;
 }
 .home{
   width: 100%;
@@ -74,12 +84,20 @@ import Service from "@/components/Service.vue";
   align-items: center;
 }
 
+.button{
+  margin-top: 1vw;
+  cursor: pointer;
+  font-weight: 500;
+  width: fit-content;
+  border-bottom: 4px solid $secondary;
+}
+
 .serviceGrid{
   position: relative;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(9,20vh);
-  grid-column-gap: 10vw;
+  grid-column-gap: 2rem;
 }
 
 .serviceWrap{

@@ -40,11 +40,6 @@ onMounted(()=>{
         <div class="name">{{name}}</div>
       </div>
 
-      <div class="button">
-        LEARN MORE
-        <div></div>
-      </div>
-
     </div>
   </div>
 

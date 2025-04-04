@@ -40,7 +40,7 @@ const resetMenu = function (){
           <RouterLink to="/about" @click="resetMenu">About</RouterLink>
           <RouterLink to="/services" @click="resetMenu">Services</RouterLink>
           <RouterLink to="/events" @click="resetMenu">Events</RouterLink>
-          <RouterLink to="/contact" @click="resetMenu">Podcast</RouterLink>
+          <RouterLink to="/podcasts" @click="resetMenu">Podcast</RouterLink>
         </div>
 
         <div class="socials">
