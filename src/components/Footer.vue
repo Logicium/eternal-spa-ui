@@ -38,7 +38,7 @@ import InstaIcon from "@/components/icons/InstaIcon.vue";
 
     <div>
       <div class="name">LOCATION</div>
-      <div>1020 Main Street</div>
+      <div>335 E Main Street</div>
       <div>Trinidad, CO 81082</div>
     </div>
 
@@ -58,10 +58,6 @@ import InstaIcon from "@/components/icons/InstaIcon.vue";
     </div>
     <div>© All Rights Reserved</div>
   </div>
-
-
-
-
 
 </div>
 
@@ -117,6 +113,7 @@ import InstaIcon from "@/components/icons/InstaIcon.vue";
 .footer{
   padding-bottom: 2rem;
   background-color: $secondary;
+  color: $quaternary;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   display: flex;
@@ -186,6 +183,7 @@ import InstaIcon from "@/components/icons/InstaIcon.vue";
 }
 
 input{
+  background-color: $primary;
   width: 80%;
   border-radius: 6px;
   border: none;

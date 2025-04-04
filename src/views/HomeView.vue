@@ -61,6 +61,7 @@ import Service from "@/components/Service.vue";
 @import "../assets/Keyframes";
 
 .serviceDesc{
+  color: $quaternary;
   grid-column: span 2;
   grid-row: span 3;
   padding: 4rem;
@@ -109,6 +110,7 @@ import Service from "@/components/Service.vue";
 }
 
 .serviceText{
+  color: $quaternary;
   text-align: center;
   width: 60%;
   font-size: calc(12px + 3vw);
