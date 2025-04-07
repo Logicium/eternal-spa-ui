@@ -68,11 +68,46 @@ const data = {
 
   events:[
     {
-      name:"",
-      desc:"",
-      location:"",
-      time:"",
-      image:""
+      "name": "Mindful Morning Yoga",
+      "desc": "Start your day with gentle stretches and mindful breathing techniques to enhance focus and reduce stress.",
+      "location": "Tranquil Garden Studio",
+      "time": 1744886400000,
+      "image": "/spa1.jpg"
+    },
+    {
+      "name": "Nourishing Your Body: A Nutrition Workshop",
+      "desc": "Learn practical tips for healthy eating, meal planning, and understanding the power of whole foods.",
+      "location": "Wellness Seminar Room",
+      "time": 1745059200000,
+      "image": "/spa2.jpg"
+    },
+    {
+      "name": "Relax and Restore Sound Bath",
+      "desc": "Immerse yourself in the soothing vibrations of singing bowls and other instruments for deep relaxation and inner peace.",
+      "location": "Serenity Sanctuary",
+      "time": 1745145600000,
+      "image": "/spa3.jpg"
+    },
+    {
+      "name": "Guided Nature Walk & Forest Bathing",
+      "desc": "Reconnect with nature through a slow-paced walk, engaging your senses to experience the calming benefits of the natural environment.",
+      "location": "Local Nature Preserve Trail",
+      "time": 1745232000000,
+      "image": "/spa4.jpg"
+    },
+    {
+      "name": "Stress Management & Meditation Techniques",
+      "desc": "Discover effective strategies for managing daily stress and learn simple yet powerful meditation practices.",
+      "location": "Harmony Hall",
+      "time": 1745318400000,
+      "image": "/spa5.jpg"
+    },
+    {
+      "name": "DIY Aromatherapy Blends for Wellness",
+      "desc": "Explore the world of essential oils and create your own personalized aromatherapy blends for relaxation, energy, and more.",
+      "location": "Aroma Workshop Space",
+      "time": 1745404800000,
+      "image": "/spa6.jpg"
     }
   ]
 
