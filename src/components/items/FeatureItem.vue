@@ -17,8 +17,8 @@ const imageUrl = computed(()=> 'url("'+props.data.image+'")').value;
     <div class="image"></div>
 
     <div class="info">
-      <div class="name">{{data.name}}</div>
       <div class="playBtn"><PlayIcon/></div>
+      <div class="name">{{data.name}}</div>
     </div>
 
   </div>
@@ -36,16 +36,19 @@ const imageUrl = computed(()=> 'url("'+props.data.image+'")').value;
   color: $primary;
   border-radius: 50%;
   margin-left: auto;
-  margin-right: 1vw;
-  margin-bottom: 1vw;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
 }
 
+.name{
+  font-weight: 500;
+}
+
 .info{
   display: flex;
+  padding: 1vw;
   flex-direction: column;
   justify-content: space-between;
 }
@@ -60,9 +63,10 @@ const imageUrl = computed(()=> 'url("'+props.data.image+'")').value;
   background-image: v-bind(imageUrl);
   background-size: cover;
   background-position: 100% 100%;
-  width: 260px;
+  min-width: 170px;
   border-radius: 6px;
   aspect-ratio: 1/1;
+  padding: 1vw;
 }
 
 </style>

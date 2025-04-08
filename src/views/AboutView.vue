@@ -44,7 +44,7 @@ import data from "../data.ts";
   height: 100%;
   background-size: cover;
   background-position: 20% 100%;
-  background-image: url("/spa5.jpg");
+  background-image: url("/spa/spa5.jpg");
   grid-column: span 6;
 }
 

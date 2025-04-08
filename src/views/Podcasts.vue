@@ -39,7 +39,7 @@ console.log("Featured podcasts: ",featuredPodcasts);
     </div>
 
     <div class="podcastList">
-      <div class="title">All Podcasts</div>
+      <div class="title2">All Podcasts</div>
       <PodcastItem v-for="podcast in data.podcasts" :data="podcast"/>
     </div>
 
@@ -57,12 +57,27 @@ console.log("Featured podcasts: ",featuredPodcasts);
 .title{
   font-size: $fontMed;
   margin-bottom: 1rem;
+  width: 80%;
+  justify-self: center;
+}
+
+.title2{
+  font-size: $fontMed;
+  margin-bottom: 1rem;
+}
+
+.podcastList{
+  width: 80%;
+  align-self: center;
 }
 
 .featuredGrid{
   display: grid;
   grid-template-columns: repeat(3,1fr);
   grid-gap: 2rem;
+  margin-bottom: 1rem;
+  width: 80%;
+  justify-self: center;
 }
 
 .searchIcon{
@@ -89,7 +104,7 @@ console.log("Featured podcasts: ",featuredPodcasts);
 
 .controls{
   padding: 2rem 0;
-  width: 100%;
+  width: 80%;
   height: 10vh;
   display: flex;
   justify-content: space-between;
@@ -113,7 +128,7 @@ console.log("Featured podcasts: ",featuredPodcasts);
 .podcasts{
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 100%;
   justify-self: center;
 }
 
