@@ -25,6 +25,7 @@ const time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
       <div class="date">
         <div class="month">{{month}}</div>
         <div class="num">{{date}}</div>
+        <div>{{day}}</div>
       </div>
     </div>
     <div class="name">{{data.name}}</div>
@@ -70,7 +71,8 @@ const time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
 
 .date{
   margin: 1vw;
-  min-width: 90px;
+  width: 100px;
+  aspect-ratio: 1/1;
   background-color: $secondary;
   display: flex;
   height: fit-content;
@@ -78,6 +80,7 @@ const time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
   align-items: center;
   justify-content: center;
   border-radius: 6px;
+  line-height: calc(12px + 1.5vw);
 }
 
 .num{

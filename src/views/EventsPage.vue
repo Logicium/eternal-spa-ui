@@ -3,10 +3,12 @@
 import ListIcon from "@/components/icons/ListIcon.vue";
 import GridIcon from "@/components/icons/GridIcon.vue";
 import CalendarIcon from "@/components/icons/CalendarIcon.vue";
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import ListItem from "@/components/ListItem.vue";
 import data from "@/data.ts";
 import GridItem from "@/components/GridItem.vue";
+import {DatePicker as VDatePicker} from "v-calendar";
+import CalItem from "@/components/CalItem.vue";
 
 const listActive = ref(true);
 const gridActive = ref(false);
@@ -26,6 +28,37 @@ const enableCal = function (){
   gridActive.value = false;
   calActive.value = true;
 }
+const date = ref(new Date());
+
+const compareDates = function(unixTimestamp: number, dateString:any) {
+  const firstDate = new Date(unixTimestamp);
+  const secondDate = new Date(dateString);
+
+  console.log("First Date: ",firstDate,"Second Date: ",secondDate)
+  return (firstDate.getUTCFullYear() === secondDate.getUTCFullYear()
+    && firstDate.getUTCMonth() === secondDate.getUTCMonth()
+    && firstDate.getDate() === secondDate.getDate());
+};
+const searchedEvents = ref(new Array(0))
+
+watch(date,(newValue,oldValue)=>{
+  // console.log("New Value: ",newValue);
+  // console.log("New Value as Date: ", new Date(newValue))
+
+  searchedEvents.value = data.events.filter(event =>
+    (compareDates(event.time,newValue) )
+  );
+  console.log("Matching results: ",searchedEvents.value);
+})
+
+const dates = data.events.map(  event  => event.time );
+const attributes = ref([
+  {
+    dot: true,
+    dates: dates,
+  }
+  ]
+);
 
 </script>
 
@@ -57,7 +90,16 @@ const enableCal = function (){
       </div>
 
       <div v-if="calActive" class="calendarView">
-
+        <div class="eventView">
+<!--          {{date}}-->
+          <div class="eventSearch">
+            <CalItem v-for="event in searchedEvents" :data="event"/>
+            <div class="empty" v-if="searchedEvents.length===0">No Events on {{date.toDateString()}}.</div>
+          </div>
+        </div>
+        <div class="calendarWrap">
+          <VDatePicker expanded is-required :attributes="attributes" v-model="date"/>
+        </div>
       </div>
 
     </div>
@@ -70,12 +112,28 @@ const enableCal = function (){
 <style scoped lang="scss">
 
 @import "../assets/Colors";
+@import "../assets/Keyframes";
+
+.calendarView{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 80%;
+  height: 50vh;
+  justify-self: center;
+  margin-bottom: 2rem;
+}
+
+.empty{
+  display: flex;
+  animation: 1s fadein forwards;
+}
 
 .listView{
   display: flex;
   flex-direction: column;
   width: 80%;
   justify-self: center;
+  margin-bottom: 2rem;
 }
 
 .gridView{
@@ -90,6 +148,7 @@ const enableCal = function (){
 .active{
   background-color: $quaternary;
   color: $primary;
+  border-radius: 6px;
   transition: 0.5s;
 }
 
@@ -121,6 +180,7 @@ const enableCal = function (){
 
 .control:hover{
   background-color: $quaternary;
+  border-radius: 6px;
   color: $primary;
   transition: 0.5s;
 }
@@ -128,6 +188,7 @@ const enableCal = function (){
 .control .active{
   background-color: $quaternary;
   color: $primary;
+  border-radius: 6px;
   transition: 0.5s;
 }
 

@@ -5,13 +5,14 @@ import data from "../data.ts";
 
 <template>
 
-  <div class="header">
+  <div class="headerLarge">
     ABOUT
+    <div class="title">We're proud to bring wellness to the Trinidad area.</div>
   </div>
 
   <div class="about">
 
-    <div class="title">We're proud to bring wellness to the Trinidad area.</div>
+
     <div class="subtitle">{{data.about2}}</div>
 
 <!--    <div class="doubleGrid">-->
@@ -99,11 +100,6 @@ import data from "../data.ts";
   flex-direction: column;
 }
 
-.title{
-  font-size: calc(12px + 3vw);
-  width: 60%;
-  margin: 2rem;
-}
 
 .subtitle{
   width: 60%;
@@ -111,10 +107,25 @@ import data from "../data.ts";
 }
 
 
+.headerLarge{
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+  background-size: cover;
+  background-position: 100% 35%;
+  background-image: url("/mountain2.jpg");
+  letter-spacing: 2.5vw;
+  font-size: calc(12px + 4vw);
+  color: $primary;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+}
+
 .header{
   letter-spacing: 2.5vw;
-  background-size: cover;
   color: $primary;
+  background-size: cover;
   background-position: 100% 35%;
   background-image: url("/mountain2.jpg");
   justify-content: center;
@@ -126,4 +137,10 @@ import data from "../data.ts";
   border-bottom-right-radius: 6px;
 }
 
+.title{
+  font-size: calc(12px + 3vw);
+  width: 60%;
+  margin: 2rem;
+  letter-spacing: initial;
+}
 </style>

@@ -9,7 +9,7 @@ const props = defineProps({
 })
 
 const dateTime = new Date(props.data.time);
-const day = dateTime.toLocaleString('en-US', {weekday: 'short'});
+const day = dateTime.toLocaleString('en-US', {weekday: 'long'});
 const date = dateTime.getDate();
 const month = dateTime.toLocaleString('en-US', {month: 'long'});
 const time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true });
@@ -20,9 +20,9 @@ const time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
 
   <div class="event">
     <div class="date">
-      <div class="day">{{day}}</div>
+      <div>{{month}}</div>
       <div class="num">{{date}}</div>
-      <div class="month">{{month}}</div>
+      <div>{{day}}</div>
     </div>
     <div class="info">
       <div class="name">{{data.name}}</div>
@@ -46,11 +46,12 @@ const time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
   display: flex;
   padding-bottom: 1vw;
   padding-top: 1vw;
-  border-bottom: 3px solid $secondary;
+  border-bottom: 4px solid $secondary;
 }
 
 .date{
-  min-width: 120px;
+  min-width: 150px;
+  aspect-ratio: 1/1;
   margin-right: 1vw;
   background-color: $secondary;
   display: flex;

@@ -75,6 +75,13 @@ const data = {
       "image": "/spa1.jpg"
     },
     {
+      "name": "Gentle Flow Pilates for Core Strength",
+      "desc": "Build core strength and improve flexibility with a gentle and mindful Pilates session suitable for all levels.",
+      "location": "Movement Arts Studio",
+      "time": 1744886400000,
+      "image": "/spa5.jpg"
+    },
+    {
       "name": "Nourishing Your Body: A Nutrition Workshop",
       "desc": "Learn practical tips for healthy eating, meal planning, and understanding the power of whole foods.",
       "location": "Wellness Seminar Room",
