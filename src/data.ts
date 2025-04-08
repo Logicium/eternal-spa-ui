@@ -58,11 +58,64 @@ const data = {
 
   podcasts:[
     {
-      name:"",
-      desc:"",
-      uploadDate:"",
-      guests:[],
-      file:""
+      "name": "The Power of Breathwork for Stress Reduction",
+      "desc": "Explore simple yet powerful breathwork techniques to calm your nervous system and reduce daily stress. Learn practical exercises you can incorporate into your routine.",
+      "transcript": "[Intro Music]\nHost: Welcome to Wellness Insights! Today we're diving into the incredible power of breathwork. Our breath is something we do unconsciously, but when we bring awareness to it, it can be a potent tool for managing stress and improving overall well-being. Let's explore a few basic techniques...\n[Short explanation of a breathing exercise]\nHost: Remember, even a few minutes of focused breathing can make a significant difference. Incorporate these practices into your day and feel the benefits. \n[Outro Music]",
+      "uploadDate": 1712530800000,
+      "guests": [],
+      "file": "/podcasts/breathwork.mp3",
+      "image": "/spa1.jpg",
+      "featured":true,
+    },
+    {
+      "name": "Nourishing Your Skin From Within",
+      "desc": "Discover the vital connection between nutrition and healthy, glowing skin. We discuss key nutrients, foods to embrace, and how your diet impacts your complexion.",
+      "transcript": "[Intro Music]\nHost: Hello and welcome back to Wellness Insights. Today we're talking about something many of us are interested in: healthy skin! But we're not just focusing on topical treatments; we're looking at what you put *inside* your body. Good nutrition is fundamental for radiant skin. Let's talk about some key vitamins and minerals...\n[Discussion about vitamins, antioxidants, and hydration]\nHost: Remember, a balanced diet rich in whole foods is your best friend when it comes to healthy skin. What you eat truly reflects on the outside. \n[Outro Music]",
+      "uploadDate": 1712617200000,
+      "guests": [],
+      "file": "/podcasts/skin_nutrition.mp3",
+      "image": "/spa2.jpg",
+      "featured":true,
+    },
+    {
+      "name": "The Benefits of Regular Gentle Movement",
+      "desc": "We explore the profound benefits of incorporating gentle movement like walking, yoga, and stretching into your daily life for improved physical and mental well-being.",
+      "transcript": "[Intro Music]\nHost: Welcome to another episode of Wellness Insights! Today we're championing the power of gentle movement. You don't need intense workouts to reap significant health rewards. Activities like a brisk walk, a gentle yoga session, or even consistent stretching can make a huge difference. Let's discuss why...\n[Explanation of benefits like improved circulation, flexibility, and mood]\nHost: Find activities you enjoy and can sustain. Consistency is key. Embrace gentle movement as a joyful part of your wellness journey. \n[Outro Music]",
+      "uploadDate": 1712703600000,
+      "guests": [],
+      "file": "/podcasts/gentle_movement.mp3",
+      "image": "/spa3.jpg",
+      "featured":true,
+    },
+    {
+      "name": "Understanding and Managing Sleep Hygiene",
+      "desc": "Learn practical strategies to improve your sleep quality by understanding the principles of good sleep hygiene and creating a restful bedtime routine.",
+      "transcript": "[Intro Music]\nHost: Welcome back to Wellness Insights. Today we're tackling a crucial aspect of our well-being: sleep. Quality sleep is essential for our physical and mental health. Let's discuss some key elements of sleep hygiene...\n[Discussion about sleep schedules, environment, and pre-bedtime habits]\nHost: Implementing good sleep hygiene practices can significantly improve how well you sleep and, in turn, your overall health. Prioritize a restful night! \n[Outro Music]",
+      "uploadDate": 1712790000000,
+      "guests": [],
+      "file": "/podcasts/sleep_hygiene.mp3",
+      "image": "/spa4.jpg",
+      "featured": false
+    },
+    {
+      "name": "The Art of Self-Compassion",
+      "desc": "Explore the concept of self-compassion and learn how to treat yourself with kindness and understanding, especially during challenging times.",
+      "transcript": "[Intro Music]\nHost: Hello and welcome to Wellness Insights. Today we're delving into the important practice of self-compassion. Often, we are harder on ourselves than we are on others. Let's explore what it means to be self-compassionate...\n[Explanation of self-kindness, common humanity, and mindfulness]\nHost: Cultivating self-compassion can lead to greater emotional resilience and overall well-being. Be kind to yourself. \n[Outro Music]",
+      "uploadDate": 1712876400000,
+      "guests": [],
+      "file": "/podcasts/self_compassion.mp3",
+      "image": "/spa5.jpg",
+      "featured": false
+    },
+    {
+      "name": "Hydration Habits for Optimal Health",
+      "desc": "Understand the vital role of water in our bodies and learn practical tips for staying adequately hydrated throughout the day for optimal health and energy levels.",
+      "transcript": "[Intro Music]\nHost: Welcome to another episode of Wellness Insights! Today we're focusing on something fundamental yet often overlooked: hydration. Water is essential for so many bodily functions. Let's talk about why it's so important and how to ensure you're getting enough...\n[Discussion about the benefits of hydration and tips for drinking more water]\nHost: Staying properly hydrated is a simple yet powerful way to support your overall health and well-being. Make it a priority! \n[Outro Music]",
+      "uploadDate": 1712962800000,
+      "guests": [],
+      "file": "/podcasts/hydration.mp3",
+      "image": "/spa6.jpg",
+      "featured": false
     }
   ],
 

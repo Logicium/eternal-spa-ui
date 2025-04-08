@@ -4,11 +4,11 @@ import ListIcon from "@/components/icons/ListIcon.vue";
 import GridIcon from "@/components/icons/GridIcon.vue";
 import CalendarIcon from "@/components/icons/CalendarIcon.vue";
 import {ref, watch} from "vue";
-import ListItem from "@/components/ListItem.vue";
+import ListItem from "@/components/items/ListItem.vue";
 import data from "@/data.ts";
-import GridItem from "@/components/GridItem.vue";
+import GridItem from "@/components/items/GridItem.vue";
 import {DatePicker as VDatePicker} from "v-calendar";
-import CalItem from "@/components/CalItem.vue";
+import CalItem from "@/components/items/CalItem.vue";
 
 const listActive = ref(true);
 const gridActive = ref(false);
@@ -207,8 +207,8 @@ const attributes = ref([
   letter-spacing: 2.5vw;
   background-size: cover;
   color: $primary;
-  background-position: 100% 100%;
-  background-image: url("/salt1.jpg");
+  background-position: 100% 20%;
+  background-image: url("/events/event2.jpg");
   justify-content: center;
   align-items: center;
   display: flex;
