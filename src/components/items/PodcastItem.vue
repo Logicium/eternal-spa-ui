@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import PlayIcon from "@/components/icons/PlayIcon.vue";
+import PlayIcon from "@/assets/icons/PlayIcon.vue";
 import {computed} from "vue";
 
 const props = defineProps({

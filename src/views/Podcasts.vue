@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
-import TuneIcon from "@/components/icons/TuneIcon.vue";
-import SearchIcon from "@/components/icons/SearchIcon.vue";
+import TuneIcon from "@/assets/icons/TuneIcon.vue";
+import SearchIcon from "@/assets/icons/SearchIcon.vue";
 import FeatureItem from "@/components/items/FeatureItem.vue";
 import data from "@/data.ts";
 import PodcastItem from "@/components/items/PodcastItem.vue";

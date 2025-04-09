@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import {computed} from "vue";
-import PlayIcon from "@/components/icons/PlayIcon.vue";
+import PlayIcon from "@/assets/icons/PlayIcon.vue";
 
 const props = defineProps({
   data: { type: Object, default: ()=>{}},

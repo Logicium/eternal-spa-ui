@@ -9,8 +9,8 @@ import LocationIcon from "@/assets/icons/LocationIcon.vue";
 import Map from "@/components/Map.vue";
 import {DatePicker as VDatePicker} from "v-calendar";
 import CalItem from "@/components/items/CalItem.vue";
-import CalendarIcon from "@/components/icons/CalendarIcon.vue";
-import CalLargeIcon from "@/components/icons/CalLargeIcon.vue";
+import CalendarIcon from "@/assets/icons/CalendarIcon.vue";
+import CalLargeIcon from "@/assets/icons/CalLargeIcon.vue";
 import TimeLargeIcon from "@/assets/icons/TimeLargeIcon.vue";
 import LocationLargeIcon from "@/assets/icons/LocationLargeIcon.vue";
 

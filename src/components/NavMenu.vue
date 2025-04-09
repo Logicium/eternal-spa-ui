@@ -1,13 +1,13 @@
 <script setup lang="ts">
 
-import MenuIcon from "@/components/icons/MenuIcon.vue";
+import MenuIcon from "@/assets/icons/MenuIcon.vue";
 import {RouterLink} from "vue-router";
 import {onMounted, ref} from "vue";
-import FacebookIcon from "@/components/icons/FacebookIcon.vue";
-import InstaIcon from "@/components/icons/InstaIcon.vue";
-import ShareIcon from "@/components/icons/ShareIcon.vue";
-import CloseIcon from "@/components/icons/CloseIcon.vue";
-import YTIcon from "@/components/icons/YTIcon.vue";
+import FacebookIcon from "@/assets/icons/FacebookIcon.vue";
+import InstaIcon from "@/assets/icons/InstaIcon.vue";
+import ShareIcon from "@/assets/icons/ShareIcon.vue";
+import CloseIcon from "@/assets/icons/CloseIcon.vue";
+import YTIcon from "@/assets/icons/YTIcon.vue";
 
 const colorChange = ref(true);
 const toggleMenu = ref(false);
