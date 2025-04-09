@@ -62,6 +62,7 @@ const skipSeconds = (seconds: number) => {
       @timeupdate="(time: number) => timeUpdateHandler(time)"
       @ready="(duration: number) => readyHandler(duration)"
       @waveSurfer="(ws: WaveSurfer) => readyWaveSurferHandler(ws)"
+      :style="{'z-index':0,'position':'relative'}"
     />
     <div class="times">
 
@@ -120,7 +121,7 @@ const skipSeconds = (seconds: number) => {
 
 .buttons{
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
 }
 

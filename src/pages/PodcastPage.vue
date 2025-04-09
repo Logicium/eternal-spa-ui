@@ -2,8 +2,11 @@
 
 import data from "@/data.ts";
 import {useRoute} from "vue-router";
-import {computed} from "vue";
+import {computed, ref} from "vue";
 import AudioControls from "@/components/AudioControls.vue";
+import FacebookIcon from "@/assets/icons/FacebookIcon.vue";
+import YTIcon from "@/assets/icons/YTIcon.vue";
+import InstaIcon from "@/assets/icons/InstaIcon.vue";
 
 const route = useRoute();
 const id = Number(route.params.id);
@@ -11,6 +14,8 @@ console.log("ID: ",id);
 const loadedData = data.podcasts[id];
 
 const imageUrl = computed(()=> 'url("'+loadedData.image+'")').value;
+
+const expand = ref(false);
 
 </script>
 
@@ -29,13 +34,53 @@ const imageUrl = computed(()=> 'url("'+loadedData.image+'")').value;
 
 
     <div class="outline">
+
       <div class="title">About Podcast</div>
+      <div class="published">Published on {{new Date(loadedData.uploadDate).toDateString()}}</div>
       <div class="desc">{{loadedData.desc}}</div>
 
-      <div class="title">Transcript</div>
-      <div class="transcript">{{loadedData.transcript}}</div>
-      <div class="expand">View All</div>
+      <div class="infoRow">
+
+        <div class="downloads">
+          <div class="title">Links</div>
+          <div class="download">Youtube Music</div>
+          <div class="download">Apple Podcasts</div>
+          <div class="download">Spotify</div>
+        </div>
+
+<!--        <div class="links">-->
+<!--          <div class="title">Links</div>-->
+<!--          <div class="socials">-->
+<!--            <div class="icon"><YTIcon/></div>-->
+<!--            <div class="icon"></div>-->
+<!--            <div class="icon"></div>-->
+<!--          </div>-->
+<!--        </div>-->
+
+        <div class="stats">
+          <div class="title">Downloads</div>
+          <div class="link">Download Podcast</div>
+          <div class="link">Download Transcript</div>
+        </div>
+
+
+
+      </div>
+
     </div>
+
+    <div class="outline">
+
+      <div class="title">Transcript</div>
+      <div :class="expand? 'transcript expand' : 'transcript'">{{loadedData.transcript}}</div>
+
+      <div class="expandBtn" @click="expand=!expand">
+        <div :class="expand? 'btn hide':'btn' ">View All</div>
+        <div :class="!expand? 'btn hide':'btn'">View Less</div>
+      </div>
+
+    </div>
+
 
 
   </div>
@@ -51,8 +96,70 @@ const imageUrl = computed(()=> 'url("'+loadedData.image+'")').value;
   width: 80%;
   justify-self: center;
 }
+
+.published{
+  margin-bottom: 1vw;
+  font-weight: 500;
+}
+
+.infoRow{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+}
+
+.hide{
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s ease;
+}
+
+.links{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
 .transcript{
   white-space: break-spaces;
+  height: 21vh;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  interpolate-size: allow-keywords;
+  transition: height 3s ease;
+}
+
+.expandBtn{
+  height: 45px;
+  display: flex;
+  align-items: center;
+}
+
+.expand{
+  height: auto;
+  transition: height 3s ease;
+}
+
+.stats{
+  text-align: right;
+}
+
+.download,.link{
+  border-bottom: 4px solid $secondary;
+  width: fit-content;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.link{
+  margin-left: auto;
+}
+
+.btn{
+  position: absolute;
+  border-bottom: 4px solid $secondary;
+  width: fit-content;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 .title{
@@ -89,6 +196,28 @@ const imageUrl = computed(()=> 'url("'+loadedData.image+'")').value;
   align-items: center;
   padding: 2rem;
 }
+
+.socials{
+  padding-bottom: 2rem;
+  display: flex;
+  width: 25rem;
+  justify-content: space-evenly;
+
+}
+
+.icon{
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  width: 45px;
+  background-color: $secondary;
+  color: $quaternary;
+  transition: 0.5s;
+}
+
 
 .podcastName{
   text-align: center;
