@@ -118,7 +118,7 @@ console.log("Featured podcasts: ",featuredPodcasts);
   justify-content: center;
   align-items: center;
   height: 45px;
-  width: 45px;
+  min-width: 45px;
   background-color: $secondary;
   color: $quaternary;
   border-radius: 6px;
@@ -138,11 +138,25 @@ input{
   padding-left: 24px;
   background-color: $primary;
   border: none;
+  color: $quaternary;
   border-bottom: 4px solid $secondary;
   width: 100%;
   font-family: "Outfit", sans-serif;
   margin-right: 1vw;
   font-size: 16px;
+  transition: 0.5s;
+}
+
+input:focus{
+  outline: none;
+  border-bottom: 4px solid $quaternary;
+  color: $quaternary;
+  transition: 0.5s;
+}
+
+::placeholder{
+  color: $secondary;
+  transition: 0.5s;
 }
 
 

@@ -31,7 +31,7 @@ const time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
     <div class="name">{{data.name}}</div>
     <div class="location"><LocationIcon/> {{data.location}}</div>
     <div class="time"><TimeIcon/> {{time}} </div>
-    <div class="cta">See More</div>
+    <RouterLink :to="'/event/'+data.id"><div class="cta">See More</div></RouterLink>
   </div>
 
 </template>
@@ -91,6 +91,10 @@ const time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
   border-bottom: 4px solid $quaternary;
   width: fit-content;
   cursor: pointer;
+}
+
+a{
+  color: initial;
 }
 
 </style>

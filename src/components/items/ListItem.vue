@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 import LocationIcon from "@/assets/icons/LocationIcon.vue";
-import TImeIcon from "@/assets/icons/TimeIcon.vue";
 import TimeIcon from "@/assets/icons/TimeIcon.vue";
 
 const props = defineProps({
@@ -19,11 +18,13 @@ const time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
 <template>
 
   <div class="event">
+
     <div class="date">
       <div>{{month}}</div>
       <div class="num">{{date}}</div>
       <div>{{day}}</div>
     </div>
+
     <div class="info">
       <div class="name">{{data.name}}</div>
       <div class="desc">{{data.desc}}</div>
@@ -31,7 +32,7 @@ const time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
         <div class="location"><LocationIcon/> {{data.location}} </div>
         <div class="time"><TimeIcon/> {{time}}</div>
       </div>
-      <div class="cta">See More</div>
+      <RouterLink :to="'/event/'+data.id"><div class="cta">See More</div></RouterLink>
     </div>
 
   </div>
@@ -97,5 +98,7 @@ const time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
   width: fit-content;
   cursor: pointer;
 }
-
+a{
+  color: initial;
+}
 </style>

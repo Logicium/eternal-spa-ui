@@ -117,7 +117,7 @@ import data from "../data.ts";
   letter-spacing: 2.5vw;
   font-size: calc(12px + 4vw);
   color: $primary;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   text-align: center;
 }

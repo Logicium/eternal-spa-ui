@@ -142,7 +142,7 @@ const active = ref(false);
   display: flex;
   flex-direction: column;
   width: 80%;
-  border-bottom: 3px solid $secondary;
+  border-bottom: 4px solid $secondary;
   padding-bottom: 2vw;
 }
 

@@ -8,51 +8,60 @@ const data = {
 
   about3: "Eternal Spa is more than just a spa; it's a catalyst for lasting transformation. We believe in empowering you to cultivate sustainable wellness practices that extend far beyond your time with us.",
 
-  "services": [
+  services: [
     {
       "name": "Red Light Therapy",
       "image": "/light-therapy2.jpg",
-      "desc": "Red Light Therapy uses low-level red light wavelengths to stimulate cellular function, promoting healing, reducing inflammation, and improving skin health."
+      "desc": "Red Light Therapy uses low-level red light wavelengths to stimulate cellular function, promoting healing, reducing inflammation, and improving skin health.",
+      "id":0,
     },
     {
       "name": "Salt Bath",
       "image": "/salt1.jpg",
-      "desc": "Salt baths utilize mineral-rich salts to relax muscles, detoxify the body, and soothe skin conditions, providing a calming and therapeutic experience."
+      "desc": "Salt baths utilize mineral-rich salts to relax muscles, detoxify the body, and soothe skin conditions, providing a calming and therapeutic experience.",
+      "id":1,
     },
     {
       "name": "Massage Therapy",
       "image": "/massage1.jpg",
-      "desc": "Massage Therapy involves manipulating soft tissues to relieve muscle tension, reduce stress, and promote relaxation and overall well-being."
+      "desc": "Massage Therapy involves manipulating soft tissues to relieve muscle tension, reduce stress, and promote relaxation and overall well-being.",
+      "id":2,
     },
     {
       "name": "Hormone Replacement Therapy",
       "image": "/hrt/hrt3.jpg",
-      "desc": "Hormone Replacement Therapy aims to balance hormone levels, alleviating symptoms associated with hormonal imbalances and improving quality of life."
+      "desc": "Hormone Replacement Therapy aims to balance hormone levels, alleviating symptoms associated with hormonal imbalances and improving quality of life.",
+      "id":3,
     },
     {
       "name": "Acupuncture",
       "image": "/acupuncture1.jpg",
-      "desc": "Acupuncture is a traditional Chinese medicine technique that involves inserting thin needles into specific points on the body to stimulate healing and relieve pain."
+      "desc": "Acupuncture is a traditional Chinese medicine technique that involves inserting thin needles into specific points on the body to stimulate healing and relieve pain.",
+      "id":4,
     },
     {
       "name": "Pulse Electronic Magnetic Frequency",
       "image": "/pemf1.jpg",
-      "desc": "Pulse Electronic Magnetic Frequency therapy uses electromagnetic fields to stimulate cellular repair, reduce pain, and improve circulation."
+      "desc": "Pulse Electronic Magnetic Frequency therapy uses electromagnetic fields to stimulate cellular repair, reduce pain, and improve circulation.",
+      "id":5,
     },
     {
       "name": "Float Tank Service",
       "image": "/float-tank1.jpg",
-      "desc": "Float Tank Service involves floating in a sensory deprivation tank filled with Epsom salt water, promoting deep relaxation and stress reduction."
+      "desc": "Float Tank Service involves floating in a sensory deprivation tank filled with Epsom salt water, promoting deep relaxation and stress reduction.",
+      "id":6,
     },
     {
       "name": "Sound Therapy",
       "image": "/sound-therapy/sound-therapy3.jpg",
-      "desc": "Sound Therapy uses specific frequencies and vibrations of sound to promote relaxation, reduce stress, and improve mental and emotional well-being."
+      "desc": "Sound Therapy uses specific frequencies and vibrations of sound to promote relaxation, reduce stress, and improve mental and emotional well-being.",
+      "id":7,
     },
     {
       "name": "Hyperbaric Oxygen Treatment",
       "image": "/salt1.jpg",
-      "desc": "Hyperbaric Oxygen Therapy involves breathing pure oxygen in a pressurized chamber, enhancing the body's natural healing process and promoting tissue repair."
+      "desc": "Hyperbaric Oxygen Therapy involves breathing pure oxygen in a pressurized chamber, enhancing the body's natural healing process and promoting tissue repair.",
+      "id":8,
     }
   ],
 
@@ -67,6 +76,7 @@ const data = {
       "file": "/podcasts/breathwork.mp3",
       "image": "/spa/spa1.jpg",
       "featured":true,
+      "id":0,
     },
     {
       "name": "Nourishing Your Skin From Within",
@@ -78,6 +88,7 @@ const data = {
       "file": "/podcasts/skin_nutrition.mp3",
       "image": "/spa/spa2.jpg",
       "featured":true,
+      "id":1,
     },
     {
       "name": "The Benefits of Regular Gentle Movement",
@@ -89,6 +100,7 @@ const data = {
       "file": "/podcasts/gentle_movement.mp3",
       "image": "/spa/spa3.jpg",
       "featured":true,
+      "id":2,
     },
     {
       "name": "Understanding and Managing Sleep Hygiene",
@@ -99,7 +111,8 @@ const data = {
       "tags": ["sleep hygiene", "sleep quality", "rest", "wellness", "mental health"],
       "file": "/podcasts/sleep_hygiene.mp3",
       "image": "/spa/spa4.jpg",
-      "featured": false
+      "featured": false,
+      "id":3,
     },
     {
       "name": "The Art of Self-Compassion",
@@ -110,7 +123,8 @@ const data = {
       "tags": ["self-compassion", "mental health", "emotional well-being", "mindfulness", "self-care"],
       "file": "/podcasts/self_compassion.mp3",
       "image": "/spa/spa5.jpg",
-      "featured": false
+      "featured": false,
+      "id":4,
     },
     {
       "name": "Hydration Habits for Optimal Health",
@@ -121,7 +135,8 @@ const data = {
       "tags": ["hydration", "water intake", "wellness", "energy"],
       "file": "/podcasts/hydration.mp3",
       "image": "/spa/spa6.jpg",
-      "featured": false
+      "featured": false,
+      "id":5,
     }
   ],
 
@@ -130,50 +145,78 @@ const data = {
       "name": "Mindful Morning Yoga",
       "desc": "Start your day with gentle stretches and mindful breathing techniques to enhance focus and reduce stress.",
       "location": "Tranquil Garden Studio",
+      "address":"1024 E Main Street, Trinidad CO 81082",
       "time": 1744886400000,
-      "image": "/spa/spa1.jpg"
+      "end_time":1745406800000,
+      "image": "/yoga/yoga1.jpg",
+      "id":0,
+      "descFull": "Begin your day with our Mindful Morning Yoga session, a practice designed to gently awaken your body and calm your mind. Through a series of carefully curated stretches, you'll improve flexibility and joint mobility. The session also incorporates mindful breathing exercises, helping you to center yourself and reduce any lingering stress. This class is perfect for all levels, whether you're new to yoga or have an established practice. Leave feeling refreshed, focused, and ready to embrace the day with a sense of inner peace."
     },
     {
       "name": "Gentle Flow Pilates for Core Strength",
       "desc": "Build core strength and improve flexibility with a gentle and mindful Pilates session suitable for all levels.",
       "location": "Movement Arts Studio",
+      "address":"1024 E Main Street, Trinidad CO 81082",
       "time": 1744886400000,
-      "image": "/spa/spa5.jpg"
+      "end_time":1745406800000,
+      "image": "/spa/spa5.jpg",
+      "id":1,
+      "descFull": "Our Gentle Flow Pilates class focuses on building a strong core and enhancing your overall flexibility through controlled and mindful movements. This session emphasizes proper alignment and technique, making it an excellent choice for individuals of all fitness levels. You will learn fundamental Pilates principles and exercises that target deep core muscles, leading to improved posture and stability. The gentle flow of the class ensures a low-impact workout that is both effective and accessible. Experience the benefits of increased body awareness and a stronger, more flexible you."
     },
     {
       "name": "Nourishing Your Body: A Nutrition Workshop",
       "desc": "Learn practical tips for healthy eating, meal planning, and understanding the power of whole foods.",
       "location": "Wellness Seminar Room",
+      "address":"1024 E Main Street, Trinidad CO 81082",
       "time": 1745059200000,
-      "image": "/spa/spa2.jpg"
+      "end_time":1745406800000,
+      "image": "/food/food6.jpg",
+      "id":2,
+      "descFull": "Join our informative Nutrition Workshop to gain valuable insights into the world of healthy eating. This session provides practical tips and strategies for creating balanced meals and effective meal plans. You will learn about the essential nutrients your body needs and how to incorporate more whole, unprocessed foods into your daily diet. Our expert will demystify common nutrition myths and empower you to make informed choices that support your overall well-being and energy levels. Discover the power of food as medicine and take control of your health through mindful eating habits."
     },
     {
       "name": "Relax and Restore Sound Bath",
       "desc": "Immerse yourself in the soothing vibrations of singing bowls and other instruments for deep relaxation and inner peace.",
       "location": "Serenity Sanctuary",
+      "address":"1024 E Main Street, Trinidad CO 81082",
       "time": 1745145600000,
-      "image": "/spa/spa3.jpg"
+      "end_time":1745406800000,
+      "image": "/sound-therapy/sound-therapy1.jpg",
+      "id":3,
+      "descFull": "Experience profound relaxation and a sense of inner peace during our Relax and Restore Sound Bath. This unique session involves being bathed in the resonant frequencies of various instruments, including singing bowls, gongs, and chimes. These sounds create a deeply calming and meditative environment, helping to reduce stress and promote a state of tranquility. Simply lie down comfortably and allow the vibrations to wash over you, easing tension and fostering a sense of well-being. This is a passive yet powerful way to reset your nervous system and find deep relaxation."
     },
     {
       "name": "Guided Nature Walk & Forest Bathing",
       "desc": "Reconnect with nature through a slow-paced walk, engaging your senses to experience the calming benefits of the natural environment.",
       "location": "Local Nature Preserve Trail",
+      "address":"1024 E Main Street, Trinidad CO 81082",
       "time": 1745232000000,
-      "image": "/spa/spa4.jpg"
+      "end_time":1745406800000,
+      "image": "/forest/walk2.jpg",
+      "id":4,
+      "descFull": "Embark on a rejuvenating journey with our Guided Nature Walk and Forest Bathing experience. This slow-paced walk encourages you to mindfully engage all your senses as you immerse yourself in the natural surroundings. Forest bathing, or Shinrin-Yoku, is a Japanese practice known for its stress-reducing and mood-boosting benefits. Our guide will offer gentle prompts to help you connect with the sights, sounds, smells, and textures of the forest. Allow the tranquility of nature to soothe your mind and revitalize your spirit. This is an opportunity to slow down, breathe deeply, and rediscover the calming power of the natural world."
     },
     {
       "name": "Stress Management & Meditation Techniques",
       "desc": "Discover effective strategies for managing daily stress and learn simple yet powerful meditation practices.",
       "location": "Harmony Hall",
+      "address":"1024 E Main Street, Trinidad CO 81082",
       "time": 1745318400000,
-      "image": "/spa/spa5.jpg"
+      "end_time":1745406800000,
+      "image": "/yoga/yoga2.jpg",
+      "id":5,
+      "descFull": "In our Stress Management & Meditation Techniques workshop, you will learn practical and effective strategies to navigate the challenges of daily stress. Our experienced instructor will guide you through various relaxation techniques and introduce you to simple yet powerful meditation practices. Discover how to cultivate mindfulness, reduce anxiety, and improve your overall well-being through these accessible tools. This session is designed for anyone seeking to better manage stress and incorporate moments of calm into their busy lives. Leave with a toolkit of techniques you can use anytime, anywhere, to promote a greater sense of balance and peace."
     },
     {
       "name": "DIY Aromatherapy Blends for Wellness",
       "desc": "Explore the world of essential oils and create your own personalized aromatherapy blends for relaxation, energy, and more.",
       "location": "Aroma Workshop Space",
+      "address":"1024 E Main Street, Trinidad CO 81082",
       "time": 1745404800000,
-      "image": "/spa/spa6.jpg"
+      "end_time":1745406800000,
+      "image": "/spa/spa3.jpg",
+      "id":6,
+      "descFull": "Delve into the fragrant world of essential oils in our DIY Aromatherapy Blends for Wellness workshop. You will learn about the properties and benefits of various essential oils and how to safely blend them to create personalized aromatherapy products. Our instructor will guide you through the process of making blends for relaxation, energy boosting, sleep support, and more. You'll have the opportunity to create and take home your own unique aromatherapy blends. Discover the therapeutic power of natural scents and enhance your well-being through the art of aromatherapy."
     }
   ]
 

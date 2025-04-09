@@ -14,7 +14,7 @@ import InstaIcon from "@/components/icons/InstaIcon.vue";
       <div class="ctaText">Sign up to earn reward points and manage your bookings.</div>
       <div class="cta">
         <input type="email" placeholder="Email">
-        <div class="button">SIGN UP</div>
+        <div class="button">Sign Up</div>
       </div>
     </div>
 
@@ -189,6 +189,10 @@ input{
   border: none;
   font-family: "Outfit", sans-serif;
   font-size: 16px;
+}
+
+input:focus{
+  outline: none;
 }
 
 </style>

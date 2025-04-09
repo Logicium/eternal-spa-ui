@@ -29,7 +29,7 @@ let time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true });
       <div class="name">{{data.name}}</div>
       <div class="location"><LocationIcon/>{{data.location}} | <TimeIcon/> {{time}} </div>
       <div class="time"></div>
-      <div class="cta">See More</div>
+      <RouterLink :to="'/event/'+data.id"><div class="cta">See More</div></RouterLink>
     </div>
 
   </div>
@@ -84,6 +84,10 @@ let time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true });
 .num{
   font-size: calc(12px + 2vw);
   font-weight: 500;
+}
+
+a{
+  color: initial;
 }
 
 </style>
