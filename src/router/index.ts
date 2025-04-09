@@ -5,6 +5,7 @@ import Services from "@/pages/Services.vue";
 import EventsPage from "@/pages/EventsPage.vue";
 import EventPage from "@/pages/EventPage.vue";
 import Podcasts from "@/pages/Podcasts.vue";
+import PodcastPage from "@/pages/PodcastPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -42,7 +43,7 @@ const router = createRouter({
     {
       path: '/podcast/:id',
       name: 'podcast',
-      component: Podcasts,
+      component: PodcastPage,
     },
   ],
 })

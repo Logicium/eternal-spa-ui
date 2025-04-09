@@ -24,7 +24,9 @@ const imageUrl = computed(()=> 'url("'+props.data.image+'")').value;
       </div>
     </div>
 
-    <div class="playBtn"><PlayIcon/></div>
+    <RouterLink :to="'/podcast/'+data.id">
+      <div class="playBtn"><PlayIcon/></div>
+    </RouterLink>
 
   </div>
 </template>
@@ -36,6 +38,7 @@ const imageUrl = computed(()=> 'url("'+props.data.image+'")').value;
 .tags{
   margin-top: 1vw;
   display: flex;
+  cursor: default;
 }
 
 .tag{

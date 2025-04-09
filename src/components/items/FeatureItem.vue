@@ -17,7 +17,9 @@ const imageUrl = computed(()=> 'url("'+props.data.image+'")').value;
     <div class="image"></div>
 
     <div class="info">
-      <div class="playBtn"><PlayIcon/></div>
+      <RouterLink :to="'/podcast/'+data.id">
+        <div class="playBtn"><PlayIcon/></div>
+      </RouterLink>
       <div class="name">{{data.name}}</div>
     </div>
 

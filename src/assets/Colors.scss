@@ -33,3 +33,10 @@ $primary: $pink;
 $secondary: $cornflower;
 $tertiary: $lavender;
 $quaternary: $indigo;
+
+:export {
+  primary: $primary;
+  secondary: $secondary;
+  tertiary: $tertiary;
+  quaternary: $quaternary;
+}

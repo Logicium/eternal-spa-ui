@@ -1,15 +1,9 @@
 <script setup lang="ts">
 
-
 import data from "@/data.ts";
 import {useRoute} from "vue-router";
 import {computed, ref} from "vue";
-import TimeIcon from "@/assets/icons/TimeIcon.vue";
-import LocationIcon from "@/assets/icons/LocationIcon.vue";
 import Map from "@/components/Map.vue";
-import {DatePicker as VDatePicker} from "v-calendar";
-import CalItem from "@/components/items/CalItem.vue";
-import CalendarIcon from "@/assets/icons/CalendarIcon.vue";
 import CalLargeIcon from "@/assets/icons/CalLargeIcon.vue";
 import TimeLargeIcon from "@/assets/icons/TimeLargeIcon.vue";
 import LocationLargeIcon from "@/assets/icons/LocationLargeIcon.vue";

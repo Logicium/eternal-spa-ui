@@ -16,6 +16,7 @@
     "lint": "eslint . --fix"
   },
   "dependencies": {
+    "@meersagor/wavesurfer-vue": "^1.0.0",
     "@popperjs/core": "^2.11.8",
     "pinia": "^2.3.1",
     "v-calendar": "^3.1.2",
