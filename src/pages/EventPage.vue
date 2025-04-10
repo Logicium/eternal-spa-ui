@@ -77,10 +77,9 @@ const endTime = new Date(loadedData.end_time).toLocaleString('en-US', { hour: 'n
 
 
     <div class="about">
-      <div class="title">Information</div>
+      <div class="title">About Event</div>
+      <div class="price">Price: Free</div>
       <div>{{loadedData.descFull}}</div>
-      <!--      <div class="title">Price</div>-->
-      <!--      <div>Free</div>-->
     </div>
 
     <div class="location">
@@ -91,11 +90,6 @@ const endTime = new Date(loadedData.end_time).toLocaleString('en-US', { hour: 'n
           <div class="title">Location</div>
           <div class="locationName">{{loadedData.location}}</div>
           <div class="address">{{loadedData.address}}</div>
-        </div>
-
-        <div class="infoCol price">
-          <div class="title">Price</div>
-          <div>Free</div>
         </div>
 
         <div class="infoCol booking">
@@ -131,7 +125,7 @@ const endTime = new Date(loadedData.end_time).toLocaleString('en-US', { hour: 'n
 
 .infoRow{
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(2,1fr);
   margin-bottom: 2rem;
 }
 
@@ -169,7 +163,8 @@ const endTime = new Date(loadedData.end_time).toLocaleString('en-US', { hour: 'n
 }
 
 .price{
-  text-align: center;
+  font-weight: 500;
+  margin-bottom: 1vw;
 }
 .name{
   width: 80%;

@@ -39,17 +39,15 @@ const compareDates = function(unixTimestamp: number, dateString:any) {
     && firstDate.getUTCMonth() === secondDate.getUTCMonth()
     && firstDate.getDate() === secondDate.getDate());
 };
-const searchedEvents = ref(new Array(0))
+
+const searchedEvents = ref(new Array(0));
 
 watch(date,(newValue,oldValue)=>{
-  // console.log("New Value: ",newValue);
-  // console.log("New Value as Date: ", new Date(newValue))
-
   searchedEvents.value = data.events.filter(event =>
     (compareDates(event.time,newValue) )
   );
   console.log("Matching results: ",searchedEvents.value);
-})
+});
 
 const dates = data.events.map(  event  => event.time );
 const attributes = ref([
@@ -98,7 +96,7 @@ const attributes = ref([
           </div>
         </div>
         <div class="calendarWrap">
-          <VDatePicker expanded is-required :attributes="attributes" v-model="date"/>
+          <VDatePicker borderless expanded transparent is-required :attributes="attributes" v-model="date"/>
         </div>
       </div>
 
@@ -113,6 +111,11 @@ const attributes = ref([
 
 @import "../assets/Colors";
 @import "../assets/Keyframes";
+
+.calendarWrap{
+  background-color: $secondary;
+  border-radius: 6px;
+}
 
 .calendarView{
   display: grid;

@@ -40,7 +40,7 @@ const active = ref(false);
             <div class="option">
               <div class="optionName">30 Minute Session</div>
               <div>A full 30 minute session that will work the tissues and stimulate circulation.</div>
-              <div class="bookBtn">Book Service</div>
+              <RouterLink to="/bookings"><div class="bookBtn">Book Service</div></RouterLink>
             </div>
 
             <div class="option">

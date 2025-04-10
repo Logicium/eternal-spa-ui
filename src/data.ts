@@ -1,3 +1,5 @@
+import {ref} from "vue";
+
 const data = {
 
   about0: "Experience the ultimate in relaxation and healing.",
@@ -7,6 +9,12 @@ const data = {
   about2: "Our team of certified professionals at Eternal Spa Healing and Wellness Center are passionate about empowering you to achieve optimal health. We've curated a peaceful haven, designed to promote deep relaxation and rejuvenation.",
 
   about3: "Eternal Spa is more than just a spa; it's a catalyst for lasting transformation. We believe in empowering you to cultivate sustainable wellness practices that extend far beyond your time with us.",
+
+  aboutFull:"From the moment you enter Eternal Spa, our focus is on creating a deeply restorative experience tailored just for you. We go beyond surface-level pampering, delving into methods that encourage profound healing and equilibrium throughout your entire being. Our commitment is to provide treatments that offer tangible results, leaving you feeling not only relaxed but also more centered, clear, and energetically aligned. Allow us to guide you on a personalized journey towards reclaiming your vitality and inner peace in a supportive and nurturing environment.",
+
+  aboutSpace:"Every element within Eternal Spa is intentionally curated to create an immediate sense of peace and calm upon arrival. Soft lighting, soothing textures, and a tranquil ambiance provide a genuine escape from the demands of daily life. This serene haven is designed to quiet your mind and prepare your body to fully receive the benefits of healing and deep relaxation.",
+  aboutMission:"At Eternal Spa, we embrace a holistic philosophy, recognizing the intricate connection between mind, body, and spirit for true wellness. We thoughtfully integrate effective traditional wisdom with beneficial contemporary practices to address your unique needs comprehensively. This personalized approach fosters not just momentary calm, but aims to support lasting balance and transformation from within.",
+  aboutTeam:"Our dedicated team consists of highly skilled, certified practitioners who are passionate about empowering your well-being journey. With attentive care and genuine warmth, they listen to your needs and apply their expertise to provide truly personalized treatments. Trust in their commitment to guide you towards profound relaxation, effective healing, and renewed vitality.",
 
   services: [
     {
@@ -218,7 +226,65 @@ const data = {
       "id":6,
       "descFull": "Delve into the fragrant world of essential oils in our DIY Aromatherapy Blends for Wellness workshop. You will learn about the properties and benefits of various essential oils and how to safely blend them to create personalized aromatherapy products. Our instructor will guide you through the process of making blends for relaxation, energy boosting, sleep support, and more. You'll have the opportunity to create and take home your own unique aromatherapy blends. Discover the therapeutic power of natural scents and enhance your well-being through the art of aromatherapy."
     }
-  ]
+  ],
+
+  bookings:[
+
+    {
+      id:0,
+      serviceType:"massage therapy",
+      serviceId:'',
+      specialistId:'',
+      timeslot:"April 10, 2025 11:00:00",
+      selected: ref(false),
+    },
+
+    {
+      id:1,
+      serviceType:"massage therapy",
+      serviceId:'',
+      specialistId:'',
+      timeslot:"April 10, 2025 12:00:00",
+      selected: ref(false),
+    },
+
+    {
+      id:2,
+      serviceType:"massage therapy",
+      serviceId:'',
+      specialistId:'',
+      timeslot:"April 11, 2025 14:00:00",
+      selected: ref(false),
+    },
+
+    {
+      id:3,
+      serviceType:"float tank service",
+      serviceId:'',
+      specialistId:'',
+      timeslot:"April 11, 2025 11:00:00",
+      selected: ref(false),
+    },
+
+    {
+      id:4,
+      serviceType:"float tank service",
+      serviceId:'',
+      specialistId:'',
+      timeslot:"April 12, 2025 11:00:00",
+      selected: ref(false),
+    },
+
+    {
+      id:5,
+      serviceType:"acupuncture",
+      serviceId:'',
+      specialistId:'',
+      timeslot:"April 13, 2025 11:00:00",
+      selected: ref(false),
+    },
+
+  ],
 
 }
 

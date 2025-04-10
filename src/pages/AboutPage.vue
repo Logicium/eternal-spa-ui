@@ -12,25 +12,51 @@ import data from "../data.ts";
 
   <div class="about">
 
+    <div class="subtitle">{{data.aboutFull}}</div>
 
-    <div class="subtitle">{{data.about2}}</div>
 
-<!--    <div class="doubleGrid">-->
+    <div class="imageCardA">
 
-<!--      <div class="imageGrid">-->
-<!--        <div class="img1"></div>-->
+      <div class="image img1"></div>
+      <div class="imageInfo">
+        <div class="title3">The Sanctuary</div>
+        {{data.aboutSpace}}
+      </div>
+
+    </div>
+
+    <div class="imageCardB">
+
+      <div class="imageInfo">
+        <div class="title2">The Human Touch</div>
+        {{data.aboutTeam}}
+      </div>
+      <div class="imageB img2"></div>
+
+    </div>
+
+
+<!--    <div class="imageGrid">-->
+<!--      -->
+<!--      <div class="imageCard">-->
+<!--        <div class="image img1"></div>-->
+<!--        <div class="imageInfo"></div>-->
 <!--      </div>-->
-<!--      <div class="textGrid">-->
-<!--        <div/>-->
-<!--        <div class="desc">-->
-<!--          <div>Located in the heart of Southern Colorado.</div>-->
-<!--          <div class="info">{{data.about3}}</div>-->
-<!--        </div>-->
+<!--      -->
+<!--      <div class="imageCard">-->
+<!--        <div class="image img2"></div>-->
+<!--        <div class="imageInfo"></div>-->
+<!--      </div>-->
+
+<!--      <div class="imageCard">-->
+<!--        <div class="image img3"></div>-->
+<!--        <div class="imageInfo"></div>-->
 <!--      </div>-->
 
 <!--    </div>-->
 
-    <div class="subtitle">{{data.about2}}</div>
+    <div class="title2"></div>
+
 
   </div>
 
@@ -39,19 +65,78 @@ import data from "../data.ts";
 <style lang="scss" scoped>
 
 @import "../assets/Colors";
+@import "../assets/Fonts";
 
-.img1{
-  height: 100%;
+.imageGrid{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-gap: 2rem;
+  width: 80%;
+}
+
+.imageCard{
+  display: flex;
+  background-color: $secondary;
+  border-radius: 6px;
+  aspect-ratio: 2/1;
+}
+
+.imageCardA{
+  width: 80%;
+  border: 4px solid $secondary;
+  border-radius: 6px;
+  display: flex;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  text-align: right;
+}
+.imageCardB{
+  width: 80%;
+  border: 4px solid $secondary;
+  border-radius: 6px;
+  display: flex;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.imageInfo{
+  width: 70%;
+}
+
+.image{
+  width: 50%;
   background-size: cover;
   background-position: 20% 100%;
-  background-image: url("/spa/spa5.jpg");
-  grid-column: span 6;
+  border-radius: 6px;
+  aspect-ratio: 3/2;
+  margin-right: 2rem;
+}
+
+.imageB{
+  width: 50%;
+  background-size: cover;
+  background-position: 20% 100%;
+  border-radius: 6px;
+  aspect-ratio: 3/2;
+  margin-left: 2rem;
+}
+
+.img1{
+  background-image: url("/spa/spa4.jpg");
+}
+
+.img2{
+  background-image: url("/team/team2.jpg");
+}
+
+.img3{
+  background-image: url("/spa/spa3.jpg");
 }
 
 .team{
   background-color: $secondary;
   border-radius: 6px;
-  width: 60%;
+  width: 80%;
   padding: 2rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -72,40 +157,16 @@ import data from "../data.ts";
   border-radius: 6px;
 }
 
-.doubleGrid{
-  width: 100%;
-}
-
-.imageGrid{
-  position: absolute;
-}
-
-.imageGrid,.textGrid{
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: 50vh;
-}
-
-.textGrid{
-  position: relative;
-  z-index: 1;
-  padding: 2rem;
-  grid-template-rows: 60vh;
-}
-
 .about{
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
-
 .subtitle{
-  width: 60%;
+  width: 80%;
   margin: 2rem;
 }
-
 
 .headerLarge{
   display: flex;
@@ -122,19 +183,15 @@ import data from "../data.ts";
   text-align: center;
 }
 
-.header{
-  letter-spacing: 2.5vw;
-  color: $primary;
-  background-size: cover;
-  background-position: 100% 35%;
-  background-image: url("/fishers-peak/mountain2.jpg");
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  height: 25vh;
-  font-size: calc(12px + 4vw);
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
+.title2,{
+  width: 80%;
+  font-size: $fontMed;
+  margin-bottom: 1rem;
+}
+
+.title3{
+  font-size: $fontMed;
+  margin-bottom: 1rem;
 }
 
 .title{

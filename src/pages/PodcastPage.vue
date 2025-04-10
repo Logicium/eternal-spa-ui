@@ -36,7 +36,7 @@ const expand = ref(false);
     <div class="outline">
 
       <div class="title">About Podcast</div>
-      <div class="published">Published on {{new Date(loadedData.uploadDate).toDateString()}}</div>
+      <div class="published">Published: {{new Date(loadedData.uploadDate).toDateString()}}</div>
       <div class="desc">{{loadedData.desc}}</div>
 
       <div class="infoRow">

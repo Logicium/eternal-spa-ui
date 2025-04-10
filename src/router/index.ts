@@ -6,6 +6,7 @@ import EventsPage from "@/pages/EventsPage.vue";
 import EventPage from "@/pages/EventPage.vue";
 import Podcasts from "@/pages/Podcasts.vue";
 import PodcastPage from "@/pages/PodcastPage.vue";
+import BookingsPage from "@/pages/BookingsPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,6 +25,11 @@ const router = createRouter({
       path: '/services',
       name: 'services',
       component: Services,
+    },
+    {
+      path: '/bookings',
+      name: 'bookings',
+      component: BookingsPage,
     },
     {
       path: '/events',

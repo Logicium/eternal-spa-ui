@@ -92,7 +92,10 @@ const skipSeconds = (seconds: number) => {
 @import "../assets/Fonts";
 
 .controls{
+  display: flex;
+  flex-direction: column;
   padding: 2rem;
+  justify-content: center;
 }
 
 .times{
@@ -104,6 +107,7 @@ const skipSeconds = (seconds: number) => {
   justify-self: center;
   border-radius: 6px;
   padding-top: 2rem;
+  align-self: center;
 }
 
 .time{
