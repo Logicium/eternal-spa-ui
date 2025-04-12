@@ -7,6 +7,7 @@ import SearchIcon from "@/assets/icons/SearchIcon.vue";
 import {ref, watch} from "vue";
 import Timeslot from "@/components/items/Timeslot.vue";
 import NextIcon from "@/assets/icons/NextIcon.vue";
+import Summary from "@/components/Summary.vue";
 
 const dates = [];
 
@@ -23,8 +24,7 @@ const formatTime = function(date: Date){
     minute: '2-digit',
     hour12: true
   });
-  const formattedTime = formatter.format(date);
-  return formattedTime;
+  return formatter.format(date);
 };
 
 const compareDates = function(unixTimestamp: number, dateString:any) {
@@ -64,6 +64,12 @@ const resetSelection = function(){
   });
 }
 
+const nextClick = ref(false);
+
+const nextPanelClick = function (){
+  nextClick.value = !nextClick.value;
+}
+
 watch(date,(newValue,oldValue)=>{
   searchedBookings.value = data.bookings.filter(booking =>
     (compareDates(booking.timeslot,newValue) &&
@@ -101,12 +107,13 @@ watch(selectedService,(newValue,oldValue)=>{
     BOOKINGS
   </div>
 
-  <div class="bookings">
+  <Summary :class="!nextClick?'panelHidden':''" :toggle="nextClick" :back-click="nextPanelClick" :data="selectedBooking"/>
+
+  <div :class=" [(nextClick ? 'bookings panelHidden':'bookings'),(nextClick==false ?'slideIn':'')]">
 
     <div class="controls">
 
       <div class="input">
-        <div class="searchIcon"><SearchIcon/></div>
         <select id="services" v-model="selectedService">
           <template v-for="service in data.services">
             <option>{{service.name}}</option>
@@ -146,7 +153,7 @@ watch(selectedService,(newValue,oldValue)=>{
           <div>Select a Time</div>
         </div>
 
-        <div :class=" selectedBooking!=null ? 'nextBtn':'nextBtn hidden' " @click="">
+        <div :class=" selectedBooking!=null ? 'nextBtn':'nextBtn hidden' " @click="nextPanelClick">
           <div>Next</div><NextIcon/>
         </div>
 
@@ -160,9 +167,7 @@ watch(selectedService,(newValue,oldValue)=>{
 
 <style scoped lang="scss">
 
-@import "../assets/Colors";
-@import "../assets/Fonts";
-@import "../assets/Keyframes";
+@import "../assets/Library";
 
 .vc-arrow,.vc-title{
   background-color: $secondary !important;
@@ -176,6 +181,16 @@ watch(selectedService,(newValue,oldValue)=>{
   display: flex;
   animation: 1s fadein forwards;
   margin-bottom: 1vw;
+}
+
+.panelHidden{
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.slideIn{
+  animation: 0.5s slidein ease;
 }
 
 .controls{
@@ -194,6 +209,7 @@ watch(selectedService,(newValue,oldValue)=>{
   width: 80%;
   justify-self: center;
   margin-bottom: 2rem;
+  height: 80vh;
 }
 
 .border{
@@ -297,15 +313,14 @@ watch(selectedService,(newValue,oldValue)=>{
 
 select{
   height: 45px;
-  padding-left: 24px;
   background-color: $primary;
+  font-size: $fontMed;
   border: none;
   color: $quaternary;
   border-bottom: 4px solid $secondary;
   width: 100%;
   font-family: "Outfit", sans-serif;
   margin-right: 1vw;
-  font-size: 18px;
   transition: 0.5s;
 }
 

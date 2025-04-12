@@ -29,7 +29,7 @@ import Service from "@/components/Service.vue";
           <div class="button">Learn More</div>
         </div>
 
-        <Service image="/massage2.jpg" :offset="false" style="grid-row: span 3"/>
+        <Service image="/massage/massage2.jpg" :offset="false" style="grid-row: span 3"/>
 
         <Service image="/reception2.jpg" :offset="true" style="grid-row: span 3"/>
 

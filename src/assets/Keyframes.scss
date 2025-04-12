@@ -64,3 +64,12 @@
   }
 }
 
+@keyframes slidein {
+
+  from{
+    transform: translateX(5%);
+  }
+  to{
+    transform: translateX(0%);
+  }
+}

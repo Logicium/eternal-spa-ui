@@ -15,6 +15,7 @@ const props = defineProps(['selected','time']);
 <style scoped lang="scss">
 
 @import "../../assets/Colors";
+@import "../../assets/Keyframes";
 
 .time{
   font-weight: 500;
@@ -29,6 +30,7 @@ const props = defineProps(['selected','time']);
   height: 100px;
   cursor: pointer;
   transition: 0.5s;
+  animation: 1s fadein forwards;
 }
 
 .selected{

@@ -16,62 +16,362 @@ const data = {
   aboutMission:"At Eternal Spa, we embrace a holistic philosophy, recognizing the intricate connection between mind, body, and spirit for true wellness. We thoughtfully integrate effective traditional wisdom with beneficial contemporary practices to address your unique needs comprehensively. This personalized approach fosters not just momentary calm, but aims to support lasting balance and transformation from within.",
   aboutTeam:"Our dedicated team consists of highly skilled, certified practitioners who are passionate about empowering your well-being journey. With attentive care and genuine warmth, they listen to your needs and apply their expertise to provide truly personalized treatments. Trust in their commitment to guide you towards profound relaxation, effective healing, and renewed vitality.",
 
-  services: [
-    {
-      "name": "Red Light Therapy",
-      "image": "/light-therapy2.jpg",
-      "desc": "Red Light Therapy uses low-level red light wavelengths to stimulate cellular function, promoting healing, reducing inflammation, and improving skin health.",
-      "id":0,
-    },
-    {
-      "name": "Salt Bath",
-      "image": "/salt1.jpg",
-      "desc": "Salt baths utilize mineral-rich salts to relax muscles, detoxify the body, and soothe skin conditions, providing a calming and therapeutic experience.",
-      "id":1,
-    },
-    {
-      "name": "Massage Therapy",
-      "image": "/massage1.jpg",
-      "desc": "Massage Therapy involves manipulating soft tissues to relieve muscle tension, reduce stress, and promote relaxation and overall well-being.",
-      "id":2,
-    },
-    {
-      "name": "Hormone Replacement Therapy",
-      "image": "/hrt/hrt3.jpg",
-      "desc": "Hormone Replacement Therapy aims to balance hormone levels, alleviating symptoms associated with hormonal imbalances and improving quality of life.",
-      "id":3,
-    },
-    {
-      "name": "Acupuncture",
-      "image": "/acupuncture1.jpg",
-      "desc": "Acupuncture is a traditional Chinese medicine technique that involves inserting thin needles into specific points on the body to stimulate healing and relieve pain.",
-      "id":4,
-    },
-    {
-      "name": "Pulse Electronic Magnetic Frequency",
-      "image": "/pemf1.jpg",
-      "desc": "Pulse Electronic Magnetic Frequency therapy uses electromagnetic fields to stimulate cellular repair, reduce pain, and improve circulation.",
-      "id":5,
-    },
-    {
-      "name": "Float Tank Service",
-      "image": "/float-tank1.jpg",
-      "desc": "Float Tank Service involves floating in a sensory deprivation tank filled with Epsom salt water, promoting deep relaxation and stress reduction.",
-      "id":6,
-    },
-    {
-      "name": "Sound Therapy",
-      "image": "/sound-therapy/sound-therapy3.jpg",
-      "desc": "Sound Therapy uses specific frequencies and vibrations of sound to promote relaxation, reduce stress, and improve mental and emotional well-being.",
-      "id":7,
-    },
-    {
-      "name": "Hyperbaric Oxygen Treatment",
-      "image": "/salt1.jpg",
-      "desc": "Hyperbaric Oxygen Therapy involves breathing pure oxygen in a pressurized chamber, enhancing the body's natural healing process and promoting tissue repair.",
-      "id":8,
-    }
-  ],
+    "services": [
+      {
+        "id": 0,
+        "name": "Red Light Therapy",
+        "image": "/light-therapy2.jpg",
+        "desc": "Red Light Therapy uses low-level red light wavelengths to stimulate cellular function, promoting healing, reducing inflammation, and improving skin health.",
+        "packages": [
+          {
+            "name": "Quick Boost",
+            "duration": 20,
+            "desc": "A focused 20-minute session targeting specific areas for a quick energy boost and localized relief.",
+            "price": 39
+          },
+          {
+            "name": "Radiant Renewal",
+            "duration": 40,
+            "desc": "A comprehensive 40-minute full-body session designed to promote overall skin rejuvenation and reduce inflammation.",
+            "price": 59
+          },
+          {
+            "name": "Ultimate Recovery",
+            "duration": 60,
+            "desc": "A prolonged 60-minute session for deep tissue penetration, ideal for enhanced healing and significant pain reduction.",
+            "price": 79
+          }
+        ],
+        "addOns": [
+          {
+            "name": "Targeted Spot Treatment (10 mins)",
+            "duration": 10,
+            "price": 10
+          },
+          {
+            "name": "Infrared Sauna Integration (15 mins post-therapy)",
+            "duration": 15,
+            "price": 20
+          }
+        ]
+      },
+      {
+        "name": "Salt Bath",
+        "image": "/salt1.jpg",
+        "desc": "Salt baths utilize mineral-rich salts to relax muscles, detoxify the body, and soothe skin conditions, providing a calming and therapeutic experience.",
+        "id": 1,
+        "packages": [
+          {
+            "name": "Relaxation Soak",
+            "duration": 30,
+            "desc": "A 30-minute soak in mineral-rich salts to ease muscle tension and promote relaxation.",
+            "price": 45
+          },
+          {
+            "name": "Detoxifying Cleanse",
+            "duration": 45,
+            "desc": "A 45-minute salt bath infused with specific minerals to aid in detoxification and skin purification.",
+            "price": 65
+          },
+          {
+            "name": "Therapeutic Immersion",
+            "duration": 60,
+            "desc": "A full 60-minute immersion in a customized salt blend designed to target specific ailments and enhance well-being.",
+            "price": 85
+          }
+        ],
+        "addOns": [
+          {
+            "name": "Aromatherapy Infusion",
+            "duration": 0,
+            "price": 10
+          },
+          {
+            "name": "Scalp Massage (15 mins)",
+            "duration": 15,
+            "price": 25
+          }
+        ]
+      },
+      {
+        "name": "Massage Therapy",
+        "image": "/massage/massage3.jpg",
+        "desc": "Massage Therapy involves manipulating soft tissues to relieve muscle tension, reduce stress, and promote relaxation and overall well-being.",
+        "id": 2,
+        "packages": [
+          {
+            "name": "Swedish Massage",
+            "duration": 30,
+            "desc": "A classic 30-minute Swedish massage using long, flowing strokes to promote relaxation and improve circulation.",
+            "price": 49
+          },
+          {
+            "name": "Deep Tissue Massage",
+            "duration": 45,
+            "desc": "A focused 45-minute deep tissue massage targeting deeper layers of muscle to relieve chronic pain and tension.",
+            "price": 69
+          },
+          {
+            "name": "Full Body Relaxation Massage",
+            "duration": 60,
+            "desc": "A comprehensive 60-minute massage combining various techniques to provide full-body relaxation and stress relief.",
+            "price": 89
+          },
+          {
+            "name": "Therapeutic Massage",
+            "duration": 75,
+            "desc": "A 75-minute customized massage addressing specific concerns, incorporating techniques like deep tissue, trigger point therapy, and stretching.",
+            "price": 109
+          },
+          {
+            "name": "Hot Stone Massage",
+            "duration": 90,
+            "desc": "A luxurious 90-minute massage using heated stones to melt away tension and promote deep relaxation.",
+            "price": 129
+          }
+        ],
+        "addOns": [
+          {
+            "name": "Aromatherapy Upgrade",
+            "duration": 0,
+            "price": 10
+          },
+          {
+            "name": "Hot Stone Enhancement (Back)",
+            "duration": 0,
+            "price": 15
+          },
+          {
+            "name": "Scalp Treatment (15 mins)",
+            "duration": 15,
+            "price": 20
+          }
+        ]
+      },
+      {
+        "name": "Hormone Replacement Therapy",
+        "image": "/hrt/hrt3.jpg",
+        "desc": "Hormone Replacement Therapy aims to balance hormone levels, alleviating symptoms associated with hormonal imbalances and improving quality of life.",
+        "id": 3,
+        "packages": [
+          {
+            "name": "Initial Consultation & Assessment",
+            "duration": 60,
+            "desc": "A comprehensive 60-minute consultation to discuss your health history, symptoms, and determine the best course of HRT.",
+            "price": 150
+          },
+          {
+            "name": "Follow-up Monitoring (Monthly)",
+            "duration": 30,
+            "desc": "A 30-minute monthly follow-up appointment to monitor hormone levels and adjust treatment as needed.",
+            "price": 75
+          },
+          {
+            "name": "Comprehensive Wellness Plan (Quarterly)",
+            "duration": 90,
+            "desc": "A 90-minute quarterly session including hormone level review, lifestyle recommendations, and overall wellness assessment.",
+            "price": 200
+          }
+        ],
+        "addOns": [
+          {
+            "name": "Nutritional Counseling (30 mins)",
+            "duration": 30,
+            "price": 50
+          },
+          {
+            "name": "Stress Management Coaching (30 mins)",
+            "duration": 30,
+            "price": 50
+          }
+        ]
+      },
+      {
+        "name": "Acupuncture",
+        "image": "/acupuncture1.jpg",
+        "desc": "Acupuncture is a traditional Chinese medicine technique that involves inserting thin needles into specific points on the body to stimulate healing and relieve pain.",
+        "id": 4,
+        "packages": [
+          {
+            "name": "Initial Acupuncture Session",
+            "duration": 60,
+            "desc": "A 60-minute initial session including a detailed health assessment and your first acupuncture treatment.",
+            "price": 80
+          },
+          {
+            "name": "Follow-up Acupuncture Session",
+            "duration": 45,
+            "desc": "A 45-minute follow-up session to continue your acupuncture treatment and monitor progress.",
+            "price": 65
+          },
+          {
+            "name": "Acupuncture Package (5 Sessions)",
+            "duration": null,
+            "desc": "A package of five 45-minute acupuncture sessions at a discounted rate.",
+            "price": 300
+          }
+        ],
+        "addOns": [
+          {
+            "name": "Moxibustion Therapy (15 mins)",
+            "duration": 15,
+            "price": 15
+          },
+          {
+            "name": "Cupping Therapy (20 mins)",
+            "duration": 20,
+            "price": 25
+          }
+        ]
+      },
+      {
+        "name": "Pulse Electronic Magnetic Frequency",
+        "image": "/pemf1.jpg",
+        "desc": "Pulse Electronic Magnetic Frequency therapy uses electromagnetic fields to stimulate cellular repair, reduce pain, and improve circulation.",
+        "id": 5,
+        "packages": [
+          {
+            "name": "Single PEMF Session",
+            "duration": 30,
+            "desc": "A 30-minute individual PEMF therapy session.",
+            "price": 55
+          },
+          {
+            "name": "PEMF Package (5 Sessions)",
+            "duration": null,
+            "desc": "A package of five 30-minute PEMF therapy sessions.",
+            "price": 250
+          },
+          {
+            "name": "Extended PEMF Session",
+            "duration": 60,
+            "desc": "A longer 60-minute PEMF therapy session for more comprehensive treatment.",
+            "price": 90
+          }
+        ],
+        "addOns": [
+          {
+            "name": "Localized PEMF Treatment (15 mins)",
+            "duration": 15,
+            "price": 20
+          },
+          {
+            "name": "Combination with Red Light Therapy (15 mins PEMF)",
+            "duration": 15,
+            "price": 30
+          }
+        ]
+      },
+      {
+        "name": "Float Tank Service",
+        "image": "/float-tank1.jpg",
+        "desc": "Float Tank Service involves floating in a sensory deprivation tank filled with Epsom salt water, promoting deep relaxation and stress reduction.",
+        "id": 6,
+        "packages": [
+          {
+            "name": "Introductory Float",
+            "duration": 60,
+            "desc": "A 60-minute introductory float session for first-time users.",
+            "price": 69
+          },
+          {
+            "name": "Standard Float Session",
+            "duration": 90,
+            "desc": "A 90-minute standard float session for deep relaxation and mental clarity.",
+            "price": 89
+          },
+          {
+            "name": "Extended Float Experience",
+            "duration": 120,
+            "desc": "A 120-minute extended float session for profound relaxation and introspection.",
+            "price": 119
+          }
+        ],
+        "addOns": [
+          {
+            "name": "Pre-Float Relaxation Massage (15 mins)",
+            "duration": 15,
+            "price": 25
+          },
+          {
+            "name": "Post-Float Integration Session (15 mins guided meditation)",
+            "duration": 15,
+            "price": 15
+          }
+        ]
+      },
+      {
+        "name": "Sound Therapy",
+        "image": "/sound-therapy/sound-therapy3.jpg",
+        "desc": "Sound Therapy uses specific frequencies and vibrations of sound to promote relaxation, reduce stress, and improve mental and emotional well-being.",
+        "id": 7,
+        "packages": [
+          {
+            "name": "Individual Sound Bath",
+            "duration": 45,
+            "desc": "A 45-minute individual sound bath session using various instruments to create a relaxing and therapeutic soundscape.",
+            "price": 60
+          },
+          {
+            "name": "Extended Sound Healing Session",
+            "duration": 60,
+            "desc": "A 60-minute extended sound healing session incorporating different sonic frequencies for deeper relaxation and emotional balance.",
+            "price": 80
+          },
+          {
+            "name": "Sound Therapy Package (3 Sessions)",
+            "duration": null,
+            "desc": "A package of three 45-minute individual sound therapy sessions.",
+            "price": 165
+          }
+        ],
+        "addOns": [
+          {
+            "name": "Aromatherapy Integration",
+            "duration": 0,
+            "price": 10
+          },
+          {
+            "name": "Crystal Healing Enhancement",
+            "duration": 0,
+            "price": 15
+          }
+        ]
+      },
+      {
+        "name": "Hyperbaric Oxygen Treatment",
+        "image": "/salt1.jpg",
+        "desc": "Hyperbaric Oxygen Therapy involves breathing pure oxygen in a pressurized chamber, enhancing the body's natural healing process and promoting tissue repair.",
+        "id": 8,
+        "packages": [
+          {
+            "name": "Single HBOT Session",
+            "duration": 60,
+            "desc": "A 60-minute individual Hyperbaric Oxygen Treatment session.",
+            "price": 150
+          },
+          {
+            "name": "HBOT Package (5 Sessions)",
+            "duration": null,
+            "desc": "A package of five 60-minute Hyperbaric Oxygen Treatment sessions.",
+            "price": 675
+          },
+          {
+            "name": "Extended HBOT Session",
+            "duration": 90,
+            "desc": "A longer 90-minute Hyperbaric Oxygen Treatment session.",
+            "price": 200
+          }
+        ],
+        "addOns": [
+          {
+            "name": "Nutritional Consultation (pre or post session)",
+            "duration": 20,
+            "price": 40
+          }
+        ]
+      }
+    ],
 
   podcasts:[
     {
@@ -233,54 +533,54 @@ const data = {
     {
       id:0,
       serviceType:"massage therapy",
-      serviceId:'',
-      specialistId:'',
-      timeslot:"April 10, 2025 11:00:00",
-      selected: ref(false),
-    },
-
-    {
-      id:1,
-      serviceType:"massage therapy",
-      serviceId:'',
-      specialistId:'',
-      timeslot:"April 10, 2025 12:00:00",
-      selected: ref(false),
-    },
-
-    {
-      id:2,
-      serviceType:"massage therapy",
-      serviceId:'',
-      specialistId:'',
-      timeslot:"April 11, 2025 14:00:00",
-      selected: ref(false),
-    },
-
-    {
-      id:3,
-      serviceType:"float tank service",
-      serviceId:'',
+      serviceId:2,
       specialistId:'',
       timeslot:"April 11, 2025 11:00:00",
       selected: ref(false),
     },
 
     {
-      id:4,
+      id:1,
+      serviceType:"massage therapy",
+      serviceId:2,
+      specialistId:'',
+      timeslot:"April 11, 2025 12:00:00",
+      selected: ref(false),
+    },
+
+    {
+      id:2,
+      serviceType:"massage therapy",
+      serviceId:2,
+      specialistId:'',
+      timeslot:"April 12, 2025 14:00:00",
+      selected: ref(false),
+    },
+
+    {
+      id:3,
       serviceType:"float tank service",
-      serviceId:'',
+      serviceId:6,
       specialistId:'',
       timeslot:"April 12, 2025 11:00:00",
       selected: ref(false),
     },
 
     {
-      id:5,
-      serviceType:"acupuncture",
-      serviceId:'',
+      id:4,
+      serviceType:"float tank service",
+      serviceId:6,
       specialistId:'',
       timeslot:"April 13, 2025 11:00:00",
+      selected: ref(false),
+    },
+
+    {
+      id:5,
+      serviceType:"acupuncture",
+      serviceId:4,
+      specialistId:'',
+      timeslot:"April 14, 2025 11:00:00",
       selected: ref(false),
     },
 
