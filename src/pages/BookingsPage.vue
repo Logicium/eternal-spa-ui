@@ -4,10 +4,11 @@ import TuneIcon from "@/assets/icons/TuneIcon.vue";
 import {DatePicker as VDatePicker} from "v-calendar";
 import data from "@/data.ts";
 import SearchIcon from "@/assets/icons/SearchIcon.vue";
-import {ref, watch} from "vue";
+import {computed, ref, watch} from "vue";
 import Timeslot from "@/components/items/Timeslot.vue";
 import NextIcon from "@/assets/icons/NextIcon.vue";
 import Summary from "@/components/Summary.vue";
+import BackIcon from "@/assets/icons/BackIcon.vue";
 
 const dates = [];
 
@@ -40,7 +41,7 @@ const compareServiceTypes = function(serviceName:string,searchedName:string){
   return (serviceName.toLowerCase() === searchedName.toLowerCase())
 }
 
-const selectedService = ref();
+const selectedService = ref(null);
 const allBookings = ref(data.bookings);
 const selectedBooking = ref(null);
 const searchedBookings = ref(new Array(0));
@@ -94,10 +95,34 @@ watch(selectedService,(newValue,oldValue)=>{
       compareServiceTypes(booking.serviceType,newValue))
   );
 
+  serviceData.value = data.services.find(service => (service.name === newValue));
+  serviceImage.value = computed(()=> 'url("'+serviceData.value.image+'")').value;
+
   selectedBooking.value = null;
   resetSelection();
 
-})
+});
+
+const serviceData = ref();
+const serviceImage = ref();
+const selectedPackage = ref({desc:'',duration:0,price:0});
+const selectedPackageName = ref(null);
+const selectedAddons = ref([]);
+const selectedAddonsNames = ref([]);
+
+watch(selectedAddonsNames,(newValue,oldValue)=>{
+  selectedAddons.value = serviceData.value.addOns.filter( addOn => (
+    selectedAddonsNames.value.includes(addOn.name)
+  ));
+});
+
+watch(selectedPackageName,(newValue,oldValue)=>{
+  if(selectedPackageName.value) {
+    selectedPackage.value = serviceData.value.packages.find(packageItem => (
+      packageItem.name === newValue
+    ));
+  }
+});
 
 </script>
 
@@ -110,53 +135,97 @@ watch(selectedService,(newValue,oldValue)=>{
   <Summary :class="!nextClick?'panelHidden':''" :toggle="nextClick" :back-click="nextPanelClick" :data="selectedBooking"/>
 
   <div :class=" [(nextClick ? 'bookings panelHidden':'bookings'),(nextClick==false ?'slideIn':'')]">
+    <div class="bookingsWrap">
+      <div class="controls">
 
-    <div class="controls">
+        <div class="input">
+          <select id="services" v-model="selectedService">
+            <option :value="null" disabled>Select a Service</option>
+            <template v-for="service in data.services">
+              <option>{{service.name}}</option>
+            </template>
+          </select>
+        </div>
 
-      <div class="input">
-        <select id="services" v-model="selectedService">
-          <template v-for="service in data.services">
-            <option>{{service.name}}</option>
-          </template>
-        </select>
+        <div class="filters"><TuneIcon/></div>
+
       </div>
 
-      <div class="filters"><TuneIcon/></div>
+      <div class="title">Service Selection</div>
+
+      <div class="bookingsGrid">
+
+        <div class="border">
+          <VDatePicker transparent borderless expanded is-required :attributes="attributes" v-model="date"/>
+        </div>
+
+        <div class="timeslotsWrap">
+
+          <div class="timeslots">
+
+            <template v-for="booking in searchedBookings">
+              <Timeslot @click="selectTime(booking.id)" :selected="booking.selected" :time="formatTime( new Date(booking.timeslot) )"/>
+            </template>
+
+          </div>
+
+          <div class="empty" v-if="searchedBookings.length===0">
+            No Bookings for {{selectedService}} on {{date.toDateString()}}.
+          </div>
+
+        </div>
+
+      </div>
 
     </div>
 
-    <div class="bookingsGrid">
+    <div class="packages">
 
-      <div class="border">
-        <VDatePicker transparent borderless expanded is-required :attributes="attributes" v-model="date"/>
+      <div class="controls">
+        <template v-if="selectedService">
+          <select id="packages" v-model="selectedPackageName">
+            <option :value="null" disabled>Select a Package</option>
+            <template v-for="packageItem in serviceData.packages">
+              <option>{{packageItem.name}}</option>
+            </template>
+          </select>
+        </template>
       </div>
 
-      <div class="timeslotsWrap">
+      <div class="title">Package Selection</div>
 
-        <div class="timeslots">
+      <div class="pkgSelection">
+        <template v-if="serviceData">
 
-          <template v-for="booking in searchedBookings">
-            <Timeslot @click="selectTime(booking.id)" :selected="booking.selected" :time="formatTime( new Date(booking.timeslot) )"/>
-          </template>
+          <div>{{selectedPackage?.desc}}</div>
 
-        </div>
+          <div>Duration: {{selectedPackage.duration}} minutes</div>
 
-        <div class="empty" v-if="searchedBookings.length===0">
-          No Bookings for {{selectedService}} on {{date.toDateString()}}.
-        </div>
+          <div>Price: ${{selectedPackage.price}}</div>
 
-      </div>
+          <div class="title">Add ons</div>
 
-      <div class="buttons">
+          <div class="addOns">
+            <div v-for="(addOn,index) in serviceData.addOns" class="addOn">
+              <input type="checkbox" :id="addOn.name" :value="addOn.name" v-model="selectedAddonsNames"/>
+              <label :for="addOn.name">{{addOn.name}}</label>
+              <div>Price: ${{addOn.price}}</div>
+            </div>
+          </div>
 
-        <div :class=" selectedBooking===null ? 'selectBookingBtn':'selectBookingBtn hidden' ">
-          <div>Select a Time</div>
-        </div>
+          <div class="buttons">
 
-        <div :class=" selectedBooking!=null ? 'nextBtn':'nextBtn hidden' " @click="nextPanelClick">
-          <div>Next</div><NextIcon/>
-        </div>
+            <div :class=" selectedBooking===null ? 'selectBookingBtn':'selectBookingBtn hidden' ">
+              <div>Select a Time</div>
+            </div>
 
+            <div :class=" selectedBooking!=null ? 'nextBtn':'nextBtn hidden' " @click="nextPanelClick">
+              <div>Next</div><NextIcon/>
+            </div>
+
+          </div>
+
+        </template>
       </div>
 
     </div>
@@ -187,6 +256,9 @@ watch(selectedService,(newValue,oldValue)=>{
   visibility: hidden;
   opacity: 0;
   transition: 0.5s;
+  transition-behavior: allow-discrete;
+  display: none;
+  position: absolute;
 }
 
 .slideIn{
@@ -197,8 +269,6 @@ watch(selectedService,(newValue,oldValue)=>{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
 }
 
 .bookingsGrid{
@@ -208,8 +278,16 @@ watch(selectedService,(newValue,oldValue)=>{
 .bookings{
   width: 80%;
   justify-self: center;
+  margin-top: 2rem;
+  border-radius: 6px;
   margin-bottom: 2rem;
-  height: 80vh;
+}
+
+.bookingsWrap{
+  padding: 1vw;
+  border:4px solid $secondary;
+  border-radius: 6px;
+  margin-bottom: 2rem;
 }
 
 .border{
@@ -231,6 +309,28 @@ watch(selectedService,(newValue,oldValue)=>{
   width: 100%;
 }
 
+.packages{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 4px solid $secondary;
+  border-radius: 6px;
+  padding: 1vw;
+}
+
+.addOns{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-gap: 1vw;
+}
+
+.addOn{
+  background-color: $secondary;
+  border-radius: 6px;
+  padding: 1vw;
+}
+
 .searchIcon{
   position: absolute;
   display: flex;
@@ -241,8 +341,7 @@ watch(selectedService,(newValue,oldValue)=>{
 
 .buttons{
   display: flex;
-  justify-content: end;
-  margin-left: auto;
+  margin-top: 1vw;
 }
 
 .selectBookingBtn{
@@ -283,6 +382,10 @@ watch(selectedService,(newValue,oldValue)=>{
   transition: 0.5s;
 }
 
+.title{
+  font-size: $fontMed;
+}
+
 .header{
   letter-spacing: 2.5vw;
   background-size: cover;
@@ -313,26 +416,14 @@ watch(selectedService,(newValue,oldValue)=>{
 
 select{
   height: 45px;
-  background-color: $primary;
-  font-size: $fontMed;
+  font-size: $fontNormal;
   border: none;
   color: $quaternary;
-  border-bottom: 4px solid $secondary;
+  background-color: $secondary;
+  border-radius: 6px;
   width: 100%;
   font-family: "Outfit", sans-serif;
   margin-right: 1vw;
-  transition: 0.5s;
-}
-
-select:focus{
-  outline: none;
-  border-bottom: 4px solid $quaternary;
-  color: $quaternary;
-  transition: 0.5s;
-}
-
-::placeholder{
-  color: $secondary;
   transition: 0.5s;
 }
 

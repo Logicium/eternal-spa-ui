@@ -52,9 +52,9 @@ import InstaIcon from "@/assets/icons/InstaIcon.vue";
 
   <div class="disclaimers">
     <div class="policy">
-      <div class="link">Contact</div>
-      <div class="link">Privacy Policy</div>
-      <div class="link">Terms of Use</div>
+      <div class="link">Login</div>
+      <RouterLink to="/privacy"><div class="link">Privacy Policy</div></RouterLink>
+      <RouterLink to="/terms"><div class="link">Terms of Use</div></RouterLink>
     </div>
     <div>© All Rights Reserved</div>
   </div>
@@ -157,7 +157,7 @@ import InstaIcon from "@/assets/icons/InstaIcon.vue";
 }
 
 .link:hover{
-  font-weight: 500;
+  font-weight: 600;
   transition: 0.5s;
 }
 
@@ -193,6 +193,10 @@ input{
 
 input:focus{
   outline: none;
+}
+
+a{
+  color: $quaternary;
 }
 
 </style>

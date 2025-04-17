@@ -4,6 +4,7 @@ import {computed, ref, watch} from "vue";
 import BackIcon from "@/assets/icons/BackIcon.vue";
 import data from "@/data.ts";
 import NextIcon from "@/assets/icons/NextIcon.vue";
+import LoginItem from "@/components/items/LoginItem.vue";
 
 const props = defineProps(
   {
@@ -31,11 +32,9 @@ const serviceData = ref();
 const serviceImage = ref();
 
 const selectedPackage = ref({desc:'',duration:0,price:0});
-const selectedPackageName = ref();
+const selectedPackageName = ref(null);
 const selectedAddons = ref([]);
 const selectedAddonsNames = ref([]);
-const totalDuration = ref(0);
-const totalCost = ref(0);
 
 const calcPrice = function (){
   let total = selectedPackage.value.price;
@@ -78,12 +77,12 @@ watch(()=>props.data,(newValue,oldValue)=>{
 });
 
 watch(selectedPackageName,(newValue,oldValue)=>{
-  selectedPackage.value = serviceData.value.packages.find( packageItem => (
-    packageItem.name === newValue
-  ));
+  if(selectedPackageName.value) {
+    selectedPackage.value = serviceData.value.packages.find(packageItem => (
+      packageItem.name === newValue
+    ));
+  }
 });
-
-
 
 const formatTime = function(date: Date){
   const formatter = new Intl.DateTimeFormat('en-US', {
@@ -96,6 +95,9 @@ const formatTime = function(date: Date){
 
 const backPanelClick = function(){
   props.backClick();
+  selectedPackageName.value = null;
+  selectedAddonsNames.value = [];
+  selectedPackage.value =  {desc:'',duration:0,price:0};
 }
 
 </script>
@@ -105,59 +107,21 @@ const backPanelClick = function(){
     <div :class="toggle ? 'summary slideIn' : 'summary' ">
       <template v-if="data">
 
-        <div class="packages">
-
-          <div class="controls">
-            <div class="backBtn" @click="backPanelClick"><BackIcon/>Back</div>
-            <template v-if="serviceData">
-              <select id="packages" v-model="selectedPackageName">
-                <template v-for="packageItem in serviceData.packages">
-                  <option>{{packageItem.name}}</option>
-                </template>
-              </select>
-            </template>
-          </div>
-
-          <div class="title">Package Selection</div>
-
-          <div class="pkgSelection">
-            <template v-if="serviceData">
-
-              <div>{{selectedPackage.desc}}</div>
-
-              <div>Duration: {{selectedPackage.duration}} minutes</div>
-
-              <div>Price: ${{selectedPackage.price}}</div>
-
-              <div class="title">Add ons</div>
-
-              <div class="addOns">
-                <div v-for="(addOn,index) in serviceData.addOns" class="addOn">
-                  <input type="checkbox" :id="addOn.name" :value="addOn.name" v-model="selectedAddonsNames"/>
-                  <label :for="addOn.name">{{addOn.name}}</label>
-                  <div>Price: ${{addOn.price}}</div>
-                </div>
-              </div>
-
-            </template>
-          </div>
-
-        </div>
-
         <div class="summaryArea">
           <template v-if="serviceData">
 
             <div class="row">
-
               <div class="col">
+                <div class="backBtn" @click="backPanelClick"><BackIcon/>Back</div>
                 <div class="title">Booking Summary</div>
                 <div>Service: {{serviceData.name}} | {{selectedPackage.name}}</div>
-                <div>Add ons: {{selectedAddonsNames.toString()}}</div>
+                <div>Add ons: {{selectedAddonsNames.toString()}}
+                  <template v-if="selectedAddonsNames.length===0">None</template>
+                </div>
                 <div>Date: {{day}} {{date}}, {{month}} {{year}}
                 </div><div>Time: {{time}}</div>
                 <div>Duration: {{calcDuration()}} minutes</div>
                 <div>Total Price: ${{calcPrice()}}</div>
-                <div class="confirmBtn">Book & Checkout<NextIcon/></div>
 
               </div>
 
@@ -167,6 +131,8 @@ const backPanelClick = function(){
 
           </template>
         </div>
+
+        <LoginItem/>
 
       </template>
     </div>
@@ -207,18 +173,6 @@ const backPanelClick = function(){
   overflow: hidden;
 }
 
-.addOns{
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  grid-gap: 1vw;
-}
-
-.addOn{
-  background-color: $secondary;
-  border-radius: 6px;
-  padding: 1vw;
-}
-
 .serviceImg{
   background-image: v-bind(serviceImage);
   background-size: cover;
@@ -230,10 +184,13 @@ const backPanelClick = function(){
   margin-left: 1vw;
   text-align: right;
   color: $primary;
+  transition-behavior: allow-discrete;
 }
 
 .panelHidden{
   transform: translateX(5%);
+  display: none !important;
+  position: absolute;
 }
 
 .slideIn{
@@ -257,7 +214,7 @@ const backPanelClick = function(){
   margin-right: 1vw;
 }
 
-.packages,.summaryArea{
+.summaryArea{
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -268,7 +225,6 @@ const backPanelClick = function(){
 }
 
 .summaryArea{
-  margin-top: 2rem;
   flex-direction: column;
 }
 
@@ -287,10 +243,10 @@ const backPanelClick = function(){
 }
 
 .summaryWrap{
-  position: absolute;
   display: flex;
   width: 100%;
   justify-content: center;
+  margin-bottom: 2rem;
 }
 
 

@@ -7,6 +7,8 @@ import EventPage from "@/pages/EventPage.vue";
 import Podcasts from "@/pages/Podcasts.vue";
 import PodcastPage from "@/pages/PodcastPage.vue";
 import BookingsPage from "@/pages/BookingsPage.vue";
+import TosPage from "@/pages/TosPage.vue";
+import PrivacyPage from "@/pages/PrivacyPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,6 +52,16 @@ const router = createRouter({
       path: '/podcast/:id',
       name: 'podcast',
       component: PodcastPage,
+    },
+    {
+      path: '/terms',
+      name: 'terms',
+      component: TosPage,
+    },
+    {
+      path: '/privacy',
+      name: 'privacy',
+      component: PrivacyPage,
     },
   ],
 })

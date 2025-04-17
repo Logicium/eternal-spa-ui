@@ -16,6 +16,94 @@ const data = {
   aboutMission:"At Eternal Spa, we embrace a holistic philosophy, recognizing the intricate connection between mind, body, and spirit for true wellness. We thoughtfully integrate effective traditional wisdom with beneficial contemporary practices to address your unique needs comprehensively. This personalized approach fosters not just momentary calm, but aims to support lasting balance and transformation from within.",
   aboutTeam:"Our dedicated team consists of highly skilled, certified practitioners who are passionate about empowering your well-being journey. With attentive care and genuine warmth, they listen to your needs and apply their expertise to provide truly personalized treatments. Trust in their commitment to guide you towards profound relaxation, effective healing, and renewed vitality.",
 
+  tos:{
+    intro:"Welcome to Eternal Spa. By scheduling an appointment or utilizing our services and facilities, you agree to adhere to the following terms and conditions:",
+    terms:[
+      {
+        "name":"Appointments & Cancellations",
+        "desc": "We highly recommend scheduling appointments in advance. We kindly request a minimum of 24 hours' notice for any cancellation or rescheduling. Failure to provide sufficient notice or missing an appointment (no-show) may result in a cancellation fee equivalent to a portion or the full price of the scheduled service(s)."
+      },
+      {
+        "name": "Arrival & Late Policy",
+        "desc": "Please arrive 10-15 minutes prior to your scheduled appointment time. This allows for a relaxed check-in process and ensures your service begins promptly. Late arrivals may necessitate a shortened service time to accommodate subsequent appointments, with the full service fee remaining applicable."
+      },
+      {
+        "name": "Health Considerations",
+        "desc": "Your health and safety are paramount. Please inform us at the time of booking and notify your therapist before your session begins of any health conditions, allergies, injuries, or if you are pregnant. Eternal Spa reserves the right to modify or refuse services for health and safety reasons."
+      },
+      {
+        "name": "Spa Environment & Conduct",
+        "desc": "To maintain a tranquil atmosphere for all guests, we ask that you maintain a quiet voice and silence mobile devices within the spa. We reserve the right to refuse or discontinue service to any individual demonstrating inappropriate behavior, ensuring a respectful and safe environment for everyone."
+      },
+      {
+        "name": "Payment",
+        "desc": "Full payment is due at the time service is rendered. We accept [List accepted payment methods - e.g., Visa, MasterCard, Discover, American Express, Cash]. Prices are subject to change without prior notice."
+      },
+      {
+        "name": "Personal Belongings",
+        "desc": "Eternal Spa is not responsible for the loss, theft, or damage of personal items. We recommend leaving valuables at home."
+      },
+      {
+        "name": "Gift Certificates",
+        "desc": "Gift certificates are non-refundable and may not be redeemed for cash. Please present your gift certificate at the time of service."
+      },
+      {
+        "name": "Changes to Terms",
+        "desc": "These terms and conditions are subject to change at the discretion of Eternal Spa management without prior notice."
+      }
+    ]
+  },
+
+  privacyPolicy: {
+    intro:"Welcome to Eternal Spa (\"we,\" \"us,\" \"our\"). We are committed to protecting the privacy and security of your personal information. This Privacy Policy explains how we collect, use, share, and protect information gathered from our clients and visitors (\"you\").",
+    policies:[
+      {
+        "name":"1. Information We Collect",
+        "policy":"We may collect the following types of personal information:\n\n* **Personal Contact Information:** Name, email address, phone number, mailing address (if provided).\n* **Health & Wellness Information:** Information you provide regarding health conditions, allergies, injuries, pregnancy status, treatment preferences, and contraindications necessary for providing safe and effective spa services.\n* **Appointment & Transaction Information:** Details about the services you book, appointment dates and times, therapist preferences, purchase history, and payment information (often processed securely through a third-party payment processor).\n* **Communication Information:** Records of your communications with us via email, phone, or our website contact forms.\n* **Technical Information (if applicable):** If you use our website or online booking, we may collect information via cookies or similar technologies, such as IP address, browser type, and usage patterns (please see our Cookie section below)."
+      },
+      {
+        "name":"2. How We Collect Information",
+        "policy":"We collect information directly from you when you:\n\n* Schedule an appointment (online, by phone, or in person).\n* Complete client intake or health history forms.\n* Communicate with our staff during consultations or services.\n* Make payments for services or products.\n* Contact us with inquiries.\n* Visit our website (technical information via cookies)."
+      },
+      {
+        "name":"3. How We Use Your Information",
+        "policy":"We use your information for the following purposes:\n\n* To schedule and confirm your appointments.\n* To provide safe, personalized, and effective spa services, tailoring treatments based on your health information and preferences.\n* To process payments for services and products.\n* To communicate with you regarding your appointments (confirmations, reminders) or respond to your inquiries.\n* For internal record-keeping and service improvement.\n* To send you marketing communications (e.g., newsletters, special offers) **only if you have opted-in or given explicit consent**. You may opt-out at any time.\n* To comply with legal and regulatory requirements."
+      },
+      {
+        "name":"4. Information Sharing and Disclosure",
+        "policy":"We value your privacy and handle your information with care. We do not sell your personal information. We may share your information only in the following limited circumstances:\n\n* **Internally:** With our therapists and staff who need the information to provide services to you. Access to sensitive health information is limited to relevant personnel.\n* **Third-Party Service Providers:** With trusted third parties who perform essential functions on our behalf, such as appointment scheduling software providers, payment processors, and email service providers (for marketing, if applicable). These providers are contractually obligated to protect your information and use it only for the services they provide to us.\n* **Legal Requirements:** If required by law, regulation, subpoena, court order, or other governmental request.\n* **Safety & Security:** To protect the rights, property, or safety of Eternal Spa, our clients, or others."
+      },
+      {
+        "name":"5. Data Security",
+        "policy":"We implement reasonable administrative, technical, and physical safeguards designed to protect your personal information from unauthorized access, use, or disclosure. However, please note that no electronic transmission or storage system can be guaranteed to be 100% secure."
+      },
+      {
+        "name":"6. Data Retention",
+        "policy":"We retain your personal information for as long as necessary to fulfill the purposes outlined in this Privacy Policy, provide you with services, maintain our business relationship, comply with our legal obligations, resolve disputes, and enforce our agreements."
+      },
+      {
+        "name":"7. Your Choices and Rights",
+        "policy":"You generally have the right to:\n\n* Access the personal information we hold about you.\n* Request correction of inaccurate information.\n* Request deletion of your personal information (subject to our legal and operational retention needs).\n* Opt-out of receiving marketing communications from us by following the unsubscribe instructions in those emails or contacting us directly.\n\nPlease contact us using the information below to exercise these rights."
+      },
+      {
+        "name":"8. Cookies (If Applicable)",
+        "policy":"Our website may use \"cookies\" (small text files placed on your device) to enhance user experience, facilitate online booking, and gather basic analytics. You can manage your cookie preferences through your browser settings. Disabling cookies may affect the functionality of certain website features."
+      },
+      {
+        "name":"9. Children's Privacy",
+        "policy":"Our services are generally intended for adults. We do not knowingly collect personal information from children under the age of 13 without verifiable parental consent, in compliance with the Children's Online Privacy Protection Act (COPPA). If we become aware that we have inadvertently collected such information, we will take steps to delete it."
+      },
+      {
+        "name":"10. Changes to This Privacy Policy",
+        "policy":"We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date. We encourage you to review this policy periodically."
+      },
+      {
+        "name":"11. Contact Us",
+        "policy":"If you have any questions or concerns about this Privacy Policy or our data practices, please contact us at:\n\n[Insert Spa Phone Number]\n[Insert Spa Email Address]\n[Insert Spa Physical Address, Trinidad, CO]"
+      }
+    ]
+  },
+
     "services": [
       {
         "id": 0,
