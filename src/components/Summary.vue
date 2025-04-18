@@ -17,6 +17,12 @@ const props = defineProps(
     data:{
       type: Object,
       required:true,
+    },
+    selectedPackageName:{
+      type:Object
+    },
+    selectedAddonsNames:{
+      type:Object
     }
   }
 );
@@ -32,9 +38,7 @@ const serviceData = ref();
 const serviceImage = ref();
 
 const selectedPackage = ref({desc:'',duration:0,price:0});
-const selectedPackageName = ref(null);
 const selectedAddons = ref([]);
-const selectedAddonsNames = ref([]);
 
 const calcPrice = function (){
   let total = selectedPackage.value.price;
@@ -56,10 +60,12 @@ const calcDuration = function (){
   return total;
 };
 
-watch(selectedAddonsNames,(newValue,oldValue)=>{
-  selectedAddons.value = serviceData.value.addOns.filter( addOn => (
-    selectedAddonsNames.value.includes(addOn.name)
-  ));
+watch(()=>props.selectedAddonsNames,(newValue,oldValue)=>{
+  if(newValue){
+    selectedAddons.value = serviceData.value.addOns.filter( addOn => (
+      newValue.includes(addOn.name)
+    ));
+  }
 });
 
 watch(()=>props.data,(newValue,oldValue)=>{
@@ -76,8 +82,8 @@ watch(()=>props.data,(newValue,oldValue)=>{
   }
 });
 
-watch(selectedPackageName,(newValue,oldValue)=>{
-  if(selectedPackageName.value) {
+watch(()=>props.selectedPackageName,(newValue,oldValue)=>{
+  if(newValue) {
     selectedPackage.value = serviceData.value.packages.find(packageItem => (
       packageItem.name === newValue
     ));
@@ -95,9 +101,9 @@ const formatTime = function(date: Date){
 
 const backPanelClick = function(){
   props.backClick();
-  selectedPackageName.value = null;
-  selectedAddonsNames.value = [];
-  selectedPackage.value =  {desc:'',duration:0,price:0};
+  // selectedPackageName.value = null;
+  // selectedAddonsNames.value = [];
+  // selectedPackage.value =  {desc:'',duration:0,price:0};
 }
 
 </script>
@@ -112,7 +118,6 @@ const backPanelClick = function(){
 
             <div class="row">
               <div class="col">
-                <div class="backBtn" @click="backPanelClick"><BackIcon/>Back</div>
                 <div class="title">Booking Summary</div>
                 <div>Service: {{serviceData.name}} | {{selectedPackage.name}}</div>
                 <div>Add ons: {{selectedAddonsNames.toString()}}
@@ -122,7 +127,7 @@ const backPanelClick = function(){
                 </div><div>Time: {{time}}</div>
                 <div>Duration: {{calcDuration()}} minutes</div>
                 <div>Total Price: ${{calcPrice()}}</div>
-
+                <div class="backBtn" @click="backPanelClick"><BackIcon/>Back: Package Selection</div>
               </div>
 
               <div class="serviceImg"></div>
@@ -162,7 +167,6 @@ const backPanelClick = function(){
 
 .summary{
   margin-top: 2rem;
-  z-index: 1;
   position: relative;
   width: 80%;
   display: flex;
@@ -171,6 +175,7 @@ const backPanelClick = function(){
   transition: 0.5s;
   justify-self: center;
   overflow: hidden;
+  transition-behavior: allow-discrete;
 }
 
 .serviceImg{
@@ -184,7 +189,6 @@ const backPanelClick = function(){
   margin-left: 1vw;
   text-align: right;
   color: $primary;
-  transition-behavior: allow-discrete;
 }
 
 .panelHidden{
@@ -211,7 +215,7 @@ const backPanelClick = function(){
   justify-content: center;
   cursor: pointer;
   padding: 1vw;
-  margin-right: 1vw;
+  margin-top: 1vw;
 }
 
 .summaryArea{
@@ -247,6 +251,7 @@ const backPanelClick = function(){
   width: 100%;
   justify-content: center;
   margin-bottom: 2rem;
+  overflow: hidden;
 }
 
 

@@ -66,6 +66,28 @@ const resetSelection = function(){
 }
 
 const nextClick = ref(false);
+const summaryClick = ref(false);
+const showBookingsPanel = ref(true);
+const showPackagesPanel = ref(false);
+const showSummaryPanel = ref(false);
+
+const showBookingsPanelClick = function (){
+  showBookingsPanel.value = true;
+  showPackagesPanel.value = false;
+  showSummaryPanel.value = false;
+}
+
+const showPackagesPanelClick = function (){
+  showBookingsPanel.value = false;
+  showPackagesPanel.value = true;
+  showSummaryPanel.value = false;
+}
+
+const showSummaryPanelClick = function (){
+  showBookingsPanel.value = false;
+  showPackagesPanel.value = false;
+  showSummaryPanel.value = true;
+}
 
 const nextPanelClick = function (){
   nextClick.value = !nextClick.value;
@@ -132,10 +154,20 @@ watch(selectedPackageName,(newValue,oldValue)=>{
     BOOKINGS
   </div>
 
-  <Summary :class="!nextClick?'panelHidden':''" :toggle="nextClick" :back-click="nextPanelClick" :data="selectedBooking"/>
+  <Summary
+    :class="showSummaryPanel?'':'panelHidden'"
+    :toggle="showSummaryPanel"
+    :back-click="showPackagesPanelClick"
+    :data="selectedBooking"
+    :selected-package-name="selectedPackageName"
+    :selected-addons-names="selectedAddonsNames"
+  />
 
-  <div :class=" [(nextClick ? 'bookings panelHidden':'bookings'),(nextClick==false ?'slideIn':'')]">
+  <div :class=" [(showBookingsPanel ? 'bookings slideIn':'bookings panelHidden')]">
     <div class="bookingsWrap">
+
+      <div class="title">Service Selection</div>
+
       <div class="controls">
 
         <div class="input">
@@ -147,11 +179,7 @@ watch(selectedPackageName,(newValue,oldValue)=>{
           </select>
         </div>
 
-        <div class="filters"><TuneIcon/></div>
-
       </div>
-
-      <div class="title">Service Selection</div>
 
       <div class="bookingsGrid">
 
@@ -177,11 +205,27 @@ watch(selectedPackageName,(newValue,oldValue)=>{
 
       </div>
 
+      <div class="buttons">
+        <div :class=" selectedBooking===null ? 'selectBookingBtn':'selectBookingBtn hidden' ">
+          <div>Select a Time</div>
+        </div>
+        <div :class=" selectedBooking!=null ? 'nextBtn':'nextBtn hidden' " @click="showPackagesPanelClick">
+          <div>Next: Package Selection</div><NextIcon/>
+        </div>
+      </div>
+
     </div>
 
-    <div class="packages">
+  </div>
+
+  <div :class="showPackagesPanel? 'packagesWrap':'packagesWrap panelHidden'">
+
+    <div :class="showPackagesPanel?'packages slideIn':'packages'" >
+
+      <div class="title">Package Selection</div>
 
       <div class="controls">
+
         <template v-if="selectedService">
           <select id="packages" v-model="selectedPackageName">
             <option :value="null" disabled>Select a Package</option>
@@ -191,8 +235,6 @@ watch(selectedPackageName,(newValue,oldValue)=>{
           </select>
         </template>
       </div>
-
-      <div class="title">Package Selection</div>
 
       <div class="pkgSelection">
         <template v-if="serviceData">
@@ -212,20 +254,20 @@ watch(selectedPackageName,(newValue,oldValue)=>{
               <div>Price: ${{addOn.price}}</div>
             </div>
           </div>
-
-          <div class="buttons">
-
-            <div :class=" selectedBooking===null ? 'selectBookingBtn':'selectBookingBtn hidden' ">
-              <div>Select a Time</div>
-            </div>
-
-            <div :class=" selectedBooking!=null ? 'nextBtn':'nextBtn hidden' " @click="nextPanelClick">
-              <div>Next</div><NextIcon/>
-            </div>
-
-          </div>
-
         </template>
+        <div class="buttonsWrap">
+          <div class="backBtn" @click="showBookingsPanelClick"><BackIcon/>Back: Service Selection</div>
+          <div class="buttons">
+            <div :class=" selectedPackage.price === 0 ? 'selectBookingBtn':'selectBookingBtn hidden' ">
+              <div>Select a Package</div>
+            </div>
+            <div :class=" selectedPackage.price != 0 ? 'nextBtn':'nextBtn hidden' " @click="showSummaryPanelClick">
+              <div>Next: Booking Summary</div><NextIcon/>
+            </div>
+          </div>
+        </div>
+
+
       </div>
 
     </div>
@@ -256,9 +298,10 @@ watch(selectedPackageName,(newValue,oldValue)=>{
   visibility: hidden;
   opacity: 0;
   transition: 0.5s;
+  transform: translateX(5%) !important;
   transition-behavior: allow-discrete;
-  display: none;
-  position: absolute;
+  display: none !important;
+  position: absolute !important;
 }
 
 .slideIn{
@@ -269,6 +312,11 @@ watch(selectedPackageName,(newValue,oldValue)=>{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1vw;
+}
+
+.packagesWrap{
+  overflow: hidden;
 }
 
 .bookingsGrid{
@@ -296,6 +344,10 @@ watch(selectedPackageName,(newValue,oldValue)=>{
   min-width: 50%;
 }
 
+.buttonsWrap{
+  display: flex;
+}
+
 .timeslots{
   padding-left: 1vw;
   display: grid;
@@ -310,13 +362,18 @@ watch(selectedPackageName,(newValue,oldValue)=>{
 }
 
 .packages{
+  position: relative;
   display: flex;
-  width: 100%;
   flex-direction: column;
   justify-content: space-between;
   border: 4px solid $secondary;
   border-radius: 6px;
   padding: 1vw;
+  width: 80%;
+  margin: 2rem;
+  justify-self: center;
+  transform: translateX(0%);
+  transition: 0.5s;
 }
 
 .addOns{
@@ -344,6 +401,20 @@ watch(selectedPackageName,(newValue,oldValue)=>{
   margin-top: 1vw;
 }
 
+.backBtn{
+  height: 45px;
+  width: fit-content;
+  background-color: $secondary;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 1vw;
+  margin-top: 1vw;
+  margin-right: 1vw;
+}
+
 .selectBookingBtn{
   background-color: $secondary;
   border-radius: 6px;
@@ -354,7 +425,6 @@ watch(selectedPackageName,(newValue,oldValue)=>{
   align-items: center;
   min-width: 140px;
   cursor: default;
-  margin-left: auto;
   opacity: 1;
   transition: 0.5s;
 }
@@ -371,7 +441,6 @@ watch(selectedPackageName,(newValue,oldValue)=>{
   align-items: center;
   width: fit-content;
   cursor: pointer;
-  margin-left: auto;
   opacity: 1;
   transition: 0.5s;
 }
@@ -423,7 +492,6 @@ select{
   border-radius: 6px;
   width: 100%;
   font-family: "Outfit", sans-serif;
-  margin-right: 1vw;
   transition: 0.5s;
 }
 
