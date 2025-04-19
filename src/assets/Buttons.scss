@@ -1,0 +1,33 @@
+@import "Colors";
+
+.button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  padding: 1vw;
+  height: 45px;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: $quaternary;
+  color: $primary;
+}
+
+.ghost{
+   background-color: transparent;
+   border: 4px solid $secondary;
+   color: $quaternary;
+}
+
+.rev{
+  background-color: $secondary;
+  color: $quaternary;
+}
+
+.underline{
+  background-color: transparent;
+  border-bottom: 4px solid $secondary;
+  color: $quaternary;
+  border-radius: 0;
+  padding: 0;
+}

@@ -52,7 +52,7 @@ import InstaIcon from "@/assets/icons/InstaIcon.vue";
 
   <div class="disclaimers">
     <div class="policy">
-      <div class="link">Login</div>
+      <RouterLink to="/login"><div class="link">Login</div></RouterLink>
       <RouterLink to="/privacy"><div class="link">Privacy Policy</div></RouterLink>
       <RouterLink to="/terms"><div class="link">Terms of Use</div></RouterLink>
     </div>

@@ -23,7 +23,6 @@ import data from "../data.ts";
 
 @import "../assets/Library";
 
-
 .terms{
   display: grid;
   grid-gap: 1vw;
@@ -49,18 +48,7 @@ import data from "../data.ts";
 }
 
 .header{
-  letter-spacing: 2.5vw;
-  background-size: cover;
-  color: $primary;
-  background-position: 100% 20%;
   background-image: url("/events/event2.jpg");
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  height: 25vh;
-  font-size: calc(12px + 4vw);
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
 }
 
 </style>

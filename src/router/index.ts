@@ -9,6 +9,7 @@ import PodcastPage from "@/pages/PodcastPage.vue";
 import BookingsPage from "@/pages/BookingsPage.vue";
 import TosPage from "@/pages/TosPage.vue";
 import PrivacyPage from "@/pages/PrivacyPage.vue";
+import LoginPage from "@/pages/LoginPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -62,6 +63,11 @@ const router = createRouter({
       path: '/privacy',
       name: 'privacy',
       component: PrivacyPage,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginPage,
     },
   ],
 })

@@ -104,7 +104,7 @@ const data = {
     ]
   },
 
-    "services": [
+  services: [
       {
         "id": 0,
         "name": "Red Light Therapy",
