@@ -63,7 +63,7 @@ const onSubmit = function (e:any){
         <input type="password" name="password" v-model="password" placeholder="Password">
         <div class="row">
           <input type="checkbox">
-          <div>I agree to receive text or email booking updates at the number/email provided.</div>
+          <div>I agree to receive text or email booking updates.</div>
         </div>
         <div class="row">
           <input type="checkbox">
@@ -75,8 +75,6 @@ const onSubmit = function (e:any){
         </div>
       </div>
     </form>
-
-    <div class="loginImage"/>
 
   </div>
 </template>

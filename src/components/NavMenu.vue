@@ -57,7 +57,9 @@ const resetMenu = function (){
 
     </div>
 
-    <RouterLink to="/" @click="resetMenu"><div class="appIcon"/></RouterLink>
+    <RouterLink to="/" @click="resetMenu">
+      <div :class="colorChange? 'appIcon':'appIcon colorChangeRev'"/>
+    </RouterLink>
 
     <div class="buttons">
       <div class="menuBtn"  @click="toggleMenu=!toggleMenu">
@@ -138,12 +140,13 @@ const resetMenu = function (){
 .appIcon{
   margin: 2rem;
   cursor: pointer;
-  background-color: $primary;
+  background-color: $secondary;
   border-radius: 50%;
   height: 45px;
   width: 45px;
   z-index: 3;
   position: relative;
+  transition: 0.5s;
 }
 
 nav{
@@ -212,6 +215,11 @@ nav a{
 
 .colorChange{
   background-color: $secondary;
+  transition: 0.5s;
+}
+
+.colorChangeRev{
+  background-color: $quaternary;
   transition: 0.5s;
 }
 

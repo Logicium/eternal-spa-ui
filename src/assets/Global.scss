@@ -14,15 +14,13 @@
 
 .panel{
   display: grid;
-  margin: 2rem;
-  grid-template-columns: 2fr 1fr;
+  margin: 6rem;
   grid-gap: 1vw;
   width: 80%;
+  align-self: center;
   justify-self: center;
+  align-content: center;
   min-height: 25vh;
-  border: 4px solid $secondary;
-  border-radius: 6px;
-  padding: 1vw;
 }
 
 .gap{

@@ -6,6 +6,7 @@ import GuestLoginPanel from "@/components/panels/GuestLoginPanel.vue";
 import VendorLoginPanel from "@/components/panels/VendorLoginPanel.vue";
 import SignupPanel from "@/components/panels/SignupPanel.vue";
 import PwResetPanel from "@/components/panels/PwResetPanel.vue";
+import data from "../data.ts";
 
 const toggleGuestLogin = ref(true);
 const toggleVendorLogin = ref(false);
@@ -44,10 +45,6 @@ const togglePwResetPanelClick = function (){
 
   <div class="loginWrap">
 
-    <div class="header">
-      <div>LOGIN</div>
-    </div>
-
     <div class="panelWrap">
       <transition-group name="slide">
 
@@ -74,6 +71,10 @@ const togglePwResetPanelClick = function (){
 
     </div>
 
+    <div class="loginImage">
+      <div>{{data.about0}}</div>
+    </div>
+
   </div>
 
 </template>
@@ -90,8 +91,19 @@ const togglePwResetPanelClick = function (){
   overflow: hidden;
 }
 
-.header{
-  background-image: url("/events/event2.jpg");
+.loginImage{
+  background-image: url("/fishers-peak/mountain2.jpg");
+  background-position: 60% 100%;
+  background-size: cover;
+  color: $primary;
+  font-size: $fontMed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
 }
 
 .loginInfo{
@@ -99,10 +111,11 @@ const togglePwResetPanelClick = function (){
   grid-gap: 1vw;
 }
 
-button{
-  border: none;
-  font-family: "Outfit", sans-serif;
-  font-size: $fontNormal;
+.loginWrap{
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 2rem;
 }
 
 </style>

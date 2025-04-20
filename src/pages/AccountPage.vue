@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
+import router from "@/router";
 import {useAuthStore} from "../stores/AuthStore";
 import {useAccountStore} from "../stores/AccountStore";
-import router from "@/router";
 
 const authStore = useAuthStore();
 const accountStore = useAccountStore();
@@ -21,24 +21,38 @@ init();
     <div class="header">ACCOUNT</div>
     <div class="panelFull">
 
-      <div class="title"> Hi {{accountStore.guest.firstName}}</div>
+      <div class="outline">
+        <div class="title">Hi {{accountStore.guest.firstName}}</div>
+        <div>No upcoming reservations</div>
+      </div>
 
       <div class="accountGrid">
 
-        <div>
-          <div>Manage Bookings</div>
+        <div class="item filled">
+          <div>
+            <div class="title">Reservations</div>
+            <div class="button underline">View All</div>
+          </div>
+          <div class="filledRev stat">
+            <div class="title">{{accountStore.guest.reservations.length}}</div>
+            <div>Reservations</div>
+          </div>
         </div>
 
-        <div>
-          <div>View Rewards</div>
+        <div class="item filled">
+          <div class="title">Rewards</div>
+          <div class="filledRev stat">
+            <div class="title">{{accountStore.guest.rewardsPoints}}</div>
+            <div>Rewards Points</div>
+          </div>
         </div>
 
-        <div>
-          <div>Change Settings</div>
+        <div class="item filled">
+          <div class="title">Settings</div>
         </div>
 
-        <div>
-          <div>Logout</div>
+        <div class="item filled">
+          <div class="title">Logout</div>
         </div>
 
       </div>
@@ -63,16 +77,44 @@ init();
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   height: 50vh;
+  grid-gap: 1vw;
+  margin-top: 2rem;
 }
 
 .panelFull{
   display: grid;
-  padding: 1vw;
   margin: 2rem;
-  border-radius: 6px;
-  border: 4px solid $secondary;
   width: 80%;
   justify-self: center;
+}
+
+.outline{
+  padding: 1vw;
+  border-radius: 6px;
+  border: 4px solid $secondary;
+}
+
+.filled{
+  background-color: $secondary;
+  border-radius: 6px;
+}
+
+.filledRev{
+  color: $primary;
+  background-color: $quaternary;
+  border-radius: 6px;
+}
+
+.item{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.stat{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .title{

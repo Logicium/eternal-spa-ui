@@ -40,8 +40,6 @@ const loginClick = function (){
       </div>
     </form>
 
-    <div class="loginImage"/>
-
   </div>
 </template>
 
