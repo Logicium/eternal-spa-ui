@@ -1,6 +1,6 @@
 <script setup lang="ts">
 //import data from "../data.ts";
-import {ref, watch} from "vue";
+import {computed, ref, watch} from "vue";
 import {useFetch} from "@vueuse/core";
 import api from "@/router/api.ts";
 
@@ -10,6 +10,7 @@ const fetchData = async function (){
   const response = await fetch(`${api.about_page}?populate=*`, {});
   const data = await response.json();
   fetchedData.value = data;
+  imageUrl.value = computed(()=> 'url("https://strapi-8w04.onrender.com'+data.data.bannerImage.url+'")').value;
   console.log(data);
 }
 
@@ -171,7 +172,7 @@ fetchData();
   height: 70vh;
   background-size: cover;
   background-position: 100% 35%;
-  background-image: url("/fishers-peak/mountain2.jpg");
+  background-image: v-bind(imageUrl);
   letter-spacing: 2.5vw;
   font-size: calc(12px + 4vw);
   color: $primary;
