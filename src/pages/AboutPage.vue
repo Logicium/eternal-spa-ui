@@ -3,6 +3,7 @@
 import {computed, ref, watch} from "vue";
 import {useFetch} from "@vueuse/core";
 import api from "@/router/api.ts";
+import LoadingPage from "@/pages/LoadingPage.vue";
 
 const fetchedData = ref(null);
 const imageUrl = ref(null);
@@ -20,50 +21,60 @@ fetchData();
 
 
 <template>
-  <div v-if="fetchedData===null" class="loading">Loading...</div>
-  <template v-else>
 
-  <div class="headerLarge">
-    ABOUT
-    <div class="title">We're proud to bring wellness to the Trinidad area.</div>
-  </div>
+    <div class="panelWrap">
+      <transition-group name="fade" appear>
+        <LoadingPage v-if="fetchedData===null" :big="true"/>
+        <template v-else>
+          <div class="headerLarge">
+            ABOUT
+            <div class="title">We're proud to bring wellness to the Trinidad area.</div>
+          </div>
 
-  <div class="about">
+          <div class="about">
 
-    <div class="subtitle">{{fetchedData.data.aboutFull[0].children[0].text}}</div>
+            <div class="subtitle">{{fetchedData.data.aboutFull[0].children[0].text}}</div>
 
 
-    <div class="imageCardA">
+            <div class="imageCardA">
 
-      <div class="image img1"></div>
-      <div class="imageInfo">
-        <div class="title3">The Sanctuary</div>
-        {{fetchedData.data.aboutSpaceFull[0].children[0].text}}
-      </div>
+              <div class="image img1"></div>
+              <div class="imageInfo">
+                <div class="title3">The Sanctuary</div>
+                {{fetchedData.data.aboutSpaceFull[0].children[0].text}}
+              </div>
 
+            </div>
+
+            <div class="imageCardB">
+
+              <div class="imageInfo">
+                <div class="title2">The Human Touch</div>
+                {{fetchedData.data.aboutTeamFull[0].children[0].text}}
+              </div>
+              <div class="imageB img2"></div>
+
+            </div>
+
+            <div class="title2"></div>
+          </div>
+        </template>
+      </transition-group>
     </div>
 
-    <div class="imageCardB">
 
-      <div class="imageInfo">
-        <div class="title2">The Human Touch</div>
-        {{fetchedData.data.aboutTeamFull[0].children[0].text}}
-      </div>
-      <div class="imageB img2"></div>
-
-    </div>
-
-    <div class="title2"></div>
-
-
-  </div>
-  </template>
 </template>
 
 <style lang="scss" scoped>
 
-@import "../assets/Colors";
-@import "../assets/Fonts";
+@import "../assets/Library";
+
+.panelWrap{
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
 
 .imageGrid{
   display: grid;
