@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import data from "../data.ts";
-import Service from "@/components/Service.vue";
+import HomeCard from "@/components/cards/HomeCard.vue";
+import HomeCardRev from "@/components/cards/HomeCardRev.vue";
 </script>
 
 <template>
@@ -8,45 +9,26 @@ import Service from "@/components/Service.vue";
 
     <div class="titleWrap">
       <div class="title">
-        <div class="titleInner">ETERNAL SPA & WELLNESS CENTER</div>
+        <div class="titleInner">ETERNAL FLOAT SPA & WELLNESS CENTER</div>
       </div>
       <div class="heroWrap">
         <video class="heroVideo parallax" src="/spa0.mp4" autoplay muted loop></video>
       </div>
     </div>
 
-    <div class="serviceWrap">
+    <div class="cardsWrap">
 
-      <div class="serviceText">
+      <div class="subtitle">
         {{data.about0}}
       </div>
 
-      <div class="serviceGrid">
+      <div class="cardsGrid">
 
-        <div class="serviceDesc parallax-1">
-          <div class="innerTitle">Bespoke Experiences</div>
-          <div class="inner"> {{data.about1}}</div>
-          <div class="button">Learn More</div>
-        </div>
+        <HomeCard title="Bespoke Experiences" :desc="data.about1" image="/massage/massage2.jpg" parallax="1"/>
 
-        <Service image="/massage/massage2.jpg" :offset="false" style="grid-row: span 3"/>
+        <HomeCardRev title="Licenced Specialists" :desc="data.about2" image="/reception2.jpg" parallax="2"/>
 
-        <Service image="/reception2.jpg" :offset="true" style="grid-row: span 3"/>
-
-        <div class="serviceDesc parallax-2">
-          <div class="innerTitle">Licenced Specialists</div>
-          <div class="inner">{{data.about2}}</div>
-          <div class="button">Learn More</div>
-        </div>
-
-        <div class="serviceDesc parallax-3" style="{grid-column: 1/3;}">
-          <div class="innerTitle">Wellness Lifestyle</div>
-          <div class="inner">{{data.about3}}</div>
-          <div class="button">Learn More</div>
-        </div>
-
-        <Service image="/spa-room1.jpg" style="grid-row: span 3"/>
-
+        <HomeCard title="Wellness Lifestyle" :desc="data.about3" image="/spa-room1.jpg" parallax="3"/>
 
       </div>
 
@@ -57,26 +39,8 @@ import Service from "@/components/Service.vue";
 </template>
 
 <style lang="scss" scoped>
-@import "../assets/Colors";
-@import "../assets/Keyframes";
+@import "../assets/Library";
 
-.serviceDesc{
-  color: $quaternary;
-  grid-column: span 2;
-  grid-row: span 3;
-  padding: 4rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-}
-.innerTitle{
-  font-size: calc(12px + 3vw);
-}
-
-.inner{
-  width: 70%;
-}
 .home{
   width: 100%;
   display: flex;
@@ -85,23 +49,15 @@ import Service from "@/components/Service.vue";
   align-items: center;
 }
 
-.button{
-  margin-top: 1vw;
-  cursor: pointer;
-  font-weight: 500;
-  width: fit-content;
-  border-bottom: 4px solid $secondary;
-}
-
-.serviceGrid{
+.cardsGrid{
   position: relative;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(9,20vh);
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3,60vh);
   grid-column-gap: 2rem;
 }
 
-.serviceWrap{
+.cardsWrap{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -109,7 +65,7 @@ import Service from "@/components/Service.vue";
   width: 100%;
 }
 
-.serviceText{
+.subtitle{
   color: $quaternary;
   text-align: center;
   width: 60%;
@@ -124,14 +80,14 @@ import Service from "@/components/Service.vue";
   margin-bottom: 2rem;
 }
 .titleInner{
-  width: 60%;
+  width: 80%;
   justify-self: center;
 }
 
 .title{
   position: absolute;
   top: 20%;
-  font-size: calc(12px + 4vw);
+  font-size: $fontBig;
   text-align: center;
   color: $primary;
   //mix-blend-mode: difference;
@@ -157,28 +113,5 @@ import Service from "@/components/Service.vue";
   object-fit: cover;
   filter: sepia(30%) brightness(80%);
 }
-
-.parallax{
-  animation-name: parallax;
-  animation-duration: 1ms;
-  animation-direction: alternate;
-  animation-timeline: scroll(block nearest);
-}
-
-.parallax-1, .parallax-2, .parallax-3{
-  animation-duration: 1ms;
-  animation-direction: alternate;
-  animation-timeline: scroll(block nearest);
-}
-.parallax-1{
-  animation-name: parallax-1;
-}
-.parallax-2{
-  animation-name: parallax-2;
-}
-.parallax-3{
-  animation-name: parallax-3;
-}
-
 
 </style>

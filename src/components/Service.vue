@@ -2,12 +2,11 @@
 
 import {computed, onMounted, ref, useTemplateRef} from "vue";
 
-const props = defineProps(['name','image','offset']);
+const props = defineProps(['name','image']);
 
 const imageUrl = computed(()=> 'url("'+props.image+'")').value;
 
  const serviceRef = useTemplateRef('serviceRef');
-//const serviceRef = ref<HTMLElement|null>(null);
 
 const reveal = ref(false);
 
@@ -31,7 +30,6 @@ onMounted(()=>{
 </script>
 
 <template>
-<!--  :style="{ gridRow: offset ? '4 / 8' : 'span 3'}"-->
   <div class="service">
     <div class="serviceImg" ref="serviceRef" :class=" reveal ? 'reveal':'' "/>
     <div class="serviceInfo">
@@ -75,7 +73,6 @@ onMounted(()=>{
 .service{
   width: 100%;
   height: 100%;
-  grid-column: span 2;
 }
 
 .serviceInfo{
