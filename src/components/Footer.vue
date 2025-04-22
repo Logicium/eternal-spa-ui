@@ -3,13 +3,32 @@
 import FacebookIcon from "@/assets/icons/FacebookIcon.vue";
 import YTIcon from "@/assets/icons/YTIcon.vue";
 import InstaIcon from "@/assets/icons/InstaIcon.vue";
+import {useRoute, useRouter} from 'vue-router';
+import {onMounted, ref, watch} from "vue";
+
+const route = useRoute();
+const router = useRouter();
+const showFull = ref(true);
+
+onMounted(async ()=>{
+  await router.isReady();
+  showFull.value = !(router.currentRoute.value.path === '/login' || router.currentRoute.value.path === '/account');
+  console.log(router.currentRoute.value.path)
+})
+
+watch(() => route.fullPath,
+  (newPath, oldPath) => {
+    console.log('Route changed from:', oldPath, 'to:', newPath);
+    showFull.value = !(newPath === '/login' || newPath === '/account');
+});
+
 </script>
 
 <template>
 
 <div class="footer">
 
-  <div class="heroImage">
+  <div class="heroImage" v-if="showFull">
     <div class="ctaWrap">
       <div class="ctaText">Sign up to earn reward points and manage your bookings.</div>
       <div class="cta">

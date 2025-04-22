@@ -19,14 +19,26 @@
    color: $quaternary;
 }
 
-.rev{
+.button.rev{
   background-color: $secondary;
+  color: $quaternary;
+}
+
+.ghost.rev{
+  border: 4px solid $quaternary;
   color: $quaternary;
 }
 
 .underline{
   background-color: transparent;
   border-bottom: 4px solid $secondary;
+  color: $quaternary;
+  border-radius: 0;
+  padding: 0;
+}
+.underline.rev{
+  background-color: transparent;
+  border-bottom: 4px solid $quaternary;
   color: $quaternary;
   border-radius: 0;
   padding: 0;

@@ -1,4 +1,5 @@
 const baseUrl = 'http://localhost:3000';
+const cmsUrl = 'http://localhost:1337'
 // const baseUrl = 'https://flora-6tzn.onrender.com';
 
 const api = {
@@ -15,6 +16,7 @@ const api = {
   },
   email:{
     contact:baseUrl+'/email/contact'
-  }
+  },
+  about_page:cmsUrl+'/api/about'
 }
 export default api

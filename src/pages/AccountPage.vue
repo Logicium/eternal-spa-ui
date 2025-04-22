@@ -23,15 +23,15 @@ init();
 
       <div class="outline">
         <div class="title">Hi {{accountStore.guest.firstName}}</div>
-        <div>No upcoming reservations</div>
+        <div>No upcoming reservations.</div>
       </div>
 
       <div class="accountGrid">
 
         <div class="item filled">
-          <div>
-            <div class="title">Reservations</div>
-            <div class="button underline">View All</div>
+          <div class="wrap">
+            <div class="title">Bookings</div>
+            <div class="button underline rev">View All</div>
           </div>
           <div class="filledRev stat">
             <div class="title">{{accountStore.guest.reservations.length}}</div>
@@ -39,21 +39,44 @@ init();
           </div>
         </div>
 
+        <div class="filled span">
+
+          <div class="settings">
+            <div class="title">Settings</div>
+            <div>Contact Info</div>
+            <div class="names">
+              <input class="gap" type="text" v-model="accountStore.guest.firstName" placeholder="First Name"/>
+              <input type="text" v-model="accountStore.guest.lastName" placeholder="Last Name"/>
+            </div>
+            <input type="text" placeholder="Phone" v-model="accountStore.guest.phone">
+            <input type="email" placeholder="Email" v-model="accountStore.guest.email"/>
+            <div class="button underline rev">Contact Preferences</div>
+            <div class="button underline rev">Security & Data</div>
+<!--            <div><input type="checkbox" /> Email Notifications</div>-->
+<!--            <div><input type="checkbox"/> SMS Notifications</div>-->
+<!--            <div><input type="checkbox"/> Newsletter Signup</div>-->
+            <div class="buttons">
+              <div class="button gap">Save Settings</div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
         <div class="item filled">
-          <div class="title">Rewards</div>
+          <div class="wrap">
+            <div class="title">Rewards</div>
+            <div class="button underline rev">View Rewards</div>
+          </div>
           <div class="filledRev stat">
             <div class="title">{{accountStore.guest.rewardsPoints}}</div>
             <div>Rewards Points</div>
           </div>
         </div>
 
-        <div class="item filled">
-          <div class="title">Settings</div>
-        </div>
-
-        <div class="item filled">
-          <div class="title">Logout</div>
-        </div>
 
       </div>
     </div>
@@ -72,6 +95,30 @@ init();
   background-image: url("/spa/spa5.jpg");
 }
 
+.wrap{
+  padding: 1vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.settings{
+  display: flex;
+  padding: 1vw;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.names{
+  display: flex;
+  width: 100%;
+}
+
+.buttons{
+  display: flex;
+}
+
 .accountGrid{
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -79,6 +126,10 @@ init();
   height: 50vh;
   grid-gap: 1vw;
   margin-top: 2rem;
+}
+
+.span{
+  grid-row: span 2;
 }
 
 .panelFull{
@@ -119,5 +170,21 @@ init();
 
 .title{
   font-size: $fontMed;
+}
+
+input{
+  height: 45px;
+  background-color: $secondary;
+  border: none;
+  border-radius: 6px;
+  width: 100%;
+  font-family: "Outfit", sans-serif;
+  font-size: $fontNormal;
+}
+
+input[type="checkbox"]{
+  margin-right: 1vw;
+  width: fit-content;
+  height: fit-content;
 }
 </style>

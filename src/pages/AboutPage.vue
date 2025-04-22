@@ -1,9 +1,26 @@
 <script setup lang="ts">
-import data from "../data.ts";
+//import data from "../data.ts";
+import {ref, watch} from "vue";
+import {useFetch} from "@vueuse/core";
+import api from "@/router/api.ts";
+
+const fetchedData = ref(null);
+const imageUrl = ref(null);
+const fetchData = async function (){
+  const response = await fetch(`${api.about_page}?populate=*`, {});
+  const data = await response.json();
+  fetchedData.value = data;
+  console.log(data);
+}
+
+fetchData();
+
 </script>
 
 
 <template>
+  <div v-if="fetchedData===null" class="loading">Loading...</div>
+  <template v-else>
 
   <div class="headerLarge">
     ABOUT
@@ -12,7 +29,7 @@ import data from "../data.ts";
 
   <div class="about">
 
-    <div class="subtitle">{{data.aboutFull}}</div>
+    <div class="subtitle">{{fetchedData.data.aboutFull[0].children[0].text}}</div>
 
 
     <div class="imageCardA">
@@ -20,7 +37,7 @@ import data from "../data.ts";
       <div class="image img1"></div>
       <div class="imageInfo">
         <div class="title3">The Sanctuary</div>
-        {{data.aboutSpace}}
+        {{fetchedData.data.aboutSpaceFull[0].children[0].text}}
       </div>
 
     </div>
@@ -29,37 +46,17 @@ import data from "../data.ts";
 
       <div class="imageInfo">
         <div class="title2">The Human Touch</div>
-        {{data.aboutTeam}}
+        {{fetchedData.data.aboutTeamFull[0].children[0].text}}
       </div>
       <div class="imageB img2"></div>
 
     </div>
 
-
-<!--    <div class="imageGrid">-->
-<!--      -->
-<!--      <div class="imageCard">-->
-<!--        <div class="image img1"></div>-->
-<!--        <div class="imageInfo"></div>-->
-<!--      </div>-->
-<!--      -->
-<!--      <div class="imageCard">-->
-<!--        <div class="image img2"></div>-->
-<!--        <div class="imageInfo"></div>-->
-<!--      </div>-->
-
-<!--      <div class="imageCard">-->
-<!--        <div class="image img3"></div>-->
-<!--        <div class="imageInfo"></div>-->
-<!--      </div>-->
-
-<!--    </div>-->
-
     <div class="title2"></div>
 
 
   </div>
-
+  </template>
 </template>
 
 <style lang="scss" scoped>
@@ -183,7 +180,7 @@ import data from "../data.ts";
   text-align: center;
 }
 
-.title2,{
+.title2{
   width: 80%;
   font-size: $fontMed;
   margin-bottom: 1rem;
