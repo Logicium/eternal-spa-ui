@@ -8,28 +8,23 @@ import HomeCardRev from "@/components/cards/HomeCardRev.vue";
   <div class="home">
 
     <div class="titleWrap">
+
       <div class="title">
         <div class="titleInner">ETERNAL FLOAT SPA & WELLNESS CENTER</div>
       </div>
       <div class="heroWrap">
-        <video class="heroVideo parallax" src="/spa0.mp4" autoplay muted loop></video>
+        <video class="heroVideo parallax" src="/spa0.mp4" autoplay muted loop/>
       </div>
+
     </div>
 
     <div class="cardsWrap">
 
-      <div class="subtitle">
-        {{data.about0}}
-      </div>
-
+      <div class="subtitle">{{data.about0}}</div>
       <div class="cardsGrid">
-
         <HomeCard title="Bespoke Experiences" :desc="data.about1" image="/massage/massage2.jpg" parallax="1"/>
-
         <HomeCardRev title="Licenced Specialists" :desc="data.about2" image="/reception2.jpg" parallax="2"/>
-
         <HomeCard title="Wellness Lifestyle" :desc="data.about3" image="/spa-room1.jpg" parallax="3"/>
-
       </div>
 
     </div>

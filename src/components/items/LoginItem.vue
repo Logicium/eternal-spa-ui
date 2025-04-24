@@ -1,5 +1,6 @@
 <script setup lang="ts">
 
+import router from "@/router";
 </script>
 
 <template>
@@ -19,7 +20,7 @@
       </div>
     </div>
     <div class="buttons">
-      <div class="button fill">Checkout & Rewards Signup</div>
+      <div class="button fill" @click="router.push('/checkout')">Checkout & Rewards Signup</div>
       <div class="or">or</div>
       <div class="button ghost">Checkout as Guest</div>
     </div>

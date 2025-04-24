@@ -11,6 +11,8 @@ import TosPage from "@/pages/TosPage.vue";
 import PrivacyPage from "@/pages/PrivacyPage.vue";
 import LoginPage from "@/pages/LoginPage.vue";
 import AccountPage from "@/pages/AccountPage.vue";
+import CheckoutPage from "@/pages/CheckoutPage.vue";
+import ConfirmationPage from "@/pages/ConfirmationPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -64,6 +66,16 @@ const router = createRouter({
       path: '/privacy',
       name: 'privacy',
       component: PrivacyPage,
+    },
+    {
+      path: '/checkout',
+      name: 'checkout',
+      component: CheckoutPage,
+    },
+    {
+      path: '/confirmation',
+      name: 'confirmation',
+      component: ConfirmationPage,
     },
     {
       path: '/login',
