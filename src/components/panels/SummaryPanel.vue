@@ -2,9 +2,9 @@
 
 import {computed, ref, watch} from "vue";
 import BackIcon from "@/assets/icons/BackIcon.vue";
-import data from "@/data.ts";
 import NextIcon from "@/assets/icons/NextIcon.vue";
 import LoginItem from "@/components/items/LoginItem.vue";
+import {useServicesStore} from "@/stores/ServiceStore.ts";
 
 const props = defineProps(
   {
@@ -40,6 +40,8 @@ const serviceImage = ref();
 const selectedPackage = ref({desc:'',duration:0,price:0});
 const selectedAddons = ref([]);
 
+const allServicesData = useServicesStore();
+
 const calcPrice = function (){
   let total = selectedPackage.value.price;
   if(selectedAddons){
@@ -60,6 +62,23 @@ const calcDuration = function (){
   return total;
 };
 
+const calcTimeEnd = function(): Date | null { // Return a Date object or null if input is invalid
+  const startTime = dateTime.value; // Assuming dateTime.value holds a Date object
+
+  if (!(startTime instanceof Date) || isNaN(startTime.getTime())) {
+    console.error("Invalid start date/time provided.");
+    return null; // Or throw an error, depending on how you want to handle it
+  }
+
+  const totalDurationMinutes = calcDuration();
+
+  const endTime = new Date(startTime.getTime());
+
+  endTime.setMinutes(endTime.getMinutes() + totalDurationMinutes);
+
+  return endTime;
+};
+
 watch(()=>props.selectedAddonsNames,(newValue,oldValue)=>{
   if(newValue){
     selectedAddons.value = serviceData.value.addOns.filter( addOn => (
@@ -77,7 +96,7 @@ watch(()=>props.data,(newValue,oldValue)=>{
     year.value = dateTime.value.toLocaleString('en-US', {year: 'numeric'});
     time.value = formatTime(dateTime.value);
 
-    serviceData.value = data.services.find(service => (service.id === newValue.serviceId) );
+    serviceData.value = allServicesData.services.find(service => (service.id === newValue.serviceId) );
     serviceImage.value = computed(()=> 'url("'+serviceData.value.image+'")').value;
   }
 });
@@ -137,7 +156,16 @@ const backPanelClick = function(){
           </template>
         </div>
 
-        <LoginItem/>
+        <LoginItem
+          guest-id=""
+          vendor-id=""
+          :time-start="dateTime"
+          :time-end="calcTimeEnd()"
+          :total-duration="calcDuration()"
+          service-id=""
+          package-id=""
+          :addons="selectedAddons"
+        />
 
       </template>
     </div>
@@ -147,7 +175,7 @@ const backPanelClick = function(){
 
 <style scoped lang="scss">
 
-@import "../assets/Library";
+@import "../../assets/Library";
 
 .row{
   display: flex;

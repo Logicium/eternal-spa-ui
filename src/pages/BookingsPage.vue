@@ -7,8 +7,9 @@ import SearchIcon from "@/assets/icons/SearchIcon.vue";
 import {computed, ref, watch} from "vue";
 import Timeslot from "@/components/items/Timeslot.vue";
 import NextIcon from "@/assets/icons/NextIcon.vue";
-import Summary from "@/components/Summary.vue";
+import SummaryPanel from "@/components/panels/SummaryPanel.vue";
 import BackIcon from "@/assets/icons/BackIcon.vue";
+import {useServicesStore} from "@/stores/ServiceStore.ts";
 
 const dates = [];
 
@@ -46,6 +47,8 @@ const allBookings = ref(data.bookings);
 const selectedBooking = ref(null);
 const searchedBookings = ref(new Array(0));
 const allServiceBookings = ref(Array(0));
+
+const allServicesData = useServicesStore();
 
 const selectTime = function(id:number){
   for (let i = 0; i < allBookings.value.length; i++) {
@@ -117,7 +120,7 @@ watch(selectedService,(newValue,oldValue)=>{
       compareServiceTypes(booking.serviceType,newValue))
   );
 
-  serviceData.value = data.services.find(service => (service.name === newValue));
+  serviceData.value = allServicesData.services.find(service => (service.name === newValue));
   serviceImage.value = computed(()=> 'url("'+serviceData.value.image+'")').value;
 
   selectedBooking.value = null;
@@ -154,7 +157,7 @@ watch(selectedPackageName,(newValue,oldValue)=>{
     BOOKINGS
   </div>
 
-  <Summary
+  <SummaryPanel
     :class="showSummaryPanel?'':'panelHidden'"
     :toggle="showSummaryPanel"
     :back-click="showPackagesPanelClick"
@@ -173,7 +176,7 @@ watch(selectedPackageName,(newValue,oldValue)=>{
         <div class="input">
           <select id="services" v-model="selectedService">
             <option :value="null" disabled>Select a Service</option>
-            <template v-for="service in data.services">
+            <template v-for="service in allServicesData.services">
               <option>{{service.name}}</option>
             </template>
           </select>

@@ -50,7 +50,7 @@ const onSubmit = function (e:any){
 <template>
   <div class="panel">
 
-    <form id="signup" @submit.prevent="onSubmit" :action="api.auth.signup" method="post">
+    <form id="signup" @submit.prevent="onSubmit" :action="api.guest.signup" method="post">
       <div class="loginInfo">
         <div class="title">Sign Up</div>
         <div class="desc">Sign up to get rewards points, manage your bookings, and get notified of new events.</div>

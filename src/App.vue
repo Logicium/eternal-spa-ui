@@ -2,6 +2,11 @@
 import { RouterView } from 'vue-router'
 import Footer from "@/components/Footer.vue";
 import NavMenu from "@/components/NavMenu.vue";
+import {useServicesStore} from "./stores/ServiceStore";
+
+const servicesStore = useServicesStore();
+servicesStore.fill();
+
 
 </script>
 

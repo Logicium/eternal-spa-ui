@@ -2,6 +2,10 @@
 
 import NextIcon from "@/assets/icons/NextIcon.vue";
 import {ref} from "vue";
+import api from "@/router/api.ts";
+import router from "@/router";
+import {useAccountStore} from "@/stores/AccountStore";
+import {useAuthStore} from "@/stores/AuthStore";
 
 const props = defineProps({
   toggleVendorLoginClick:{
@@ -18,27 +22,47 @@ const props = defineProps({
 const email = ref();
 const password = ref();
 const buttonText = ref('Login');
+const accountStore = useAccountStore();
+const authStore = useAuthStore();
 
-const loginClick = function (){
-
+const onSubmit = function (e:any){
+  const form = e.target;
+  const formData = new FormData(form);
+  const entries = Object.fromEntries(formData.entries())
+  fetch(form.action, {
+    method: form.method,
+    body: JSON.stringify(entries),
+    headers: { "Content-Type": "application/json" }
+  }).then(async response => {
+    if (response.status != 200) {
+      buttonText.value = 'INVALID INPUT';
+      setTimeout(() => buttonText.value = "LOG IN", 2000);
+    } else {
+      const json = await response.json();
+      authStore.token = json.token;
+      await accountStore.fill(json.token);
+      await router.push('/account');
+    }
+  })
 }
+
 
 </script>
 
 <template>
 
   <div class="panel">
-    <form>
+    <form id="login" @submit.prevent="onSubmit" :action="api.guest.login" method="post">
       <div class="loginInfo">
           <div class="title">Guest Login</div>
-          <input type="email" v-model="email" placeholder="Email">
-          <input type="password" v-model="password" placeholder="Password">
+          <input type="email" name="email" v-model="email" placeholder="Email">
+          <input type="password" name="password" v-model="password" placeholder="Password">
           <div class="loginOptions">
             <div class="link" @click="togglePwResetPanelClick">Password Reset</div>
             <div class="link" @click="toggleVendorLoginClick">Vendor Login</div>
           </div>
           <div class="buttons">
-            <input type="submit" class="button gap" @click="loginClick" :value="buttonText"/>
+            <input type="submit" class="button gap" :value="buttonText"/>
             <div class="button ghost" @click="toggleSignupPanelClick">Sign Up <NextIcon/></div>
           </div>
       </div>

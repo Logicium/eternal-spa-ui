@@ -18,7 +18,7 @@ export const useAccountStore = defineStore({
                     },
                 }
             })
-            const {isFetching,data} = await fetchUser(api.auth.account).json();
+            const {isFetching,data} = await fetchUser(api.guest.account).json();
             return this.guest = (await data);
             //console.log(this.user);
         }
