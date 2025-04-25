@@ -14,6 +14,11 @@ const init = async function (){
 }
 init();
 
+const logoutClick = function(){
+  authStore.token = null;
+  router.push('/login')
+}
+
 </script>
 
 <template>
@@ -52,6 +57,7 @@ init();
             <input type="email" placeholder="Email" v-model="accountStore.guest.email"/>
             <div class="button underline rev">Contact Preferences</div>
             <div class="button underline rev">Security & Data</div>
+            <div class="button underline rev" @click="logoutClick">Logout</div>
 <!--            <div><input type="checkbox" /> Email Notifications</div>-->
 <!--            <div><input type="checkbox"/> SMS Notifications</div>-->
 <!--            <div><input type="checkbox"/> Newsletter Signup</div>-->

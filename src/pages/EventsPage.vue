@@ -2,7 +2,7 @@
 
 import ListIcon from "@/assets/icons/ListIcon.vue";
 import GridIcon from "@/assets/icons/GridIcon.vue";
-import CalendarIcon from "@/assets/icons/CalendarIcon.vue";
+import CalendarIcon from "@/assets/icons/cal/CalendarIcon.vue";
 import {ref, watch} from "vue";
 import ListItem from "@/components/items/ListItem.vue";
 import data from "@/data.ts";

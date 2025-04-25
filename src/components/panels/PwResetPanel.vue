@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
-import NextIcon from "@/assets/icons/NextIcon.vue";
+import NextIcon from "@/assets/icons/nav/NextIcon.vue";
 import {ref} from "vue";
-import BackIcon from "@/assets/icons/BackIcon.vue";
+import BackIcon from "@/assets/icons/nav/BackIcon.vue";
 
 const props = defineProps({
   toggleGuestLoginClick:{

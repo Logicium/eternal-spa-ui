@@ -1,32 +1,35 @@
 <script setup lang="ts">
 
-import FacebookIcon from "@/assets/icons/FacebookIcon.vue";
-import YTIcon from "@/assets/icons/YTIcon.vue";
-import InstaIcon from "@/assets/icons/InstaIcon.vue";
+import FacebookIcon from "@/assets/icons/socials/FacebookIcon.vue";
+import YTIcon from "@/assets/icons/socials/YTIcon.vue";
+import InstaIcon from "@/assets/icons/socials/InstaIcon.vue";
 import {useRoute, useRouter} from 'vue-router';
 import {onMounted, ref, watch} from "vue";
 
 const route = useRoute();
 const router = useRouter();
 const showFull = ref(true);
+const showFooter = ref(true);
 
 onMounted(async ()=>{
   await router.isReady();
-  showFull.value = !(router.currentRoute.value.path === '/login' || router.currentRoute.value.path === '/account');
+  showFull.value = !(router.currentRoute.value.path === '/login' || router.currentRoute.value.path === '/guest/account');
+  showFooter.value = !(router.currentRoute.value.path === '/vendor/account');
   console.log(router.currentRoute.value.path)
 })
 
 watch(() => route.fullPath,
   (newPath, oldPath) => {
     console.log('Route changed from:', oldPath, 'to:', newPath);
-    showFull.value = !(newPath === '/login' || newPath === '/account');
+    showFull.value = !(newPath === '/login' || newPath === '/guest/account');
+    showFooter.value = !(newPath === '/vendor/account');
 });
 
 </script>
 
 <template>
 
-<div class="footer">
+<div class="footer" v-if="showFooter">
 
   <div class="heroImage" v-if="showFull">
     <div class="ctaWrap">

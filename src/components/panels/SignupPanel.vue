@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import BackIcon from "@/assets/icons/BackIcon.vue";
+import BackIcon from "@/assets/icons/nav/BackIcon.vue";
 
 import {ref} from "vue";
 import api from "@/router/api.ts";

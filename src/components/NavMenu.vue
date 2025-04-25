@@ -1,20 +1,31 @@
 <script setup lang="ts">
 
 import MenuIcon from "@/assets/icons/MenuIcon.vue";
-import {RouterLink} from "vue-router";
-import {onMounted, ref} from "vue";
-import FacebookIcon from "@/assets/icons/FacebookIcon.vue";
-import InstaIcon from "@/assets/icons/InstaIcon.vue";
-import ShareIcon from "@/assets/icons/ShareIcon.vue";
+import {RouterLink, useRoute, useRouter} from "vue-router";
+import {onMounted, ref, watch} from "vue";
+import FacebookIcon from "@/assets/icons/socials/FacebookIcon.vue";
+import InstaIcon from "@/assets/icons/socials/InstaIcon.vue";
+import ShareIcon from "@/assets/icons/socials/ShareIcon.vue";
 import CloseIcon from "@/assets/icons/CloseIcon.vue";
-import YTIcon from "@/assets/icons/YTIcon.vue";
+import YTIcon from "@/assets/icons/socials/YTIcon.vue";
+
+const route = useRoute();
+const router = useRouter();
 
 const colorChange = ref(true);
 const toggleMenu = ref(false);
+const showNavigation = ref(true);
 
-onMounted(()=>{
+onMounted(async ()=>{
   window.addEventListener('scroll', updateScroll);
+  await router.isReady();
+  showNavigation.value = !(router.currentRoute.value.path === '/vendor/account');
 })
+
+watch(() => route.fullPath,
+  (newPath, oldPath) => {
+    showNavigation.value = !(newPath === '/vendor/account');
+});
 
 const updateScroll = function (){
   let scrollPosition = window.scrollY
@@ -29,7 +40,7 @@ const resetMenu = function (){
 
 <template>
 
-  <nav :class="colorChange ? '' : 'colorChange' ">
+  <nav v-if="showNavigation" :class="colorChange ? '' : 'colorChange' ">
 
     <div class="fullWrap">
 

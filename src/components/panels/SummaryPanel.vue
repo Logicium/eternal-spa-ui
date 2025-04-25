@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
 import {computed, ref, watch} from "vue";
-import BackIcon from "@/assets/icons/BackIcon.vue";
-import NextIcon from "@/assets/icons/NextIcon.vue";
+import BackIcon from "@/assets/icons/nav/BackIcon.vue";
+import NextIcon from "@/assets/icons/nav/NextIcon.vue";
 import LoginItem from "@/components/items/LoginItem.vue";
 import {useServicesStore} from "@/stores/ServiceStore.ts";
 

@@ -6,9 +6,9 @@ import data from "@/data.ts";
 import SearchIcon from "@/assets/icons/SearchIcon.vue";
 import {computed, ref, watch} from "vue";
 import Timeslot from "@/components/items/Timeslot.vue";
-import NextIcon from "@/assets/icons/NextIcon.vue";
+import NextIcon from "@/assets/icons/nav/NextIcon.vue";
 import SummaryPanel from "@/components/panels/SummaryPanel.vue";
-import BackIcon from "@/assets/icons/BackIcon.vue";
+import BackIcon from "@/assets/icons/nav/BackIcon.vue";
 import {useServicesStore} from "@/stores/ServiceStore.ts";
 
 const dates = [];

@@ -3,11 +3,11 @@
 import {ref, watch} from 'vue'
 import type WaveSurfer from 'wavesurfer.js'
 import { WaveSurferPlayer } from '@meersagor/wavesurfer-vue'
-import PlayIcon from "@/assets/icons/PlayIcon.vue";
+import PlayIcon from "@/assets/icons/audio/PlayIcon.vue";
 import * as colors from "@/assets/Colors.scss"
-import PauseIcon from "@/assets/icons/PauseIcon.vue";
-import SkipForwardIcon from "@/assets/icons/SkipForwardIcon.vue";
-import SkipBackIcon from "@/assets/icons/SkipBackIcon.vue";
+import PauseIcon from "@/assets/icons/audio/PauseIcon.vue";
+import SkipForwardIcon from "@/assets/icons/audio/SkipForwardIcon.vue";
+import SkipBackIcon from "@/assets/icons/audio/SkipBackIcon.vue";
 
 const props = defineProps(['url'])
 

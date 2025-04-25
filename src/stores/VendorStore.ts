@@ -5,7 +5,7 @@ export const useVendorStore = defineStore({
   id:"VendorStore",
   state:()=>{
     return {
-      guest: useStorage('vendor', {})
+      vendor: useStorage('vendor', null)
     };
   },
   actions:{
@@ -19,8 +19,8 @@ export const useVendorStore = defineStore({
         }
       })
       const {isFetching,data} = await fetchUser(api.vendor.account).json();
-      return this.guest = (await data);
-      //console.log(this.user);
+      return this.vendor = (await data);
+      console.log(this.vendor);
     }
   }
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import NextIcon from "@/assets/icons/NextIcon.vue";
+import NextIcon from "@/assets/icons/nav/NextIcon.vue";
 import {ref} from "vue";
 import api from "@/router/api.ts";
 import router from "@/router";
@@ -35,13 +35,13 @@ const onSubmit = function (e:any){
     headers: { "Content-Type": "application/json" }
   }).then(async response => {
     if (response.status != 200) {
-      buttonText.value = 'INVALID INPUT';
-      setTimeout(() => buttonText.value = "LOG IN", 2000);
+      buttonText.value = 'Invalid Input';
+      setTimeout(() => buttonText.value = "Login", 2000);
     } else {
       const json = await response.json();
       authStore.token = json.token;
       await accountStore.fill(json.token);
-      await router.push('/account');
+      await router.push('/guest/account');
     }
   })
 }

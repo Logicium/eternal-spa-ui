@@ -4,7 +4,7 @@ import data from "@/data.ts";
 import {useRoute} from "vue-router";
 import {computed, ref} from "vue";
 import Map from "@/components/Map.vue";
-import CalLargeIcon from "@/assets/icons/CalLargeIcon.vue";
+import CalLargeIcon from "@/assets/icons/cal/CalLargeIcon.vue";
 import TimeLargeIcon from "@/assets/icons/TimeLargeIcon.vue";
 import LocationLargeIcon from "@/assets/icons/LocationLargeIcon.vue";
 
