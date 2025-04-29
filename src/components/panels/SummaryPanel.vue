@@ -81,7 +81,7 @@ const calcTimeEnd = function(): Date | null { // Return a Date object or null if
 
 watch(()=>props.selectedAddonsNames,(newValue,oldValue)=>{
   if(newValue){
-    selectedAddons.value = serviceData.value.addOns.filter( addOn => (
+    selectedAddons.value = serviceData.value.addons.filter( addOn => (
       newValue.includes(addOn.name)
     ));
   }

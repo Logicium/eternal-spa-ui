@@ -1,6 +1,7 @@
 import {defineStore} from "pinia";
 import {createFetch, useFetch, useLocalStorage, useStorage} from "@vueuse/core";
 import api from "../router/api";
+import router from "../router";
 export const useVendorStore = defineStore({
   id:"VendorStore",
   state:()=>{
@@ -10,17 +11,33 @@ export const useVendorStore = defineStore({
   },
   actions:{
     async fill(token:string){
-      const fetchUser = createFetch({
-        options: {
-          async beforeFetch({ options }) {
-            options.headers.Authorization = `Bearer ${token}`
-            return { options }
-          },
+      try {
+        const fetchUser = createFetch({
+          options: {
+            async beforeFetch({ options }) {
+              options.headers.Authorization = `Bearer ${token}`
+              return { options }
+            },
+          }
+        })
+        const {isFetching,data,error} = await fetchUser(api.vendor.account).json();
+
+        // Set vendor data
+        this.vendor = (await data);
+
+        // If vendor data is null or undefined, redirect to login
+        if (!this.vendor) {
+          router.push('/login');
+          return null;
         }
-      })
-      const {isFetching,data} = await fetchUser(api.vendor.account).json();
-      return this.vendor = (await data);
-      console.log(this.vendor);
+
+        return this.vendor;
+      } catch (error) {
+        console.error("Error fetching vendor data:", error);
+        this.vendor = null;
+        router.push('/login');
+        return null;
+      }
     }
   }
 

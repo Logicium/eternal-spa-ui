@@ -169,7 +169,7 @@ const selectedAddons = ref([]);
 const selectedAddonsNames = ref([]);
 
 watch(selectedAddonsNames,(newValue,oldValue)=>{
-  selectedAddons.value = serviceData.value.addOns.filter( addOn => (
+  selectedAddons.value = serviceData.value.addons.filter( addOn => (
     selectedAddonsNames.value.includes(addOn.name)
   ));
 });
@@ -286,7 +286,7 @@ watch(selectedPackageName,(newValue,oldValue)=>{
           <div class="title">Add ons</div>
 
           <div class="addOns">
-            <div v-for="(addOn,index) in serviceData.addOns" class="addOn">
+            <div v-for="(addOn,index) in serviceData.addons" class="addOn">
               <input type="checkbox" :id="addOn.name" :value="addOn.name" v-model="selectedAddonsNames"/>
               <label :for="addOn.name">{{addOn.name}}</label>
               <div>Price: ${{addOn.price}}</div>

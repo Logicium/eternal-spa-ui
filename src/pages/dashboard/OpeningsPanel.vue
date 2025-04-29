@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useVendorStore } from "@/stores/VendorStore";
 import { useAuthStore } from "@/stores/AuthStore";
 import { useServicesStore } from "@/stores/ServiceStore";
@@ -21,6 +21,7 @@ const buttonText = ref("Create Opening");
 const statusMessage = ref("");
 const showStatus = ref(false);
 const statusType = ref("success"); // success or error
+const minDate = ref(""); // Minimum date for datetime inputs
 
 // Days of the week for series openings
 const selectedDays = ref({
@@ -61,9 +62,86 @@ const showStatusMessage = (message, type = "success") => {
   }, 3000);
 };
 
+// Initialize minimum date on component mount
+onMounted(() => {
+  // Set minimum date to today
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Format date in local timezone (YYYY-MM-DDTHH:MM)
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  const hours = String(today.getHours()).padStart(2, '0');
+  const mins = String(today.getMinutes()).padStart(2, '0');
+
+  minDate.value = `${year}-${month}-${day}T${hours}:${mins}`;
+});
+
+// Round time to nearest 15-minute interval
+const roundToNearest15Minutes = (dateTimeStr) => {
+  if (!dateTimeStr) return dateTimeStr;
+
+  const date = new Date(dateTimeStr);
+  const minutes = date.getMinutes();
+  const remainder = minutes % 15;
+
+  // Round to nearest 15 minutes
+  if (remainder < 8) {
+    // Round down
+    date.setMinutes(minutes - remainder);
+  } else {
+    // Round up
+    date.setMinutes(minutes + (15 - remainder));
+  }
+
+  // Reset seconds and milliseconds
+  date.setSeconds(0, 0);
+
+  // Format date in local timezone (YYYY-MM-DDTHH:MM)
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const mins = String(date.getMinutes()).padStart(2, '0');
+
+  return `${year}-${month}-${day}T${hours}:${mins}`;
+};
+
+// Handle time input changes
+const handleTimeStartChange = (event) => {
+  timeStart.value = roundToNearest15Minutes(event.target.value);
+};
+
+const handleTimeEndChange = (event) => {
+  timeEnd.value = roundToNearest15Minutes(event.target.value);
+};
+
+// Validate form
+const validateForm = () => {
+  // Check if end time is after start time
+  if (timeStart.value && timeEnd.value) {
+    const start = new Date(timeStart.value);
+    const end = new Date(timeEnd.value);
+
+    if (end <= start) {
+      showStatusMessage("End time must be after start time", "error");
+      return false;
+    }
+  }
+
+  return true;
+};
+
 // Handle form submission
 const onSubmit = async function(e) {
   e.preventDefault();
+
+  // Validate form
+  if (!validateForm()) {
+    return;
+  }
+
   buttonText.value = "Creating...";
 
   try {
@@ -155,20 +233,32 @@ const onSubmit = async function(e) {
 
       <div class="form-group">
         <label for="timeStart">Start Time</label>
+        <!-- step="900" restricts time selection to 15-minute intervals (900 seconds = 15 minutes) -->
+        <!-- min attribute restricts selection to current day or later -->
+        <!-- @change event handler rounds manually entered values to nearest 15-minute interval -->
         <input
           id="timeStart"
           type="datetime-local"
           v-model="timeStart"
+          :min="minDate"
+          step="900"
+          @change="handleTimeStartChange"
           required
         >
       </div>
 
       <div class="form-group">
         <label for="timeEnd">End Time</label>
+        <!-- step="900" restricts time selection to 15-minute intervals (900 seconds = 15 minutes) -->
+        <!-- min attribute restricts selection to current day or later -->
+        <!-- @change event handler rounds manually entered values to nearest 15-minute interval -->
         <input
           id="timeEnd"
           type="datetime-local"
           v-model="timeEnd"
+          :min="minDate"
+          step="900"
+          @change="handleTimeEndChange"
           required
         >
       </div>
