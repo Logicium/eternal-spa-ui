@@ -6,6 +6,7 @@ const api = {
   services:{
     list: baseUrl+'/services/list'
   },
+  bookings: baseUrl+'/bookings',
   reservations:baseUrl+'/reservation',
   order:{
     sessionStatus:baseUrl+'/order/session-status',
@@ -19,6 +20,7 @@ const api = {
   vendor:{
     account:baseUrl+'/vendor/account',
     login:baseUrl+'/vendor/login',
+    openings:baseUrl+'/vendor/openings',
   },
   email:{
     contact:baseUrl+'/email/contact'

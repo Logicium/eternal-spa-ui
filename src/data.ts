@@ -616,6 +616,33 @@ const data = {
     }
   ],
 
+  openings:[
+    {
+      id:0,
+      serviceType:"massage therapy",
+      serviceId:2,
+      vendorId:'1',
+      timeStart:"April 11, 2025 11:00:00",
+      timeEnd:"April 11, 2025 14:00:00",
+    },
+    {
+      id:1,
+      serviceType:"float tank service",
+      serviceId:6,
+      vendorId:'1',
+      timeStart:"April 12, 2025 10:00:00",
+      timeEnd:"April 12, 2025 12:00:00",
+    },
+    {
+      id:2,
+      serviceType:"acupuncture",
+      serviceId:4,
+      vendorId:'1',
+      timeStart:"April 13, 2025 13:00:00",
+      timeEnd:"April 13, 2025 15:00:00",
+    },
+  ],
+
   bookings:[
 
     {

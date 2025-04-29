@@ -19,6 +19,7 @@ import VendorSettingsPanel from "@/pages/dashboard/VendorSettingsPanel.vue";
 
 const authStore = useAuthStore();
 const vendorStore = useVendorStore();
+const activePanel = ref('overview'); // Default to overview panel
 const init = async function (){
   if(authStore.token) {
     await vendorStore.fill(authStore.token);
@@ -26,7 +27,7 @@ const init = async function (){
 }
 init();
 
-console.log(vendorStore)
+console.log(vendorStore);
 
 const logoutClick = function(){
   authStore.token = null;
@@ -49,22 +50,22 @@ const logoutClick = function(){
         </div>
 
         <div class="navigation">
-          <div class="navItem">
+          <div class="navItem" :class="{ active: activePanel === 'overview' }" @click="activePanel = 'overview'">
             <DashboardIcon class="gap"/> Overview
           </div>
-          <div class="navItem">
+          <div class="navItem" :class="{ active: activePanel === 'calendar' }" @click="activePanel = 'calendar'">
             <CalendarIcon class="gap"/> Calendar
           </div>
-          <div class="navItem">
+          <div class="navItem" :class="{ active: activePanel === 'openings' }" @click="activePanel = 'openings'">
             <CalAvailableIcon class="gap"/> Schedule Openings
           </div>
-          <div class="navItem">
+          <div class="navItem" :class="{ active: activePanel === 'timeoff' }" @click="activePanel = 'timeoff'">
             <CalBusyIcon class="gap"/> Schedule Time Off
           </div>
-          <div class="navItem">
+          <div class="navItem" :class="{ active: activePanel === 'reservations' }" @click="activePanel = 'reservations'">
             <ListIcon class="gap"/> All Reservations
           </div>
-          <div class="navItem">
+          <div class="navItem" :class="{ active: activePanel === 'settings' }" @click="activePanel = 'settings'">
             <SettingsIcon class="gap"/> Settings
           </div>
         </div>
@@ -74,12 +75,14 @@ const logoutClick = function(){
         </div>
       </nav>
       <div class="panelsWrap">
-        <transition-group name="slide">
-          <OverviewPanel/>
-          <OpeningsPanel/>
-          <TimeOffPanel/>
-          <VendorSettingsPanel/>
-        </transition-group>
+        <transition name="slide-right" mode="out-in">
+          <OverviewPanel v-if="activePanel === 'overview'" :key="'overview'"/>
+          <div v-else-if="activePanel === 'calendar'" :key="'calendar'">Calendar Panel (Coming Soon)</div>
+          <OpeningsPanel v-else-if="activePanel === 'openings'" :key="'openings'"/>
+          <TimeOffPanel v-else-if="activePanel === 'timeoff'" :key="'timeoff'"/>
+          <div v-else-if="activePanel === 'reservations'" :key="'reservations'">Reservations Panel (Coming Soon)</div>
+          <VendorSettingsPanel v-else-if="activePanel === 'settings'" :key="'settings'"/>
+        </transition>
       </div>
     </div>
   </TransitionPanel>
@@ -97,9 +100,6 @@ const logoutClick = function(){
   grid-template-columns: 1fr 3fr;
 }
 
-.gap{
-}
-
 .navItem{
   height: 48px;
   display: flex;
@@ -111,6 +111,13 @@ const logoutClick = function(){
 .navItem:hover{
   font-weight: 600;
   transition: 0.5s;
+}
+
+.navItem.active {
+  font-weight: 600;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding-left: 8px;
 }
 
 
@@ -128,6 +135,12 @@ nav{
   background-color: $secondary;
   justify-content: space-between;
   border-radius: 6px;
+}
+
+.panelsWrap {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 </style>

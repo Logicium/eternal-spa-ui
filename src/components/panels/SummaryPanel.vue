@@ -89,14 +89,15 @@ watch(()=>props.selectedAddonsNames,(newValue,oldValue)=>{
 
 watch(()=>props.data,(newValue,oldValue)=>{
   if(newValue){
-    dateTime.value = new Date(newValue.timeslot);
+    console.log(newValue);
+    dateTime.value = new Date(newValue.timeStart);
     day.value = dateTime.value.toLocaleString('en-US', {weekday: 'long'});
     date.value = dateTime.value.getDate();
     month.value = dateTime.value.toLocaleString('en-US', {month: 'long'});
     year.value = dateTime.value.toLocaleString('en-US', {year: 'numeric'});
     time.value = formatTime(dateTime.value);
 
-    serviceData.value = allServicesData.services.find(service => (service.id === newValue.serviceId) );
+    serviceData.value = allServicesData.services.find(service => (service.id === newValue.service) );
     serviceImage.value = computed(()=> 'url("'+serviceData.value.image+'")').value;
   }
 });

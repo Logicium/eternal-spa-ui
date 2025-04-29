@@ -2,14 +2,15 @@
 
 import TuneIcon from "@/assets/icons/TuneIcon.vue";
 import {DatePicker as VDatePicker} from "v-calendar";
-import data from "@/data.ts";
+import data from "@/data.ts"; // Keep for fallback
 import SearchIcon from "@/assets/icons/SearchIcon.vue";
-import {computed, ref, watch} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import Timeslot from "@/components/items/Timeslot.vue";
 import NextIcon from "@/assets/icons/nav/NextIcon.vue";
 import SummaryPanel from "@/components/panels/SummaryPanel.vue";
 import BackIcon from "@/assets/icons/nav/BackIcon.vue";
 import {useServicesStore} from "@/stores/ServiceStore.ts";
+import api from "@/router/api";
 
 const dates = [];
 
@@ -43,10 +44,42 @@ const compareServiceTypes = function(serviceName:string,searchedName:string){
 }
 
 const selectedService = ref(null);
-const allBookings = ref(data.bookings);
+const allBookings = ref([]);
 const selectedBooking = ref(null);
 const searchedBookings = ref(new Array(0));
 const allServiceBookings = ref(Array(0));
+const isLoading = ref(true);
+
+// Fetch bookings from API
+const fetchBookings = async () => {
+  try {
+    isLoading.value = true;
+    const response = await fetch(api.bookings);
+    if (response.ok) {
+      const bookingsData = await response.json();
+      // Map the received data to add the missing selected ref property
+      allBookings.value = bookingsData.map(booking => ({
+        ...booking,
+        selected: ref(false)
+      }));
+    } else {
+      console.error('Failed to fetch bookings');
+      // Fallback to data.bookings if API call fails
+      allBookings.value = data.bookings;
+    }
+  } catch (error) {
+    console.error('Error fetching bookings:', error);
+    // Fallback to data.bookings if API call fails
+    allBookings.value = data.bookings;
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+// Fetch bookings when component is mounted
+onMounted(() => {
+  fetchBookings();
+});
 
 const allServicesData = useServicesStore();
 
@@ -97,8 +130,8 @@ const nextPanelClick = function (){
 }
 
 watch(date,(newValue,oldValue)=>{
-  searchedBookings.value = data.bookings.filter(booking =>
-    (compareDates(booking.timeslot,newValue) &&
+  searchedBookings.value = allBookings.value.filter(booking =>
+    (compareDates(booking.timeStart,newValue) &&
       compareServiceTypes(booking.serviceType,selectedService.value))
   );
   selectedBooking.value = null;
@@ -107,16 +140,16 @@ watch(date,(newValue,oldValue)=>{
 
 watch(selectedService,(newValue,oldValue)=>{
 
-  allServiceBookings.value = data.bookings.filter(booking =>
+  allServiceBookings.value = allBookings.value.filter(booking =>
       compareServiceTypes(booking.serviceType,newValue)
   );
 
   attributes.value = [{
-    dot:true,dates:allServiceBookings.value.map(booking  => booking.timeslot)
+    dot:true,dates:allServiceBookings.value.map(booking  => booking.timeStart)
   }];
 
-  searchedBookings.value = data.bookings.filter(booking =>
-    (compareDates(booking.timeslot,date.value) &&
+  searchedBookings.value = allBookings.value.filter(booking =>
+    (compareDates(booking.timeStart,date.value) &&
       compareServiceTypes(booking.serviceType,newValue))
   );
 
@@ -192,15 +225,17 @@ watch(selectedPackageName,(newValue,oldValue)=>{
 
         <div class="timeslotsWrap">
 
-          <div class="timeslots">
-
-            <template v-for="booking in searchedBookings">
-              <Timeslot @click="selectTime(booking.id)" :selected="booking.selected" :time="formatTime( new Date(booking.timeslot) )"/>
-            </template>
-
+          <div v-if="isLoading" class="loading">
+            Loading bookings...
           </div>
 
-          <div class="empty" v-if="searchedBookings.length===0">
+          <div v-else class="timeslots">
+            <template v-for="booking in searchedBookings">
+              <Timeslot @click="selectTime(booking.id)" :selected="booking.selected" :time="formatTime( new Date(booking.timeStart) )"/>
+            </template>
+          </div>
+
+          <div class="empty" v-if="!isLoading && searchedBookings.length===0">
             No Bookings for {{selectedService}} on {{date.toDateString()}}.
           </div>
 
@@ -357,6 +392,16 @@ watch(selectedPackageName,(newValue,oldValue)=>{
   grid-template-columns: repeat(3,1fr);
   grid-gap: 1rem;
   margin-bottom: 1rem;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  font-size: $fontNormal;
+  color: $quaternary;
+  width: 100%;
 }
 
 .input{
