@@ -105,10 +105,10 @@ async function redirectToCheckout() {
 @import "../../assets/Library";
 
 .loginItem{
-  margin-top: 2rem;
-  border: 4px solid $secondary;
-  border-radius: 6px;
-  padding: 1vw;
+  margin-top: $sp-xl;
+  border: $bw-md solid $secondary;
+  border-radius: $br-md;
+  padding: $sp-vw-sm;
   display: flex;
   flex-direction: column;
 }
@@ -120,11 +120,11 @@ async function redirectToCheckout() {
 
 .inputs{
   display: grid;
-  grid-gap: 1vw;
+  grid-gap: $sp-vw-sm;
 }
 
 .or{
-  padding: 0 1vw;
+  padding: 0 $sp-vw-sm;
 }
 
 .title{
@@ -133,15 +133,15 @@ async function redirectToCheckout() {
 
 .buttons{
   display: flex;
-  margin-top: 1vw;
+  margin-top: $sp-vw-sm;
   align-items: center;
 }
 
 .button{
   width: fit-content;
-  height: 45px;
-  border-radius: 6px;
-  padding: 1vw;
+  height: $h-btn;
+  border-radius: $br-md;
+  padding: $sp-vw-sm;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -150,7 +150,7 @@ async function redirectToCheckout() {
 
 .button.ghost{
   background-color: transparent;
-  border: 4px solid $secondary;
+  border: $bw-md solid $secondary;
 }
 
 .button.fill{
@@ -161,14 +161,14 @@ async function redirectToCheckout() {
 input{
   background-color: $secondary;
   border: none;
-  height: 45px;
+  height: $h-input;
   font-size: $fontNormal;
-  border-radius: 6px;
+  border-radius: $br-md;
   font-family: "Outfit", sans-serif;
 }
 
 input[type="checkbox"]{
-  margin-right: 1vw;
+  margin-right: $sp-vw-sm;
 }
 
 </style>

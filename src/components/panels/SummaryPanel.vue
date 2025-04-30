@@ -195,9 +195,9 @@ const backPanelClick = function(){
 }
 
 .summary{
-  margin-top: 2rem;
+  margin-top: $sp-xl;
   position: relative;
-  width: 80%;
+  width: $w-80;
   display: flex;
   flex-direction: column;
   transform: translateX(0%);
@@ -214,8 +214,8 @@ const backPanelClick = function(){
   aspect-ratio: 3/2;
   min-width: 30%;
   max-width: 30%;
-  border-radius: 6px;
-  margin-left: 1vw;
+  border-radius: $br-md;
+  margin-left: $sp-vw-sm;
   text-align: right;
   color: $primary;
 }
@@ -235,41 +235,37 @@ const backPanelClick = function(){
 }
 
 .backBtn{
-  height: 45px;
+  height: $h-btn;
   width: fit-content;
   background-color: $secondary;
-  border-radius: 6px;
+  border-radius: $br-md;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  padding: 1vw;
-  margin-top: 1vw;
+  padding: $sp-vw-sm;
+  margin-top: $sp-vw-sm;
 }
 
 .summaryArea{
   display: flex;
-  width: 100%;
+  width: $w-full;
   flex-direction: column;
   justify-content: space-between;
-  border: 4px solid $secondary;
-  border-radius: 6px;
-  padding: 1vw;
-}
-
-.summaryArea{
-  flex-direction: column;
+  border: $bw-md solid $secondary;
+  border-radius: $br-md;
+  padding: $sp-vw-sm;
 }
 
 .confirmBtn{
   background-color: $quaternary;
   color: $primary;
-  border-radius: 6px;
-  height: 45px;
+  border-radius: $br-md;
+  height: $h-btn;
   display: flex;
   align-items: center;
-  margin-top: 1vw;
-  padding: 1vw;
+  margin-top: $sp-vw-sm;
+  padding: $sp-vw-sm;
   justify-content: center;
   cursor: pointer;
   width: fit-content;
@@ -277,23 +273,23 @@ const backPanelClick = function(){
 
 .summaryWrap{
   display: flex;
-  width: 100%;
+  width: $w-full;
   justify-content: center;
-  margin-bottom: 2rem;
+  margin-bottom: $sp-xl;
   overflow: hidden;
 }
 
 
 select{
-  height: 45px;
+  height: $h-input;
   background-color: $secondary;
   border: none;
   color: $quaternary;
-  width: 100%;
+  width: $w-full;
   font-family: "Outfit", sans-serif;
   font-size: $fontNormal;
   transition: 0.5s;
-  border-radius: 6px;
+  border-radius: $br-md;
 }
 
 select:focus{

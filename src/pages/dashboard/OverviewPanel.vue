@@ -125,21 +125,21 @@ const sampleChartData = {
 .overview{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 20vh;
+  grid-template-rows: $h-vh-sm;
   grid-auto-rows: 1fr;
   background-color: $tertiary;
-  grid-gap: 2rem;
-  height: 100%;
-  padding: 2rem;
+  grid-gap: $sp-xl;
+  height: $h-vh-full;
+  padding: $sp-xl;
 }
 
 .icon{
-  min-height: 45px;
-  max-height: 45px;
-  min-width: 45px;
-  max-width: 45px;
-  border-radius: 50%;
-  border: 2px solid $quaternary;
+  min-height: $h-icon-lg;
+  max-height: $h-icon-lg;
+  min-width: $w-icon-lg;
+  max-width: $w-icon-lg;
+  border-radius: $br-full;
+  border: $bw-sm solid $quaternary;
   color: $quaternary;
   display: flex;
   justify-content: center;
@@ -148,15 +148,15 @@ const sampleChartData = {
 
 .overviewCard{
   background-color: $primary;
-  border-radius: 6px;
+  border-radius: $br-md;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 1vw;
+  padding: $sp-vw-sm;
 }
 
 .border{
-  border: 2px solid $quaternary;
+  border: $bw-sm solid $quaternary;
 }
 
 .filled{
@@ -166,7 +166,7 @@ const sampleChartData = {
 .overviewRow{
   background-color: $primary;
   grid-column: span 4;
-  border-radius: 6px;
+  border-radius: $br-md;
 }
 
 .row{

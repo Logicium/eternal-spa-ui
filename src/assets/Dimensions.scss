@@ -1,0 +1,76 @@
+/**
+ * ETERNAL SPA UI - DIMENSION VARIABLES
+ * 
+ * This file contains SCSS variables for all dimension units used throughout the application.
+ * Using these variables helps maintain consistency and makes it easier to update dimensions globally.
+ * 
+ * CATEGORIES:
+ * - Spacing: Margins, paddings, and gaps
+ * - Borders: Border widths and radii
+ * - Heights: Standard height values
+ * - Widths: Standard width values
+ * - Viewport Units: Viewport-based dimensions
+ * - Percentages: Percentage-based dimensions
+ */
+
+/* ===== Spacing Variables ===== */
+// Small spacing
+$sp-xs: 0.2rem;
+$sp-sm: 0.5rem;
+$sp-md: 1rem;
+$sp-lg: 1.5rem;
+$sp-xl: 2rem;
+$sp-xxl: 6rem;
+
+// Viewport-based spacing
+$sp-vw-xs: 0.5vw;
+$sp-vw-sm: 1vw;
+$sp-vw-md: 2vw;
+$sp-vw-lg: 3vw;
+
+/* ===== Border Variables ===== */
+// Border widths
+$bw-sm: 2px;
+$bw-md: 4px;
+
+// Border radii
+$br-sm: 4px;
+$br-md: 6px;
+$br-lg: 8px;
+$br-full: 50%;
+
+/* ===== Height Variables ===== */
+// Fixed heights
+$h-input: 45px;
+$h-btn: 45px;
+$h-icon: 24px;
+$h-icon-lg: 45px;
+
+// Viewport-based heights
+$h-vh-xs: 10vh;
+$h-vh-sm: 20vh;
+$h-vh-md: 25vh;
+$h-vh-lg: 50vh;
+$h-vh-xl: 70vh;
+$h-vh-full: 100vh;
+
+/* ===== Width Variables ===== */
+// Fixed widths
+$w-icon: 24px;
+$w-icon-lg: 45px;
+$w-btn-min: 140px;
+$w-card-sm: 100px;
+$w-card-lg: 25rem;
+
+// Percentage-based widths
+$w-half: 50%;
+$w-60: 60%;
+$w-80: 80%;
+$w-full: 100%;
+
+/* ===== Font Size Calculations ===== */
+// These are moved from Fonts.scss for reference
+// $fontBig: calc(12px + 4vw);
+// $fontMed: calc(12px + 2vw);
+// $fontNormal: 16px;
+// $fontSmall: 14px;

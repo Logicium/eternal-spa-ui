@@ -11,7 +11,6 @@ import TosPage from "@/pages/TosPage.vue";
 import PrivacyPage from "@/pages/PrivacyPage.vue";
 import LoginPage from "@/pages/LoginPage.vue";
 import AccountPage from "@/pages/AccountPage.vue";
-import CheckoutPage from "@/pages/CheckoutPage.vue";
 import ConfirmationPage from "@/pages/ConfirmationPage.vue";
 import VendorDashboard from "@/pages/dashboard/VendorDashboard.vue";
 
@@ -67,11 +66,6 @@ const router = createRouter({
       path: '/privacy',
       name: 'privacy',
       component: PrivacyPage,
-    },
-    {
-      path: '/checkout',
-      name: 'checkout',
-      component: CheckoutPage,
     },
     {
       path: '/confirmation',

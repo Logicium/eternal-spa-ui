@@ -1,3 +1,29 @@
+/**
+ * ETERNAL SPA UI - GLOBAL CSS CLASSES
+ * 
+ * This file contains reusable CSS classes that can be applied throughout the application.
+ * Using these classes helps maintain consistency and reduces redundant CSS.
+ * 
+ * HOW TO USE:
+ * 1. Import this file in your component: @import "../assets/Global";
+ * 2. Apply classes to your elements: <div class="card flex-center p-1 rounded">
+ * 3. You can combine multiple classes to achieve the desired styling
+ * 
+ * AVAILABLE CATEGORIES:
+ * - Layout Classes: For flex, grid, and general layout
+ * - UI Element Classes: For cards, buttons, and form elements
+ * - Spacing Classes: For margins and padding
+ * - Typography Classes: For text styling
+ * - Animation Classes: For transitions and animations
+ * - Border & Shape Classes: For borders and border-radius
+ * - Container Classes: For width and centering content
+ * - Position Classes: For controlling element positioning
+ * - Display Classes: For controlling element display properties
+ * - Width & Height Classes: For controlling element dimensions
+ * - Overflow Classes: For controlling content overflow
+ */
+
+/* ===== Layout Classes ===== */
 .header{
   letter-spacing: 2.5vw;
   background-size: cover;
@@ -6,23 +32,317 @@
   justify-content: center;
   align-items: center;
   display: flex;
-  height: 25vh;
+  height: $h-vh-md;
   font-size: calc(12px + 4vw);
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: $br-md;
+  border-bottom-right-radius: $br-md;
 }
 
 .panel{
   display: grid;
-  margin: 6rem;
-  grid-gap: 1vw;
-  width: 80%;
+  margin: $sp-xxl;
+  grid-gap: $sp-vw-sm;
+  width: $w-80;
   align-self: center;
   justify-self: center;
   align-content: center;
-  min-height: 25vh;
+  min-height: $h-vh-md;
 }
 
-.gap{
-  margin-right: 1vw;
+/* Flex layouts */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Grid layouts */
+.grid {
+  display: grid;
+}
+
+.grid-gap-sm {
+  grid-gap: $sp-md;
+}
+
+.grid-gap-md {
+  grid-gap: $sp-vw-sm;
+}
+
+.grid-gap-lg {
+  grid-gap: $sp-xl;
+}
+
+/* ===== UI Element Classes ===== */
+.card {
+  border-radius: $br-md;
+  padding: $sp-vw-sm;
+}
+
+.card-bordered {
+  border-radius: $br-md;
+  padding: $sp-vw-sm;
+  border: $bw-md solid $secondary;
+}
+
+.card-filled {
+  border-radius: $br-md;
+  padding: $sp-vw-sm;
+  background-color: $secondary;
+}
+
+.btn {
+  height: $h-btn;
+  border-radius: $br-md;
+  padding: $sp-vw-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.btn-primary {
+  background-color: $quaternary;
+  color: $primary;
+  height: $h-btn;
+  border-radius: $br-md;
+  padding: $sp-vw-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.btn-secondary {
+  background-color: $secondary;
+  height: $h-btn;
+  border-radius: $br-md;
+  padding: $sp-vw-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.btn-ghost {
+  background-color: transparent;
+  border: $bw-md solid $secondary;
+  height: $h-btn;
+  border-radius: $br-md;
+  padding: $sp-vw-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.form-input {
+  height: $h-input;
+  background-color: $secondary;
+  border: none;
+  border-radius: $br-md;
+  font-family: "Outfit", sans-serif;
+  font-size: $fontNormal;
+  width: $w-full;
+}
+
+.form-select {
+  height: $h-input;
+  background-color: $secondary;
+  border: none;
+  border-radius: $br-md;
+  font-family: "Outfit", sans-serif;
+  font-size: $fontNormal;
+  color: $quaternary;
+  width: $w-full;
+  transition: 0.5s;
+}
+
+/* ===== Spacing Classes ===== */
+.gap {
+  margin-right: $sp-vw-sm;
+}
+
+.gap-sm {
+  margin-right: $sp-vw-xs;
+}
+
+.gap-lg {
+  margin-right: $sp-vw-md;
+}
+
+.m-1 {
+  margin: $sp-vw-sm;
+}
+
+.m-2 {
+  margin: $sp-xl;
+}
+
+.mt-1 {
+  margin-top: $sp-vw-sm;
+}
+
+.mt-2 {
+  margin-top: $sp-xl;
+}
+
+.mb-1 {
+  margin-bottom: $sp-vw-sm;
+}
+
+.mb-2 {
+  margin-bottom: $sp-xl;
+}
+
+.p-1 {
+  padding: $sp-vw-sm;
+}
+
+.p-2 {
+  padding: $sp-xl;
+}
+
+/* ===== Typography Classes ===== */
+.title {
+  font-size: $fontMed;
+}
+
+.subtitle {
+  font-size: $fontNormal;
+}
+
+.text-large {
+  font-size: $fontBig;
+}
+
+/* ===== Animation Classes ===== */
+.transition {
+  transition: 0.5s;
+}
+
+.fade-in {
+  animation: 1s fadein forwards;
+}
+
+.slide-in {
+  animation: 0.5s slidein ease;
+}
+
+/* ===== Border & Shape Classes ===== */
+.rounded {
+  border-radius: $br-md;
+}
+
+.rounded-full {
+  border-radius: $br-full;
+}
+
+.border {
+  border: $bw-md solid $secondary;
+}
+
+/* ===== Container Classes ===== */
+.container {
+  width: $w-80;
+  margin: 0 auto;
+}
+
+.container-fluid {
+  width: $w-full;
+  margin: 0 auto;
+}
+
+/* ===== Position Classes ===== */
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+}
+
+/* ===== Display Classes ===== */
+.block {
+  display: block;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.hidden {
+  display: none;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+/* ===== Width & Height Classes ===== */
+.w-full {
+  width: $w-full;
+}
+
+.w-half {
+  width: $w-half;
+}
+
+.h-full {
+  height: $h-vh-full;
+}
+
+.h-auto {
+  height: auto;
+}
+
+.fit-content {
+  width: fit-content;
+}
+
+/* ===== Overflow Classes ===== */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-scroll {
+  overflow: scroll;
 }

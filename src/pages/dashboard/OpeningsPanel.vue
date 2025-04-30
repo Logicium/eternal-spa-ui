@@ -259,6 +259,7 @@ const onSubmit = async function(e) {
         v-if="showDetailView && selectedOpening"
         :opening="selectedOpening"
         @close="closeDetailView"
+        @updated="refreshVendorData"
       />
     </transition>
     <!-- Use transition to manage visibility of main content -->

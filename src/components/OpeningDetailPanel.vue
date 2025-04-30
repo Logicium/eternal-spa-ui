@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits, ref, onMounted } from 'vue';
+import { useAuthStore } from "@/stores/AuthStore";
+import api from "@/router/api";
+
+const authStore = useAuthStore();
 
 // Define props
 const props = defineProps({
@@ -10,7 +14,147 @@ const props = defineProps({
 });
 
 // Define emits
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close', 'updated']);
+
+// Form data
+const serviceType = ref("");
+const serviceId = ref(0);
+const timeStart = ref("");
+const timeEnd = ref("");
+const vendorId = ref("");
+const isUpdating = ref(false);
+const statusMessage = ref("");
+const showStatus = ref(false);
+const statusType = ref("success"); // success or error
+
+// Initialize form data from opening prop
+onMounted(() => {
+  serviceType.value = props.opening.serviceType;
+  serviceId.value = props.opening.serviceId;
+
+  // Format dates for datetime-local input
+  const startDate = new Date(props.opening.timeStart);
+  const endDate = new Date(props.opening.timeEnd);
+
+  timeStart.value = formatDateForInput(startDate);
+  timeEnd.value = formatDateForInput(endDate);
+
+  vendorId.value = props.opening.vendorId;
+});
+
+// Format date for datetime-local input (YYYY-MM-DDTHH:MM)
+const formatDateForInput = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const mins = String(date.getMinutes()).padStart(2, '0');
+
+  return `${year}-${month}-${day}T${hours}:${mins}`;
+};
+
+// Round time to nearest 15-minute interval
+const roundToNearest15Minutes = (dateTimeStr) => {
+  if (!dateTimeStr) return dateTimeStr;
+
+  const date = new Date(dateTimeStr);
+  const minutes = date.getMinutes();
+  const remainder = minutes % 15;
+
+  // Round to nearest 15 minutes
+  if (remainder < 8) {
+    // Round down
+    date.setMinutes(minutes - remainder);
+  } else {
+    // Round up
+    date.setMinutes(minutes + (15 - remainder));
+  }
+
+  // Reset seconds and milliseconds
+  date.setSeconds(0, 0);
+
+  return formatDateForInput(date);
+};
+
+// Handle time input changes
+const handleTimeStartChange = (event) => {
+  timeStart.value = roundToNearest15Minutes(event.target.value);
+};
+
+const handleTimeEndChange = (event) => {
+  timeEnd.value = roundToNearest15Minutes(event.target.value);
+};
+
+// Show status message
+const showStatusMessage = (message, type = "success") => {
+  statusMessage.value = message;
+  statusType.value = type;
+  showStatus.value = true;
+  setTimeout(() => {
+    showStatus.value = false;
+  }, 3000);
+};
+
+// Validate form
+const validateForm = () => {
+  // Check if end time is after start time
+  if (timeStart.value && timeEnd.value) {
+    const start = new Date(timeStart.value);
+    const end = new Date(timeEnd.value);
+
+    if (end <= start) {
+      showStatusMessage("End time must be after start time", "error");
+      return false;
+    }
+  }
+
+  return true;
+};
+
+// Update opening
+const updateOpening = async () => {
+  // Validate form
+  if (!validateForm()) {
+    return;
+  }
+
+  isUpdating.value = true;
+
+  try {
+    // Create updated opening object
+    const updatedOpening = {
+      id: props.opening.id,
+      serviceType: serviceType.value,
+      serviceId: serviceId.value,
+      vendorId: vendorId.value,
+      timeStart: timeStart.value,
+      timeEnd: timeEnd.value
+    };
+
+    // Send to backend
+    const response = await fetch(api.vendor.openings, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${authStore.token}`
+      },
+      body: JSON.stringify(updatedOpening)
+    });
+
+    if (response.ok) {
+      showStatusMessage("Opening updated successfully!");
+      // Emit updated event to refresh data in parent component
+      emit('updated');
+    } else {
+      showStatusMessage("Failed to update opening. Please try again.", "error");
+    }
+  } catch (error) {
+    console.error("Error updating opening:", error);
+    showStatusMessage("An error occurred. Please try again.", "error");
+  }
+
+  isUpdating.value = false;
+};
 
 // Close detail view
 const closeDetailView = () => {
@@ -24,51 +168,87 @@ const closeDetailView = () => {
       <button @click="closeDetailView" class="back-button">
         &larr; Back to Openings
       </button>
-      <h3>Opening Details</h3>
+      <h3>Edit Opening</h3>
+    </div>
+
+    <div v-if="showStatus" class="status-message" :class="statusType">
+      {{ statusMessage }}
     </div>
 
     <div class="detail-content">
-      <div class="detail-section">
-        <h4>Service Information</h4>
-        <div class="detail-item">
-          <span class="detail-label">Service Type:</span>
-          <span class="detail-value">{{ opening.serviceType }}</span>
+      <form @submit.prevent="updateOpening">
+        <div class="detail-section">
+          <h4>Service Information</h4>
+          <div class="form-group">
+            <label for="serviceType">Service Type:</label>
+            <input
+              id="serviceType"
+              type="text"
+              v-model="serviceType"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="serviceId">Service ID:</label>
+            <input
+              id="serviceId"
+              type="number"
+              v-model="serviceId"
+              required
+            />
+          </div>
         </div>
-        <div class="detail-item">
-          <span class="detail-label">Service ID:</span>
-          <span class="detail-value">{{ opening.serviceId }}</span>
-        </div>
-      </div>
 
-      <div class="detail-section">
-        <h4>Time Information</h4>
-        <div class="detail-item">
-          <span class="detail-label">Start Time:</span>
-          <span class="detail-value">{{ new Date(opening.timeStart).toLocaleString() }}</span>
+        <div class="detail-section">
+          <h4>Time Information</h4>
+          <div class="form-group">
+            <label for="timeStart">Start Time:</label>
+            <input
+              id="timeStart"
+              type="datetime-local"
+              v-model="timeStart"
+              @change="handleTimeStartChange"
+              step="900"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="timeEnd">End Time:</label>
+            <input
+              id="timeEnd"
+              type="datetime-local"
+              v-model="timeEnd"
+              @change="handleTimeEndChange"
+              step="900"
+              required
+            />
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Duration:</span>
+            <span class="detail-value">
+              {{ Math.round((new Date(timeEnd) - new Date(timeStart)) / (1000 * 60)) }} minutes
+            </span>
+          </div>
         </div>
-        <div class="detail-item">
-          <span class="detail-label">End Time:</span>
-          <span class="detail-value">{{ new Date(opening.timeEnd).toLocaleString() }}</span>
-        </div>
-        <div class="detail-item">
-          <span class="detail-label">Duration:</span>
-          <span class="detail-value">
-            {{ Math.round((new Date(opening.timeEnd) - new Date(opening.timeStart)) / (1000 * 60)) }} minutes
-          </span>
-        </div>
-      </div>
 
-      <div class="detail-section">
-        <h4>Additional Information</h4>
-        <div class="detail-item">
-          <span class="detail-label">Opening ID:</span>
-          <span class="detail-value">{{ opening.id }}</span>
+        <div class="detail-section">
+          <h4>Additional Information</h4>
+          <div class="detail-item">
+            <span class="detail-label">Opening ID:</span>
+            <span class="detail-value">{{ opening.id }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Vendor ID:</span>
+            <span class="detail-value">{{ opening.vendorId }}</span>
+          </div>
         </div>
-        <div class="detail-item">
-          <span class="detail-label">Vendor ID:</span>
-          <span class="detail-value">{{ opening.vendorId }}</span>
+
+        <div class="form-actions">
+          <button type="submit" class="save-button" :disabled="isUpdating">
+            {{ isUpdating ? 'Updating...' : 'Save Changes' }}
+          </button>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </template>
@@ -153,5 +333,72 @@ const closeDetailView = () => {
 
 .detail-value {
   flex: 1;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 6px;
+    border: none;
+    background-color: lighten($primary, 5%);
+    font-family: "Outfit", sans-serif;
+    font-size: $fontNormal;
+
+    &:focus {
+      outline: 2px solid $secondary;
+    }
+  }
+}
+
+.form-actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.save-button {
+  padding: 0.75rem 1.5rem;
+  background-color: $secondary;
+  color: $primary;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: "Outfit", sans-serif;
+  font-size: $fontNormal;
+  transition: background-color 0.3s;
+
+  &:hover:not(:disabled) {
+    background-color: darken($secondary, 10%);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.status-message {
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+
+  &.success {
+    background-color: rgba(0, 128, 0, 0.1);
+    color: green;
+  }
+
+  &.error {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: red;
+  }
 }
 </style>
