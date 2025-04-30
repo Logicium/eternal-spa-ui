@@ -230,7 +230,7 @@ watch(selectedPackageName,(newValue,oldValue)=>{
           </div>
 
           <div v-else class="timeslots">
-            <template v-for="booking in searchedBookings">
+            <template v-for="booking in searchedBookings" :key="booking.id">
               <Timeslot @click="selectTime(booking.id)" :selected="booking.selected" :time="formatTime( new Date(booking.timeStart) )"/>
             </template>
           </div>

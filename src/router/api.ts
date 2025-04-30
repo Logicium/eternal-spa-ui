@@ -1,6 +1,5 @@
 const baseUrl = 'http://localhost:3000';
 const cmsUrl = 'http://localhost:1337'
-// const baseUrl = 'https://flora-6tzn.onrender.com';
 
 const api = {
   services:{
@@ -8,9 +7,8 @@ const api = {
   },
   bookings: baseUrl+'/bookings',
   reservations:baseUrl+'/reservation',
-  order:{
-    sessionStatus:baseUrl+'/order/session-status',
-    checkout:baseUrl+'/order/create-checkout-session'
+  payment:{
+    checkout:baseUrl+'/payment/checkout'
   },
   guest:{
     account:baseUrl+'/guest/account',
@@ -21,6 +19,9 @@ const api = {
     account:baseUrl+'/vendor/account',
     login:baseUrl+'/vendor/login',
     openings:baseUrl+'/vendor/openings',
+    timeoff:baseUrl+'/vendor/timeoff',
+    settings:baseUrl+'/vendor/settings',
+    reservations:baseUrl+'/vendor/reservations',
   },
   email:{
     contact:baseUrl+'/email/contact'

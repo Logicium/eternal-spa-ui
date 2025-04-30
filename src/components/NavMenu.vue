@@ -77,7 +77,7 @@ const resetMenu = function (){
         <div :class=" !toggleMenu ? 'menuIcon rotateIn' : 'menuIcon'"><MenuIcon/></div>
         <div :class=" toggleMenu ? 'menuIcon rotateIn' : 'menuIcon'"><CloseIcon/></div>
       </div>
-      <RouterLink to="/services" class="cta" @click="resetMenu">Book Appointment</RouterLink>
+      <RouterLink to="/bookings" class="cta" @click="resetMenu">Book Appointment</RouterLink>
     </div>
 
   </nav>

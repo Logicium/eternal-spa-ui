@@ -4,11 +4,16 @@ import { useVendorStore } from "@/stores/VendorStore";
 import { useAuthStore } from "@/stores/AuthStore";
 import { useServicesStore } from "@/stores/ServiceStore";
 import api from "@/router/api";
-import data from "@/data"; // Still needed for openings data
+import OpeningDetailPanel from "@/components/OpeningDetailPanel.vue";
+// No longer need to import data as we're using vendor object for openings
 
 const vendorStore = useVendorStore();
 const authStore = useAuthStore();
 const servicesStore = useServicesStore();
+
+// Selected opening for detail view
+const selectedOpening = ref(null);
+const showDetailView = ref(false);
 
 // Form data
 const serviceType = ref("");
@@ -22,6 +27,7 @@ const statusMessage = ref("");
 const showStatus = ref(false);
 const statusType = ref("success"); // success or error
 const minDate = ref(""); // Minimum date for datetime inputs
+const isLoading = ref(false); // Loading state for openings list
 
 // Days of the week for series openings
 const selectedDays = ref({
@@ -62,8 +68,38 @@ const showStatusMessage = (message, type = "success") => {
   }, 3000);
 };
 
-// Initialize minimum date on component mount
-onMounted(() => {
+// Refresh vendor data from the server
+const refreshVendorData = async () => {
+  isLoading.value = true;
+  try {
+    if (authStore.token) {
+      await vendorStore.fill(authStore.token);
+    }
+  } catch (error) {
+    console.error('Error refreshing vendor data:', error);
+    showStatusMessage('An error occurred while refreshing data.', 'error');
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+// Open detail view for an opening
+const openDetailView = (opening) => {
+  selectedOpening.value = opening;
+  showDetailView.value = true;
+};
+
+// Close detail view
+const closeDetailView = () => {
+  showDetailView.value = false;
+  // Reset selected opening after transition completes
+  setTimeout(() => {
+    selectedOpening.value = null;
+  }, 500); // Match transition duration
+};
+
+// Initialize minimum date and refresh vendor data on component mount
+onMounted(async () => {
   // Set minimum date to today
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -76,6 +112,11 @@ onMounted(() => {
   const mins = String(today.getMinutes()).padStart(2, '0');
 
   minDate.value = `${year}-${month}-${day}T${hours}:${mins}`;
+
+  // Refresh vendor data if needed
+  if (!vendorStore.vendor || !vendorStore.vendor.openings) {
+    await refreshVendorData();
+  }
 });
 
 // Round time to nearest 15-minute interval
@@ -193,6 +234,9 @@ const onSubmit = async function(e) {
         sunday: true
       };
 
+      // Refresh vendor data to show the new opening
+      await refreshVendorData();
+
       showStatusMessage(isSeriesOpening.value ? "Opening series created successfully!" : "Opening created successfully!");
     } else {
       showStatusMessage("Failed to create opening. Please try again.", "error");
@@ -209,132 +253,161 @@ const onSubmit = async function(e) {
 
 <template>
   <div class="openings-panel">
-    <h2>Create Schedule Opening</h2>
+    <!-- Detail View Panel -->
+    <transition name="slide-right">
+      <OpeningDetailPanel
+        v-if="showDetailView && selectedOpening"
+        :opening="selectedOpening"
+        @close="closeDetailView"
+      />
+    </transition>
+    <!-- Use transition to manage visibility of main content -->
+    <transition name="fade" mode="out-in">
+      <div v-show="!showDetailView" key="main-content" class="main-content">
+        <h2>Create Schedule Opening</h2>
 
-    <div v-if="showStatus" class="status-message" :class="statusType">
-      {{ statusMessage }}
-    </div>
+        <div v-if="showStatus" class="status-message" :class="statusType">
+          {{ statusMessage }}
+        </div>
 
-    <form @submit.prevent="onSubmit">
-      <div class="form-group">
-        <label for="serviceType">Service Type</label>
-        <select
-          id="serviceType"
-          v-model="serviceType"
-          required
-          @change="handleServiceChange"
-        >
-          <option value="" disabled>Select a service</option>
-          <option v-for="service in services" :key="service.id" :value="service.name">
-            {{ service.name }}
-          </option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="timeStart">Start Time</label>
-        <!-- step="900" restricts time selection to 15-minute intervals (900 seconds = 15 minutes) -->
-        <!-- min attribute restricts selection to current day or later -->
-        <!-- @change event handler rounds manually entered values to nearest 15-minute interval -->
-        <input
-          id="timeStart"
-          type="datetime-local"
-          v-model="timeStart"
-          :min="minDate"
-          step="900"
-          @change="handleTimeStartChange"
-          required
-        >
-      </div>
-
-      <div class="form-group">
-        <label for="timeEnd">End Time</label>
-        <!-- step="900" restricts time selection to 15-minute intervals (900 seconds = 15 minutes) -->
-        <!-- min attribute restricts selection to current day or later -->
-        <!-- @change event handler rounds manually entered values to nearest 15-minute interval -->
-        <input
-          id="timeEnd"
-          type="datetime-local"
-          v-model="timeEnd"
-          :min="minDate"
-          step="900"
-          @change="handleTimeEndChange"
-          required
-        >
-      </div>
-
-      <div class="form-group checkbox">
-        <input
-          id="isSeriesOpening"
-          type="checkbox"
-          v-model="isSeriesOpening"
-        >
-        <label for="isSeriesOpening">Create as series (repeating weekly)</label>
-      </div>
-
-      <div class="form-group" v-if="isSeriesOpening">
-        <label for="repeatWeeks">Number of weeks to repeat</label>
-        <input
-          id="repeatWeeks"
-          type="number"
-          v-model="repeatWeeks"
-          min="1"
-          max="52"
-        >
-      </div>
-
-      <div class="form-group days-selection" v-if="isSeriesOpening">
-        <label>Repeat on days:</label>
-        <div class="days-checkboxes">
-          <div class="day-checkbox">
-            <input type="checkbox" id="monday" v-model="selectedDays.monday">
-            <label for="monday">Monday</label>
+        <form @submit.prevent="onSubmit">
+          <div class="form-group">
+            <label for="serviceType">Service Type</label>
+            <select
+              id="serviceType"
+              v-model="serviceType"
+              required
+              @change="handleServiceChange"
+            >
+              <option value="" disabled>Select a service</option>
+              <option v-for="service in services" :key="service.id" :value="service.name">
+                {{ service.name }}
+              </option>
+            </select>
           </div>
-          <div class="day-checkbox">
-            <input type="checkbox" id="tuesday" v-model="selectedDays.tuesday">
-            <label for="tuesday">Tuesday</label>
+
+          <div class="form-group">
+            <label for="timeStart">Start Time</label>
+            <!-- step="900" restricts time selection to 15-minute intervals (900 seconds = 15 minutes) -->
+            <!-- min attribute restricts selection to current day or later -->
+            <!-- @change event handler rounds manually entered values to nearest 15-minute interval -->
+            <input
+              id="timeStart"
+              type="datetime-local"
+              v-model="timeStart"
+              :min="minDate"
+              step="900"
+              @change="handleTimeStartChange"
+              required
+            >
           </div>
-          <div class="day-checkbox">
-            <input type="checkbox" id="wednesday" v-model="selectedDays.wednesday">
-            <label for="wednesday">Wednesday</label>
+
+          <div class="form-group">
+            <label for="timeEnd">End Time</label>
+            <!-- step="900" restricts time selection to 15-minute intervals (900 seconds = 15 minutes) -->
+            <!-- min attribute restricts selection to current day or later -->
+            <!-- @change event handler rounds manually entered values to nearest 15-minute interval -->
+            <input
+              id="timeEnd"
+              type="datetime-local"
+              v-model="timeEnd"
+              :min="minDate"
+              step="900"
+              @change="handleTimeEndChange"
+              required
+            >
           </div>
-          <div class="day-checkbox">
-            <input type="checkbox" id="thursday" v-model="selectedDays.thursday">
-            <label for="thursday">Thursday</label>
+
+          <div class="form-group checkbox">
+            <input
+              id="isSeriesOpening"
+              type="checkbox"
+              v-model="isSeriesOpening"
+            >
+            <label for="isSeriesOpening">Create as series (repeating weekly)</label>
           </div>
-          <div class="day-checkbox">
-            <input type="checkbox" id="friday" v-model="selectedDays.friday">
-            <label for="friday">Friday</label>
+
+          <div class="form-group" v-if="isSeriesOpening">
+            <label for="repeatWeeks">Number of weeks to repeat</label>
+            <input
+              id="repeatWeeks"
+              type="number"
+              v-model="repeatWeeks"
+              min="1"
+              max="52"
+            >
           </div>
-          <div class="day-checkbox">
-            <input type="checkbox" id="saturday" v-model="selectedDays.saturday">
-            <label for="saturday">Saturday</label>
+
+          <div class="form-group days-selection" v-if="isSeriesOpening">
+            <label>Repeat on days:</label>
+            <div class="days-checkboxes">
+              <div class="day-checkbox">
+                <input type="checkbox" id="monday" v-model="selectedDays.monday">
+                <label for="monday">Monday</label>
+              </div>
+              <div class="day-checkbox">
+                <input type="checkbox" id="tuesday" v-model="selectedDays.tuesday">
+                <label for="tuesday">Tuesday</label>
+              </div>
+              <div class="day-checkbox">
+                <input type="checkbox" id="wednesday" v-model="selectedDays.wednesday">
+                <label for="wednesday">Wednesday</label>
+              </div>
+              <div class="day-checkbox">
+                <input type="checkbox" id="thursday" v-model="selectedDays.thursday">
+                <label for="thursday">Thursday</label>
+              </div>
+              <div class="day-checkbox">
+                <input type="checkbox" id="friday" v-model="selectedDays.friday">
+                <label for="friday">Friday</label>
+              </div>
+              <div class="day-checkbox">
+                <input type="checkbox" id="saturday" v-model="selectedDays.saturday">
+                <label for="saturday">Saturday</label>
+              </div>
+              <div class="day-checkbox">
+                <input type="checkbox" id="sunday" v-model="selectedDays.sunday">
+                <label for="sunday">Sunday</label>
+              </div>
+            </div>
           </div>
-          <div class="day-checkbox">
-            <input type="checkbox" id="sunday" v-model="selectedDays.sunday">
-            <label for="sunday">Sunday</label>
+
+          <div class="form-actions">
+            <button type="submit" class="button">{{ buttonText }}</button>
+          </div>
+        </form>
+
+        <div class="current-openings">
+          <div class="openings-header">
+            <h3>Current Openings</h3>
+            <button @click="refreshVendorData" class="refresh-button">Refresh</button>
+          </div>
+          <div v-if="isLoading" class="loading-state">
+            Loading openings...
+          </div>
+          <div v-else class="openings-list">
+            <div v-if="vendorStore.vendor && vendorStore.vendor.openings && vendorStore.vendor.openings.length > 0">
+              <div
+                v-for="opening in vendorStore.vendor.openings"
+                :key="opening.id"
+                class="opening-item"
+                @click="openDetailView(opening)"
+              >
+                <div class="opening-service">{{ opening.serviceType }}</div>
+                <div class="opening-time">
+                  {{ new Date(opening.timeStart).toLocaleString() }} -
+                  {{ new Date(opening.timeEnd).toLocaleString() }}
+                </div>
+              </div>
+            </div>
+            <div v-else class="empty-state">
+              No openings found. Create a new opening using the form above.
+            </div>
           </div>
         </div>
       </div>
+    </transition>
 
-      <div class="form-actions">
-        <button type="submit" class="button">{{ buttonText }}</button>
-      </div>
-    </form>
-
-    <div class="current-openings">
-      <h3>Current Openings</h3>
-      <div class="openings-list">
-        <!-- TODO: Update to use VendorStore data when available instead of data.openings -->
-        <div v-for="opening in data.openings" :key="opening.id" class="opening-item">
-          <div class="opening-service">{{ opening.serviceType }}</div>
-          <div class="opening-time">
-            {{ new Date(opening.timeStart).toLocaleString() }} -
-            {{ new Date(opening.timeEnd).toLocaleString() }}
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -347,6 +420,8 @@ const onSubmit = async function(e) {
   background-color: $tertiary;
   height: calc(100vh - 2rem);
   overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
 
   h2 {
     margin-bottom: 1.5rem;
@@ -432,6 +507,29 @@ const onSubmit = async function(e) {
   margin-top: 3rem;
 }
 
+.openings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.refresh-button {
+  padding: 0.5rem 1rem;
+  background-color: $secondary;
+  color: $primary;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: "Outfit", sans-serif;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: darken($secondary, 10%);
+  }
+}
+
 .openings-list {
   display: grid;
   grid-gap: 1rem;
@@ -451,6 +549,27 @@ const onSubmit = async function(e) {
     font-size: 0.9rem;
     color: $quaternary;
   }
+}
+
+.empty-state {
+  padding: 1rem;
+  background-color: $primary;
+  border-radius: 6px;
+  text-align: center;
+  color: $quaternary;
+  font-size: 0.9rem;
+}
+
+.loading-state {
+  padding: 1rem;
+  background-color: $primary;
+  border-radius: 6px;
+  text-align: center;
+  color: $quaternary;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .days-selection {
@@ -480,5 +599,24 @@ const onSubmit = async function(e) {
     margin-bottom: 0;
     font-size: 0.9rem;
   }
+}
+
+/* Detail View Styles moved to OpeningDetailPanel.vue component */
+
+/* Make opening items clickable */
+.opening-item {
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Main content container */
+.main-content {
+  width: 100%;
+  transition: opacity 0.3s ease;
 }
 </style>

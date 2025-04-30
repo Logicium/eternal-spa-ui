@@ -158,13 +158,13 @@ const backPanelClick = function(){
         </div>
 
         <LoginItem
-          guest-id=""
-          vendor-id=""
-          :time-start="dateTime"
-          :time-end="calcTimeEnd()"
+          :guest-id="null"
+          :vendor-id="data.vendorId || ''"
+          :time-start="dateTime.toString()"
+          :time-end="calcTimeEnd().toString()"
           :total-duration="calcDuration()"
-          service-id=""
-          package-id=""
+          :service-id="serviceData?.id?.toString() || ''"
+          :package-id="selectedPackage?.id || ''"
           :addons="selectedAddons"
         />
 

@@ -643,6 +643,30 @@ const data = {
     },
   ],
 
+  timeoffs:[
+    {
+      id:0,
+      vendorId:'1',
+      reason:"Vacation",
+      timeStart:"April 15, 2025 00:00:00",
+      timeEnd:"April 19, 2025 23:59:59",
+    },
+    {
+      id:1,
+      vendorId:'1',
+      reason:"Personal Day",
+      timeStart:"April 25, 2025 00:00:00",
+      timeEnd:"April 25, 2025 23:59:59",
+    },
+    {
+      id:2,
+      vendorId:'1',
+      reason:"Medical Appointment",
+      timeStart:"May 5, 2025 13:00:00",
+      timeEnd:"May 5, 2025 17:00:00",
+    },
+  ],
+
   bookings:[
 
     {

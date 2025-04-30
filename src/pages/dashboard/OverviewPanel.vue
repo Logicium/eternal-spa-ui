@@ -5,6 +5,60 @@ import PersonIcon from "@/assets/icons/PersonIcon.vue";
 import CalRangeIcon from "@/assets/icons/cal/CalRangeIcon.vue";
 import WalletIcon from "@/assets/icons/WalletIcon.vue";
 import ChartCard from "@/components/cards/ChartCard.vue";
+import { useVendorStore } from "../../stores/VendorStore";
+import { computed } from "vue";
+
+const vendorStore = useVendorStore();
+
+// Function to format price
+const formatPrice = (price) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+  }).format(price);
+};
+
+// Calculate monthly earnings
+const monthlyEarnings = computed(() => {
+  if (!vendorStore.vendor || !vendorStore.vendor.reservations) {
+    return 0;
+  }
+
+  const now = new Date();
+  const currentMonth = now.getMonth();
+  const currentYear = now.getFullYear();
+
+  // Filter reservations for the current month and confirmed status
+  const monthlyReservations = vendorStore.vendor.reservations.filter(reservation => {
+    if (!reservation.confirmed) return false;
+
+    const reservationDate = new Date(reservation.timeStart);
+    return reservationDate.getMonth() === currentMonth &&
+           reservationDate.getFullYear() === currentYear;
+  });
+
+  // Sum up the totalPrice of each reservation
+  return monthlyReservations.reduce((total, reservation) => {
+    return total + (reservation.totalPrice || 0);
+  }, 0);
+});
+
+// Calculate upcoming reservations count
+const upcomingReservationsCount = computed(() => {
+  if (!vendorStore.vendor || !vendorStore.vendor.reservations) {
+    return 0;
+  }
+
+  const now = new Date();
+
+  // Filter reservations for future dates and confirmed status
+  return vendorStore.vendor.reservations.filter(reservation => {
+    if (!reservation.confirmed) return false;
+
+    const reservationDate = new Date(reservation.timeStart);
+    return reservationDate > now;
+  }).length;
+});
 
 const sampleChartData = {
   monday:1,
@@ -27,7 +81,7 @@ const sampleChartData = {
         <div class="">Upcoming Reservations</div>
         <div class="icon right"><CalEventIcon/></div>
       </div>
-      <div class="number">2</div>
+      <div class="number">{{ upcomingReservationsCount }}</div>
     </div>
 
     <div class="overviewCard">
@@ -51,7 +105,7 @@ const sampleChartData = {
         <div class="">Monthly Earnings</div>
         <div class="icon right"><WalletIcon/></div>
       </div>
-      <div class="number">$289</div>
+      <div class="number">{{ formatPrice(monthlyEarnings) }}</div>
     </div>
 
     <div class="overviewRow">
