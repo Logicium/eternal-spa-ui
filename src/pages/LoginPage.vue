@@ -6,7 +6,7 @@ import GuestLoginPanel from "@/components/panels/GuestLoginPanel.vue";
 import VendorLoginPanel from "@/components/panels/VendorLoginPanel.vue";
 import SignupPanel from "@/components/panels/SignupPanel.vue";
 import PwResetPanel from "@/components/panels/PwResetPanel.vue";
-import data from "../data.ts";
+import data from "../data/data.ts";
 
 const toggleGuestLogin = ref(true);
 const toggleVendorLogin = ref(false);

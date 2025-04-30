@@ -2,7 +2,7 @@
 
 import TuneIcon from "@/assets/icons/TuneIcon.vue";
 import {DatePicker as VDatePicker} from "v-calendar";
-import data from "@/data.ts"; // Keep for fallback
+import data from "@/data/data.ts"; // Keep for fallback
 import SearchIcon from "@/assets/icons/SearchIcon.vue";
 import {computed, onMounted, ref, watch} from "vue";
 import Timeslot from "@/components/items/Timeslot.vue";

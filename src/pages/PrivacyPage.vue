@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import data from "../data.ts";
+import data from "../data/data.ts";
 </script>
 
 <template>

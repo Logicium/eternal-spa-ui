@@ -5,6 +5,7 @@ import BackIcon from "@/assets/icons/nav/BackIcon.vue";
 import NextIcon from "@/assets/icons/nav/NextIcon.vue";
 import LoginItem from "@/components/items/LoginItem.vue";
 import {useServicesStore} from "@/stores/ServiceStore.ts";
+import utils from "@/utils/utils.ts";
 
 const props = defineProps(
   {
@@ -43,40 +44,17 @@ const selectedAddons = ref([]);
 const allServicesData = useServicesStore();
 
 const calcPrice = function (){
-  let total = selectedPackage.value.price;
-  if(selectedAddons){
-    selectedAddons.value.forEach((addOn)=>{
-      total += addOn.price;
-    });
-  }
-  return total;
+  return utils.calc.calcTotalPrice(selectedPackage.value.price, selectedAddons.value);
 };
 
 const calcDuration = function (){
-  let total = selectedPackage.value.duration;
-  if(selectedAddons){
-    selectedAddons.value.forEach((addOn)=>{
-      total += addOn.duration;
-    });
-  }
-  return total;
+  return utils.calc.calcTotalDuration(selectedPackage.value.duration, selectedAddons.value);
 };
 
 const calcTimeEnd = function(): Date | null { // Return a Date object or null if input is invalid
   const startTime = dateTime.value; // Assuming dateTime.value holds a Date object
-
-  if (!(startTime instanceof Date) || isNaN(startTime.getTime())) {
-    console.error("Invalid start date/time provided.");
-    return null; // Or throw an error, depending on how you want to handle it
-  }
-
   const totalDurationMinutes = calcDuration();
-
-  const endTime = new Date(startTime.getTime());
-
-  endTime.setMinutes(endTime.getMinutes() + totalDurationMinutes);
-
-  return endTime;
+  return utils.date.calcTimeEnd(startTime, totalDurationMinutes);
 };
 
 watch(()=>props.selectedAddonsNames,(newValue,oldValue)=>{
@@ -111,12 +89,7 @@ watch(()=>props.selectedPackageName,(newValue,oldValue)=>{
 });
 
 const formatTime = function(date: Date){
-  const formatter = new Intl.DateTimeFormat('en-US', {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true
-  });
-  return formatter.format(date);
+  return utils.date.formatTime(date);
 };
 
 const backPanelClick = function(){

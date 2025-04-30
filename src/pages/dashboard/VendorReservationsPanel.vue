@@ -4,6 +4,7 @@ import { useVendorStore } from "../../stores/VendorStore";
 import { useAuthStore } from "../../stores/AuthStore";
 import api from "../../router/api";
 import ReservationDetailPanel from "../../components/ReservationDetailPanel.vue";
+import utils from "@/utils/utils";
 
 const vendorStore = useVendorStore();
 const authStore = useAuthStore();
@@ -21,23 +22,12 @@ const endDate = ref('');
 
 // Function to format date and time
 const formatDateTime = (dateTimeString) => {
-  const date = new Date(dateTimeString);
-  return date.toLocaleString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true
-  });
+  return utils.date.formatDateTime(dateTimeString);
 };
 
 // Function to format price
 const formatPrice = (price) => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD'
-  }).format(price);
+  return utils.calc.formatPrice(price);
 };
 
 // Get vendor reservations from the vendor object

@@ -3,7 +3,7 @@
 import TuneIcon from "@/assets/icons/TuneIcon.vue";
 import SearchIcon from "@/assets/icons/SearchIcon.vue";
 import FeatureItem from "@/components/items/FeatureItem.vue";
-import data from "@/data.ts";
+import data from "@/data/data.ts";
 import PodcastItem from "@/components/items/PodcastItem.vue";
 
 const featuredPodcasts = data.podcasts.filter(podcast => {

@@ -3,7 +3,8 @@ import { ref, computed, onMounted } from "vue";
 import { useVendorStore } from "@/stores/VendorStore";
 import { useAuthStore } from "@/stores/AuthStore";
 import api from "@/router/api";
-import data from "@/data";
+import data from "@/data/data.ts";
+import utils from "@/utils/utils";
 
 const vendorStore = useVendorStore();
 const authStore = useAuthStore();
@@ -33,12 +34,7 @@ const selectedDays = ref({
 
 // Show status message
 const showStatusMessage = (message, type = "success") => {
-  statusMessage.value = message;
-  statusType.value = type;
-  showStatus.value = true;
-  setTimeout(() => {
-    showStatus.value = false;
-  }, 3000);
+  utils.ui.showStatusMessage(message, type, 3000, statusMessage, statusType, showStatus);
 };
 
 // Initialize minimum date on component mount
@@ -47,44 +43,13 @@ onMounted(() => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  // Format date in local timezone (YYYY-MM-DDTHH:MM)
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
-  const hours = String(today.getHours()).padStart(2, '0');
-  const mins = String(today.getMinutes()).padStart(2, '0');
-
-  minDate.value = `${year}-${month}-${day}T${hours}:${mins}`;
+  // Format date using utility function
+  minDate.value = utils.date.formatDateToLocalISOString(today);
 });
 
 // Round time to nearest 15-minute interval
 const roundToNearest15Minutes = (dateTimeStr) => {
-  if (!dateTimeStr) return dateTimeStr;
-
-  const date = new Date(dateTimeStr);
-  const minutes = date.getMinutes();
-  const remainder = minutes % 15;
-
-  // Round to nearest 15 minutes
-  if (remainder < 8) {
-    // Round down
-    date.setMinutes(minutes - remainder);
-  } else {
-    // Round up
-    date.setMinutes(minutes + (15 - remainder));
-  }
-
-  // Reset seconds and milliseconds
-  date.setSeconds(0, 0);
-
-  // Format date in local timezone (YYYY-MM-DDTHH:MM)
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  const hours = String(date.getHours()).padStart(2, '0');
-  const mins = String(date.getMinutes()).padStart(2, '0');
-
-  return `${year}-${month}-${day}T${hours}:${mins}`;
+  return utils.date.roundToNearest15Minutes(dateTimeStr);
 };
 
 // Handle time input changes
@@ -99,14 +64,9 @@ const handleTimeEndChange = (event) => {
 // Validate form
 const validateForm = () => {
   // Check if end time is after start time
-  if (timeStart.value && timeEnd.value) {
-    const start = new Date(timeStart.value);
-    const end = new Date(timeEnd.value);
-
-    if (end <= start) {
-      showStatusMessage("End time must be after start time", "error");
-      return false;
-    }
+  if (!utils.form.validateTimeRange(timeStart.value, timeEnd.value)) {
+    showStatusMessage("End time must be after start time", "error");
+    return false;
   }
 
   return true;

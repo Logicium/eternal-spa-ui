@@ -5,7 +5,7 @@ import GridIcon from "@/assets/icons/GridIcon.vue";
 import CalendarIcon from "@/assets/icons/cal/CalendarIcon.vue";
 import {ref, watch} from "vue";
 import ListItem from "@/components/items/ListItem.vue";
-import data from "@/data.ts";
+import data from "@/data/data.ts";
 import GridItem from "@/components/items/GridItem.vue";
 import {DatePicker as VDatePicker} from "v-calendar";
 import CalItem from "@/components/items/CalItem.vue";

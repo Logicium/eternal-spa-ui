@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import data from "../data.ts";
+import data from "../data/data.ts";
 import HomeCard from "@/components/cards/HomeCard.vue";
 import HomeCardRev from "@/components/cards/HomeCardRev.vue";
 </script>

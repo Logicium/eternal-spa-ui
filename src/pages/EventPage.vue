@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import data from "@/data.ts";
+import data from "@/data/data.ts";
 import {useRoute} from "vue-router";
 import {computed, ref} from "vue";
 import Map from "@/components/Map.vue";

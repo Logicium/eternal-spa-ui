@@ -7,15 +7,13 @@ import WalletIcon from "@/assets/icons/WalletIcon.vue";
 import ChartCard from "@/components/cards/ChartCard.vue";
 import { useVendorStore } from "../../stores/VendorStore";
 import { computed } from "vue";
+import utils from "@/utils/utils.ts";
 
 const vendorStore = useVendorStore();
 
 // Function to format price
 const formatPrice = (price) => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD'
-  }).format(price);
+  return utils.calc.formatPrice(price);
 };
 
 // Calculate monthly earnings

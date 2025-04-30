@@ -3,16 +3,17 @@
 import LocationIcon from "@/assets/icons/LocationIcon.vue";
 import TimeIcon from "@/assets/icons/TimeIcon.vue";
 import {ref} from "vue";
+import utils from "@/utils/utils";
 
 const props = defineProps({
   data: { type: Object, default: ()=>{}},
 })
 
 let dateTime = new Date(props.data.time);
-let day = dateTime.toLocaleString('en-US', {weekday: 'short'});
+let day = utils.date.formatWeekday(dateTime);
 let date = ref(dateTime.getDate());
-let month = dateTime.toLocaleString('en-US', {month: 'short'});
-let time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true });
+let month = utils.date.formatMonth(dateTime);
+let time = utils.date.formatTimeShort(dateTime);
 
 </script>
 

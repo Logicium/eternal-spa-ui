@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineProps, defineEmits } from 'vue';
+import utils from "@/utils/utils";
 
 // Define props
 const props = defineProps({
@@ -14,23 +15,12 @@ const emit = defineEmits(['close']);
 
 // Format date and time
 const formatDateTime = (dateTimeString) => {
-  const date = new Date(dateTimeString);
-  return date.toLocaleString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true
-  });
+  return utils.date.formatDateTime(dateTimeString);
 };
 
 // Format price
 const formatPrice = (price) => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD'
-  }).format(price);
+  return utils.calc.formatPrice(price);
 };
 
 // Close detail view
