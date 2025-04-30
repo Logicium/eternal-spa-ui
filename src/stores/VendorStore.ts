@@ -2,11 +2,13 @@ import {defineStore} from "pinia";
 import {createFetch, useFetch, useLocalStorage, useStorage} from "@vueuse/core";
 import api from "../router/api";
 import router from "../router";
+import type { Vendor } from "@/interfaces";
+
 export const useVendorStore = defineStore({
   id:"VendorStore",
   state:()=>{
     return {
-      vendor: useStorage('vendor', null)
+      vendor: useStorage('vendor', null) as Vendor | null
     };
   },
   actions:{

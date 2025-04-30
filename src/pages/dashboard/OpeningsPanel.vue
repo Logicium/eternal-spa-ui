@@ -6,6 +6,7 @@ import { useServicesStore } from "@/stores/ServiceStore";
 import api from "@/router/api";
 import OpeningDetailPanel from "@/components/OpeningDetailPanel.vue";
 import utils from "@/utils/utils.ts";
+import type { Opening, Service } from "@/interfaces";
 // No longer need to import data as we're using vendor object for openings
 
 const vendorStore = useVendorStore();
@@ -13,7 +14,7 @@ const authStore = useAuthStore();
 const servicesStore = useServicesStore();
 
 // Selected opening for detail view
-const selectedOpening = ref(null);
+const selectedOpening = ref<Opening | null>(null);
 const showDetailView = ref(false);
 
 // Form data
@@ -42,7 +43,7 @@ const selectedDays = ref({
 });
 
 // Get services for dropdown
-const services = computed(() => {
+const services = computed<{ id: number | string; name: string }[]>(() => {
   if (!servicesStore.services) return [];
   return servicesStore.services.map(service => ({
     id: service.id,
@@ -147,7 +148,7 @@ const onSubmit = async function(e) {
 
   try {
     // Create opening object
-    const opening = {
+    const opening: Opening = {
       id: 0, // Backend will assign real ID
       serviceType: serviceType.value,
       serviceId: serviceId.value,

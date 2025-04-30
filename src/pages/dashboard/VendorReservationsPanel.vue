@@ -5,13 +5,14 @@ import { useAuthStore } from "../../stores/AuthStore";
 import api from "../../router/api";
 import ReservationDetailPanel from "../../components/ReservationDetailPanel.vue";
 import utils from "@/utils/utils";
+import type { Reservation } from "@/interfaces";
 
 const vendorStore = useVendorStore();
 const authStore = useAuthStore();
-const reservations = ref([]);
+const reservations = ref<Reservation[]>([]);
 const isLoading = ref(true);
 const errorMessage = ref('');
-const selectedReservation = ref(null);
+const selectedReservation = ref<Reservation | null>(null);
 const showDetailPanel = ref(false);
 
 // Search and filter state

@@ -1,11 +1,13 @@
 import {defineStore} from "pinia";
 import {useFetch, useStorage} from "@vueuse/core";
 import api from "@/router/api";
+import type { Service } from "@/interfaces";
+
 export const useServicesStore = defineStore({
   id:"ServicesStore",
   state:()=>{
     return {
-      services: useStorage('services',null)
+      services: useStorage('services',null) as Service[] | null
     };
   },
   actions:{
