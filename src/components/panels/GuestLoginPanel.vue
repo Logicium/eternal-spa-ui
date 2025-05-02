@@ -28,7 +28,8 @@ const authStore = useAuthStore();
 const onSubmit = function (e:any){
   const form = e.target;
   const formData = new FormData(form);
-  const entries = Object.fromEntries(formData.entries())
+  const entries = Object.fromEntries(formData.entries());
+  console.log(entries);
   fetch(form.action, {
     method: form.method,
     body: JSON.stringify(entries),

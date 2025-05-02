@@ -4,6 +4,7 @@ import router from "@/router";
 import {useAuthStore} from "../stores/AuthStore";
 import {useAccountStore} from "../stores/AccountStore";
 import { computed } from 'vue';
+import LoadingPage from "@/pages/LoadingPage.vue";
 
 const authStore = useAuthStore();
 const accountStore = useAccountStore();
@@ -20,37 +21,17 @@ const logoutClick = function(){
   router.push('/login')
 }
 
-// Computed properties with getters and setters for form fields
-const firstName = computed({
-  get: () => accountStore.guest?.firstName || '',
-  set: (value) => accountStore.updateGuestProperty('firstName', value)
-});
-
-const lastName = computed({
-  get: () => accountStore.guest?.lastName || '',
-  set: (value) => accountStore.updateGuestProperty('lastName', value)
-});
-
-const phone = computed({
-  get: () => accountStore.guest?.phone || '',
-  set: (value) => accountStore.updateGuestProperty('phone', value)
-});
-
-const email = computed({
-  get: () => accountStore.guest?.email || '',
-  set: (value) => accountStore.updateGuestProperty('email', value)
-});
-
 </script>
 
 <template>
-  <div v-if="authStore.token">
+  <LoadingPage v-if="!accountStore.guest"/>
+  <div v-else-if="authStore.token && accountStore.guest && accountStore.guest.reservations">
     <div class="header">ACCOUNT</div>
     <div class="panelFull">
 
-      <div class="outline">
-        <div class="title">Hi {{accountStore?.guest?.firstName}}</div>
-        <div>No upcoming reservations.</div>
+      <div class="filled summary">
+        <div class="title">Hi {{accountStore.guest.firstName}}</div>
+        <div class="empty"><div>No upcoming reservations.</div></div>
       </div>
 
       <div class="accountGrid">
@@ -61,38 +42,10 @@ const email = computed({
             <div class="button underline rev">View All</div>
           </div>
           <div class="filledRev stat">
-            <div class="title">{{accountStore?.guest?.reservations?.length}}</div>
+            <div class="title">{{accountStore.guest.reservations.length}}</div>
             <div>Reservations</div>
           </div>
         </div>
-
-        <div class="filled span">
-
-          <div class="settings">
-            <div class="title">Settings</div>
-            <div>Contact Info</div>
-            <div class="names">
-              <input class="gap" type="text" v-model="firstName" placeholder="First Name"/>
-              <input type="text" v-model="lastName" placeholder="Last Name"/>
-            </div>
-            <input type="text" placeholder="Phone" v-model="phone">
-            <input type="email" placeholder="Email" v-model="email"/>
-            <div class="button underline rev">Contact Preferences</div>
-            <div class="button underline rev">Security & Data</div>
-            <div class="button underline rev" @click="logoutClick">Logout</div>
-<!--            <div><input type="checkbox" /> Email Notifications</div>-->
-<!--            <div><input type="checkbox"/> SMS Notifications</div>-->
-<!--            <div><input type="checkbox"/> Newsletter Signup</div>-->
-            <div class="buttons">
-              <div class="button gap">Save Settings</div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
 
         <div class="item filled">
           <div class="wrap">
@@ -100,16 +53,42 @@ const email = computed({
             <div class="button underline rev">View Rewards</div>
           </div>
           <div class="filledRev stat">
-            <div class="title">{{accountStore?.guest?.rewardsPoints}}</div>
+            <div class="title">{{accountStore.guest.rewardsPoints}}</div>
             <div>Rewards Points</div>
           </div>
         </div>
 
+        <div class="outline span">
+
+          <div class="settings">
+            <div class="title">Settings</div>
+            <div>Contact Info</div>
+            <div class="names">
+              <input class="gap" type="text" v-model="accountStore.guest.firstName" placeholder="First Name"/>
+              <input type="text" v-model="accountStore.guest.lastName" placeholder="Last Name"/>
+            </div>
+            <input type="text" placeholder="Phone" v-model="accountStore.guest.phone">
+            <input type="email" placeholder="Email" v-model="accountStore.guest.email"/>
+            <div class="top">Contact Preferences</div>
+            <div><input type="checkbox" /> Email Notifications</div>
+            <div><input type="checkbox"/> SMS Notifications</div>
+            <div><input type="checkbox"/> Newsletter Signup</div>
+            <div class="buttons">
+              <div class="row">
+                <div class="button underline rev">Security & Data</div>
+                <div class="button underline rev" @click="logoutClick">Logout</div>
+              </div>
+              <div class="button mt-a">Save Settings</div>
+            </div>
+
+          </div>
+
+        </div>
 
       </div>
     </div>
   </div>
-  <template v-else>
+  <template v-else-if="!authStore.token">
     {{router.push('/login')}}
   </template>
 
@@ -130,9 +109,22 @@ const email = computed({
   justify-content: space-between;
 }
 
+.mt-a{
+  margin-top: auto;
+}
+
+.empty{
+  position: absolute;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
 .settings{
   display: flex;
-  padding: 1vw;
   height: 100%;
   flex-direction: column;
   justify-content: space-between;
@@ -145,19 +137,28 @@ const email = computed({
 
 .buttons{
   display: flex;
+  justify-content: space-between;
+}
+
+.summary{
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  padding: 1vw;
+  height: 25vh;
 }
 
 .accountGrid{
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  height: 50vh;
+  grid-template-rows: 25vh 1fr;
   grid-gap: 1vw;
-  margin-top: 2rem;
+  margin-top: 1vw;
 }
 
 .span{
   grid-row: span 2;
+  grid-column: span 2;
 }
 
 .panelFull{
@@ -202,12 +203,13 @@ const email = computed({
 
 input{
   height: 45px;
-  background-color: $secondary;
+  background-color: $primary;
   border: none;
-  border-radius: 6px;
+  border-bottom: 4px solid $secondary;
   width: 100%;
   font-family: "Outfit", sans-serif;
   font-size: $fontNormal;
+  margin-bottom: 1vw;
 }
 
 input[type="checkbox"]{

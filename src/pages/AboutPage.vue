@@ -4,7 +4,7 @@ import api from "@/router/api.ts";
 import LoadingPage from "@/pages/LoadingPage.vue";
 
 const fetchedData = ref(null);
-const imageUrl = ref(null);
+const imageUrl = ref();
 const fetchData = async function (){
   const response = await fetch(`${api.about_page}?populate=*`, {});
   const data = await response.json();
