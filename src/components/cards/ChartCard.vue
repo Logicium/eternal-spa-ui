@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, PropType } from 'vue';
+import { computed, type PropType } from 'vue';
 import {
   Chart as ChartJS,
   Title,
@@ -8,8 +8,8 @@ import {
   BarElement,         // Element type for Bar chart
   CategoryScale,      // Scale for X-axis (labels like 'Monday')
   LinearScale,        // Scale for Y-axis (numerical values)
-  ChartData,          // Type helper for chart data
-  ChartOptions        // Type helper for chart options
+  type ChartData,          // Type helper for chart data
+  type ChartOptions        // Type helper for chart options
 } from 'chart.js';
 
 import { Bar } from 'vue-chartjs';

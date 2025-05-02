@@ -121,10 +121,9 @@ const dateUtils = {
    * @param durationMinutes - Duration in minutes
    * @returns End time as Date object or null if input is invalid
    */
-  calcTimeEnd: (startTime: Date, durationMinutes: number): Date | null => {
+  calcTimeEnd: (startTime: Date, durationMinutes: number): Date => {
     if (!(startTime instanceof Date) || isNaN(startTime.getTime())) {
       console.error("Invalid start date/time provided.");
-      return null;
     }
 
     const endTime = new Date(startTime.getTime());

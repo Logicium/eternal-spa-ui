@@ -10,5 +10,6 @@ export interface Guest {
   city?: string;
   state?: string;
   zip?: string;
+  rewardsPoints?: number;
   reservations?: Reservation[];
 }

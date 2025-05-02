@@ -6,21 +6,25 @@ import NextIcon from "@/assets/icons/nav/NextIcon.vue";
 import LoginItem from "@/components/items/LoginItem.vue";
 import {useServicesStore} from "@/stores/ServiceStore.ts";
 import utils from "@/utils/utils.ts";
+import type {Booking} from "@/interfaces/Booking.ts";
+import type {Addon} from "@/interfaces/Addon.ts";
+import type {Package} from "@/interfaces";
 
 const props = defineProps(
   {
     backClick: {
-      type: Function
+      type: Function,
+      required: true,
     },
     toggle:{
-      type: Object
+      type: Boolean
     },
     data:{
-      type: Object,
+      type:Object,
       required:true,
     },
     selectedPackageName:{
-      type:Object
+      type:String
     },
     selectedAddonsNames:{
       type:Object
@@ -38,7 +42,7 @@ const time = ref();
 const serviceData = ref();
 const serviceImage = ref();
 
-const selectedPackage = ref({desc:'',duration:0,price:0});
+const selectedPackage = ref({id:'',name:'',desc:'',duration:0,price:0});
 const selectedAddons = ref([]);
 
 const allServicesData = useServicesStore();
@@ -51,7 +55,7 @@ const calcDuration = function (){
   return utils.calc.calcTotalDuration(selectedPackage.value.duration, selectedAddons.value);
 };
 
-const calcTimeEnd = function(): Date | null { // Return a Date object or null if input is invalid
+const calcTimeEnd = function(): Date { // Return a Date object or null if input is invalid
   const startTime = dateTime.value; // Assuming dateTime.value holds a Date object
   const totalDurationMinutes = calcDuration();
   return utils.date.calcTimeEnd(startTime, totalDurationMinutes);
@@ -59,7 +63,7 @@ const calcTimeEnd = function(): Date | null { // Return a Date object or null if
 
 watch(()=>props.selectedAddonsNames,(newValue,oldValue)=>{
   if(newValue){
-    selectedAddons.value = serviceData.value.addons.filter( addOn => (
+    selectedAddons.value = serviceData.value.addons.filter( (addOn:Addon) => (
       newValue.includes(addOn.name)
     ));
   }
@@ -75,14 +79,14 @@ watch(()=>props.data,(newValue,oldValue)=>{
     year.value = dateTime.value.toLocaleString('en-US', {year: 'numeric'});
     time.value = formatTime(dateTime.value);
 
-    serviceData.value = allServicesData.services.find(service => (service.id === newValue.service) );
+    serviceData.value = allServicesData?.services?.find(service => (service.id === newValue.service) );
     serviceImage.value = computed(()=> 'url("'+serviceData.value.image+'")').value;
   }
 });
 
 watch(()=>props.selectedPackageName,(newValue,oldValue)=>{
   if(newValue) {
-    selectedPackage.value = serviceData.value.packages.find(packageItem => (
+    selectedPackage.value = serviceData.value.packages.find((packageItem:Package) => (
       packageItem.name === newValue
     ));
   }

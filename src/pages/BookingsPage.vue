@@ -11,8 +11,11 @@ import SummaryPanel from "@/components/panels/SummaryPanel.vue";
 import BackIcon from "@/assets/icons/nav/BackIcon.vue";
 import {useServicesStore} from "@/stores/ServiceStore.ts";
 import api from "@/router/api";
+import type {Booking} from "@/interfaces/Booking.ts";
+import type {Addon} from "@/interfaces/Addon.ts";
+import type {Package} from "@/interfaces";
 
-const dates = [];
+const dates:any = [];
 
 const attributes = ref([{
       dot: true,
@@ -30,23 +33,22 @@ const formatTime = function(date: Date){
   return formatter.format(date);
 };
 
-const compareDates = function(unixTimestamp: number, dateString:any) {
+const compareDates = function(unixTimestamp: string, dateString:any) {
   const firstDate = new Date(unixTimestamp);
   const secondDate = new Date(dateString);
-
   return (firstDate.getUTCFullYear() === secondDate.getUTCFullYear()
-    && firstDate.getUTCMonth() === secondDate.getUTCMonth()
+    && firstDate.getMonth() === secondDate.getMonth()
     && firstDate.getDate() === secondDate.getDate());
 };
 
-const compareServiceTypes = function(serviceName:string,searchedName:string){
-  return (serviceName.toLowerCase() === searchedName.toLowerCase())
+const compareServiceTypes = function(serviceName:string,searchedName:string|null){
+  if(searchedName) return (serviceName.toLowerCase() === searchedName.toLowerCase())
 }
 
 const selectedService = ref(null);
-const allBookings = ref([]);
-const selectedBooking = ref(null);
-const searchedBookings = ref(new Array(0));
+const allBookings = ref<Booking[]>();
+const selectedBooking = ref<Booking | null>();
+const searchedBookings = ref(Array(0));
 const allServiceBookings = ref(Array(0));
 const isLoading = ref(true);
 
@@ -58,19 +60,15 @@ const fetchBookings = async () => {
     if (response.ok) {
       const bookingsData = await response.json();
       // Map the received data to add the missing selected ref property
-      allBookings.value = bookingsData.map(booking => ({
+      allBookings.value = bookingsData.map((booking:Booking) => ({
         ...booking,
         selected: ref(false)
       }));
     } else {
       console.error('Failed to fetch bookings');
-      // Fallback to data.bookings if API call fails
-      allBookings.value = data.bookings;
     }
   } catch (error) {
     console.error('Error fetching bookings:', error);
-    // Fallback to data.bookings if API call fails
-    allBookings.value = data.bookings;
   } finally {
     isLoading.value = false;
   }
@@ -83,22 +81,28 @@ onMounted(() => {
 
 const allServicesData = useServicesStore();
 
-const selectTime = function(id:number){
-  for (let i = 0; i < allBookings.value.length; i++) {
-    if (allBookings.value[i].id !== id) {
-      allBookings.value[i].selected = false
+const selectTime = function(id:string){
+  if(allBookings.value) {
+    for (let i = 0; i < allBookings.value.length; i++) {
+      if (allBookings.value[i].id !== id) {
+        allBookings.value[i].selected = false
+      }
+      else {
+        allBookings.value[i].selected = true;
+        selectedBooking.value = allBookings.value[i];
+      }
     }
-    else {
-      allBookings.value[i].selected = true;
-      selectedBooking.value = allBookings.value[i];
-    }
+
   }
+
 }
 
 const resetSelection = function(){
-  allBookings.value.forEach(booking =>{
-    booking.selected = false;
-  });
+  if(allBookings.value) {
+    allBookings.value.forEach(booking =>{
+      booking.selected = false;
+    });
+  }
 }
 
 const nextClick = ref(false);
@@ -130,35 +134,37 @@ const nextPanelClick = function (){
 }
 
 watch(date,(newValue,oldValue)=>{
-  searchedBookings.value = allBookings.value.filter(booking =>
-    (compareDates(booking.timeStart,newValue) &&
-      compareServiceTypes(booking.serviceType,selectedService.value))
-  );
-  selectedBooking.value = null;
-  resetSelection();
+  if(allBookings.value && selectedService.value && newValue){
+    searchedBookings.value = allBookings.value.filter(booking =>
+      (compareDates(booking.timeStart,newValue) &&
+        compareServiceTypes(booking.serviceType,selectedService.value))
+    );
+    selectedBooking.value = null;
+    resetSelection();
+  }
 });
 
 watch(selectedService,(newValue,oldValue)=>{
-
-  allServiceBookings.value = allBookings.value.filter(booking =>
+  if(allBookings.value && newValue) {
+    allServiceBookings.value = allBookings.value.filter(booking =>
       compareServiceTypes(booking.serviceType,newValue)
-  );
+    );
 
-  attributes.value = [{
-    dot:true,dates:allServiceBookings.value.map(booking  => booking.timeStart)
-  }];
+    attributes.value = [{
+      dot:true,dates:allServiceBookings.value.map(booking  => booking.timeStart)
+    }];
 
-  searchedBookings.value = allBookings.value.filter(booking =>
-    (compareDates(booking.timeStart,date.value) &&
-      compareServiceTypes(booking.serviceType,newValue))
-  );
+    searchedBookings.value = allBookings.value.filter(booking =>
+      (compareDates(booking.timeStart,date.value) &&
+        compareServiceTypes(booking.serviceType,newValue))
+    );
 
-  serviceData.value = allServicesData.services.find(service => (service.name === newValue));
-  serviceImage.value = computed(()=> 'url("'+serviceData.value.image+'")').value;
+    serviceData.value = allServicesData?.services?.find(service => (service.name === newValue));
+    serviceImage.value = computed(()=> 'url("'+serviceData.value.image+'")').value;
 
-  selectedBooking.value = null;
-  resetSelection();
-
+    selectedBooking.value = null;
+    resetSelection();
+  }
 });
 
 const serviceData = ref();
@@ -166,17 +172,17 @@ const serviceImage = ref();
 const selectedPackage = ref({desc:'',duration:0,price:0});
 const selectedPackageName = ref(null);
 const selectedAddons = ref([]);
-const selectedAddonsNames = ref([]);
+const selectedAddonsNames = ref<String[]>(Array());
 
 watch(selectedAddonsNames,(newValue,oldValue)=>{
-  selectedAddons.value = serviceData.value.addons.filter( addOn => (
+  selectedAddons.value = serviceData.value.addons.filter((addOn:Addon) => (
     selectedAddonsNames.value.includes(addOn.name)
   ));
 });
 
 watch(selectedPackageName,(newValue,oldValue)=>{
   if(selectedPackageName.value) {
-    selectedPackage.value = serviceData.value.packages.find(packageItem => (
+    selectedPackage.value = serviceData.value.packages.find((packageItem:Package) => (
       packageItem.name === newValue
     ));
   }

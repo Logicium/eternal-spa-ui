@@ -5,7 +5,7 @@ import {ref} from "vue";
 import api from "@/router/api.ts";
 
 const props = defineProps({
-  guestId:{type:String},
+  guestId:{type:String,nullable:true},
   vendorId:{type:String},
   timeStart:{type:String},
   timeEnd:{type:String},

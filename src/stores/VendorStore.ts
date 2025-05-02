@@ -1,14 +1,18 @@
 import {defineStore} from "pinia";
-import {createFetch, useFetch, useLocalStorage, useStorage} from "@vueuse/core";
+import {createFetch, type RemovableRef, useFetch, useLocalStorage, useStorage} from "@vueuse/core";
 import api from "../router/api";
 import router from "../router";
 import type { Vendor } from "@/interfaces";
 
+interface VendorStore {
+  vendor: RemovableRef<Vendor | null>;
+}
+
 export const useVendorStore = defineStore({
   id:"VendorStore",
-  state:()=>{
+  state:():VendorStore=>{
     return {
-      vendor: useStorage('vendor', null) as Vendor | null
+      vendor: useStorage('vendor', null)
     };
   },
   actions:{
@@ -25,7 +29,7 @@ export const useVendorStore = defineStore({
         const {isFetching,data,error} = await fetchUser(api.vendor.account).json();
 
         // Set vendor data
-        this.vendor = (await data);
+        this.vendor = (await data.value);
 
         // If vendor data is null or undefined, redirect to login
         if (!this.vendor) {
