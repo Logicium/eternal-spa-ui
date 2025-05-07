@@ -1,9 +1,10 @@
 import type { Package } from './Package';
 
 export interface Service {
-  id: number | string;
+  id: string;
   name: string;
-  description?: string;
+  image?: string;
+  desc?: string;
   price?: number;
   duration?: number;
   vendorId?: string;

@@ -14,12 +14,12 @@ const props = defineProps({
 const emit = defineEmits(['close']);
 
 // Format date and time
-const formatDateTime = (dateTimeString) => {
+const formatDateTime = (dateTimeString:string) => {
   return utils.date.formatDateTime(dateTimeString);
 };
 
 // Format price
-const formatPrice = (price) => {
+const formatPrice = (price:number) => {
   return utils.calc.formatPrice(price);
 };
 

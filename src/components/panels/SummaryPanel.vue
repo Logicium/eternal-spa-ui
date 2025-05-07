@@ -20,11 +20,10 @@ const props = defineProps(
       type: Boolean
     },
     data:{
-      type:Object,
-      required:true,
+      type:[Object as () => Booking,null],
     },
     selectedPackageName:{
-      type:String
+      type:[String,null]
     },
     selectedAddonsNames:{
       type:Object
@@ -117,8 +116,8 @@ const backPanelClick = function(){
               <div class="col">
                 <div class="title">Booking Summary</div>
                 <div>Service: {{serviceData.name}} | {{selectedPackage.name}}</div>
-                <div>Add ons: {{selectedAddonsNames.toString()}}
-                  <template v-if="selectedAddonsNames.length===0">None</template>
+                <div>Add ons: {{selectedAddonsNames?.toString()}}
+                  <template v-if="selectedAddonsNames?.length===0">None</template>
                 </div>
                 <div>Date: {{day}} {{date}}, {{month}} {{year}}
                 </div><div>Time: {{time}}</div>

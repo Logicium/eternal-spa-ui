@@ -22,12 +22,12 @@ const startDate = ref('');
 const endDate = ref('');
 
 // Function to format date and time
-const formatDateTime = (dateTimeString) => {
+const formatDateTime = (dateTimeString:string) => {
   return utils.date.formatDateTime(dateTimeString);
 };
 
 // Function to format price
-const formatPrice = (price) => {
+const formatPrice = (price:number) => {
   return utils.calc.formatPrice(price);
 };
 
@@ -72,7 +72,7 @@ const refreshVendorData = async () => {
 };
 
 // View reservation details
-const viewReservationDetails = (reservation) => {
+const viewReservationDetails = (reservation:Reservation) => {
   selectedReservation.value = reservation;
   showDetailPanel.value = true;
 };

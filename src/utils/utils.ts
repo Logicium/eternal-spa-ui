@@ -145,7 +145,7 @@ const uiUtils = {
    */
   showStatusMessage: (
     message: string,
-    type: 'success' | 'error' = 'success',
+    type: string,
     duration: number = 3000,
     statusMessage: any,
     statusType: any,

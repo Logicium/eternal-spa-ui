@@ -6,7 +6,8 @@ import BackIcon from "@/assets/icons/nav/BackIcon.vue";
 
 const props = defineProps({
   toggleGuestLoginClick:{
-    type:Function
+    type:Function,
+    required:true
   },
 });
 
@@ -29,7 +30,7 @@ const loginClick = function (){
         <div class="desc">Please enter your email to reset your password. If there's an email on file you will be sent a reset link.</div>
         <input type="email" v-model="email" placeholder="Email">
         <div class="buttons">
-          <div class="button ghost gap" @click="toggleGuestLoginClick"><BackIcon/> Back</div>
+          <div class="button ghost gap" @click="toggleGuestLoginClick()"><BackIcon/> Back</div>
           <input type="submit" class="button" @click="loginClick" :value="buttonText"/>
         </div>
       </div>

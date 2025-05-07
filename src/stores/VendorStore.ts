@@ -16,7 +16,7 @@ export const useVendorStore = defineStore({
     };
   },
   actions:{
-    async fill(token:string){
+    async fill(token:string|null){
       try {
         const fetchUser = createFetch({
           options: {

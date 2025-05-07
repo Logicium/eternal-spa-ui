@@ -9,13 +9,16 @@ import {useAuthStore} from "@/stores/AuthStore";
 
 const props = defineProps({
   toggleVendorLoginClick:{
-    type:Function
+    type:Function,
+    required:true
   },
   toggleSignupPanelClick:{
-    type:Function
+    type:Function,
+    required:true
   },
   togglePwResetPanelClick:{
-    type:Function
+    type:Function,
+    required:true
   }
 });
 
@@ -59,12 +62,12 @@ const onSubmit = function (e:any){
           <input type="email" name="email" v-model="email" placeholder="Email">
           <input type="password" name="password" v-model="password" placeholder="Password">
           <div class="loginOptions">
-            <div class="link" @click="togglePwResetPanelClick">Password Reset</div>
-            <div class="link" @click="toggleVendorLoginClick">Vendor Login</div>
+            <div class="link" @click="togglePwResetPanelClick()">Password Reset</div>
+            <div class="link" @click="toggleVendorLoginClick()">Vendor Login</div>
           </div>
           <div class="buttons">
             <input type="submit" class="button gap" :value="buttonText"/>
-            <div class="button ghost" @click="toggleSignupPanelClick">Sign Up <NextIcon/></div>
+            <div class="button ghost" @click="toggleSignupPanelClick()">Sign Up <NextIcon/></div>
           </div>
       </div>
     </form>

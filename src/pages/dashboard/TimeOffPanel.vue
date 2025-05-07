@@ -33,7 +33,7 @@ const selectedDays = ref({
 });
 
 // Show status message
-const showStatusMessage = (message, type = "success") => {
+const showStatusMessage = (message:string, type = "success") => {
   utils.ui.showStatusMessage(message, type, 3000, statusMessage, statusType, showStatus);
 };
 
@@ -48,16 +48,16 @@ onMounted(() => {
 });
 
 // Round time to nearest 15-minute interval
-const roundToNearest15Minutes = (dateTimeStr) => {
+const roundToNearest15Minutes = (dateTimeStr:string) => {
   return utils.date.roundToNearest15Minutes(dateTimeStr);
 };
 
 // Handle time input changes
-const handleTimeStartChange = (event) => {
+const handleTimeStartChange = (event:any) => {
   timeStart.value = roundToNearest15Minutes(event.target.value);
 };
 
-const handleTimeEndChange = (event) => {
+const handleTimeEndChange = (event:any) => {
   timeEnd.value = roundToNearest15Minutes(event.target.value);
 };
 
@@ -73,7 +73,7 @@ const validateForm = () => {
 };
 
 // Handle form submission
-const onSubmit = async function(e) {
+const onSubmit = async function(e:any) {
   e.preventDefault();
 
   // Validate form
@@ -91,7 +91,9 @@ const onSubmit = async function(e) {
       timeStart: timeStart.value,
       timeEnd: timeEnd.value,
       reason: reason.value,
-      isSeries: isSeriesTimeOff.value
+      isSeries: isSeriesTimeOff.value,
+      repeatWeeks : 0,
+      selectedDays: {}
     };
 
     // Add series properties if it's a series time off

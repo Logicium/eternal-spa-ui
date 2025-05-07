@@ -10,7 +10,8 @@ import {useAuthStore} from "@/stores/AuthStore";
 
 const props = defineProps({
   toggleGuestLoginClick:{
-    type:Function
+    type:Function,
+    required:true
   }
 });
 
@@ -70,7 +71,7 @@ const onSubmit = function (e:any){
           <div>I agree to the Terms of Service and Privacy Policy.*</div>
         </div>
         <div class="buttons">
-          <div class="button ghost gap" @click="toggleGuestLoginClick"><BackIcon/>Back</div>
+          <div class="button ghost gap" @click="toggleGuestLoginClick()"><BackIcon/>Back</div>
           <input type="submit" class="button gap" :value="buttonText"/>
         </div>
       </div>

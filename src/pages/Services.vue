@@ -4,8 +4,9 @@ import ServiceFull from "@/components/ServiceFull.vue";
 import LoadingPage from "@/pages/LoadingPage.vue";
 import {computed, ref, watch} from "vue";
 import api from "@/router/api.ts";
+import type {Service} from "@/interfaces";
 
-const fetchedData = ref(null);
+const fetchedData = ref<Service[] | null>(null);
 
 const fetchData = async function (){
   const response = await fetch(`${api.services.list}`, {});

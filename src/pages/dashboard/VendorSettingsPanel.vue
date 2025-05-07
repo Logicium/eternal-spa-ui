@@ -12,7 +12,7 @@ const firstName = ref(vendorStore.vendor?.firstName || '');
 const lastName = ref(vendorStore.vendor?.lastName || '');
 const email = ref(vendorStore.vendor?.email || '');
 const phone = ref(vendorStore.vendor?.phone || '');
-const currentPassword = ref('');
+const currentPassword = ref(vendorStore.vendor?.password || '');
 const newPassword = ref('');
 const confirmPassword = ref('');
 
@@ -22,7 +22,7 @@ const showStatus = ref(false);
 const buttonText = ref('Save Changes');
 
 // Function to show status messages
-const showStatusMessage = (message, type = 'success') => {
+const showStatusMessage = (message:string, type = 'success') => {
   statusMessage.value = message;
   statusType.value = type;
   showStatus.value = true;
@@ -50,7 +50,10 @@ const onSubmit = async () => {
       firstName: firstName.value,
       lastName: lastName.value,
       email: email.value,
-      phone: phone.value
+      phone: phone.value,
+      currentPassword: currentPassword.value,
+      newPassword: newPassword.value,
+      confirmPassword: confirmPassword.value,
     };
 
     // Add password fields if user is changing password
@@ -106,41 +109,22 @@ const onSubmit = async () => {
 
         <div class="form-group">
           <label for="firstName">First Name</label>
-          <input
-            id="firstName"
-            type="text"
-            v-model="firstName"
-            required
-          >
+          <input id="firstName" type="text" v-model="firstName" required>
         </div>
 
         <div class="form-group">
           <label for="lastName">Last Name</label>
-          <input
-            id="lastName"
-            type="text"
-            v-model="lastName"
-            required
-          >
+          <input id="lastName" type="text" v-model="lastName" required>
         </div>
 
         <div class="form-group">
           <label for="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            v-model="email"
-            required
-          >
+          <input id="email" type="email" v-model="email" required>
         </div>
 
         <div class="form-group">
           <label for="phone">Phone Number</label>
-          <input
-            id="phone"
-            type="tel"
-            v-model="phone"
-          >
+          <input id="phone" type="tel" v-model="phone">
         </div>
       </div>
 
@@ -150,29 +134,17 @@ const onSubmit = async () => {
 
         <div class="form-group">
           <label for="currentPassword">Current Password</label>
-          <input
-            id="currentPassword"
-            type="password"
-            v-model="currentPassword"
-          >
+          <input id="currentPassword" type="password" v-model="currentPassword">
         </div>
 
         <div class="form-group">
           <label for="newPassword">New Password</label>
-          <input
-            id="newPassword"
-            type="password"
-            v-model="newPassword"
-          >
+          <input id="newPassword" type="password" v-model="newPassword">
         </div>
 
         <div class="form-group">
           <label for="confirmPassword">Confirm New Password</label>
-          <input
-            id="confirmPassword"
-            type="password"
-            v-model="confirmPassword"
-          >
+          <input id="confirmPassword" type="password" v-model="confirmPassword">
         </div>
       </div>
 

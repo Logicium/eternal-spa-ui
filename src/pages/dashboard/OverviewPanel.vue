@@ -12,7 +12,7 @@ import utils from "@/utils/utils.ts";
 const vendorStore = useVendorStore();
 
 // Function to format price
-const formatPrice = (price) => {
+const formatPrice = (price:number) => {
   return utils.calc.formatPrice(price);
 };
 

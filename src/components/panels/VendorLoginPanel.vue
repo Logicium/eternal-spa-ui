@@ -8,10 +8,12 @@ import api from "@/router/api.ts";
 
 const props = defineProps({
   toggleGuestLoginClick:{
-    type:Function
+    type:Function,
+    required:true
   },
   togglePwResetPanelClick:{
-    type:Function
+    type:Function,
+    required:true
   }
 });
 
@@ -52,8 +54,8 @@ const onSubmit = function (e:any){
         <input type="email" name="email" v-model="email" placeholder="Email">
         <input type="password" name="password" v-model="password" placeholder="Password">
         <div class="loginOptions">
-          <div class="link" @click="togglePwResetPanelClick">Password Reset</div>
-          <div class="link" @click="toggleGuestLoginClick">Guest Login</div>
+          <div class="link" @click="togglePwResetPanelClick()">Password Reset</div>
+          <div class="link" @click="toggleGuestLoginClick()">Guest Login</div>
         </div>
         <div class="buttons">
           <input type="submit" class="button gap" :value="buttonText"/>

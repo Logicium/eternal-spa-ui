@@ -17,6 +17,7 @@ import OpeningsPanel from "@/pages/dashboard/OpeningsPanel.vue";
 import TimeOffPanel from "@/pages/dashboard/TimeOffPanel.vue";
 import VendorSettingsPanel from "@/pages/dashboard/VendorSettingsPanel.vue";
 import VendorReservationsPanel from "@/pages/dashboard/VendorReservationsPanel.vue";
+import VendorCalendarPanel from "@/pages/dashboard/VendorCalendarPanel.vue";
 
 const authStore = useAuthStore();
 const vendorStore = useVendorStore();
@@ -78,7 +79,7 @@ const logoutClick = function(){
       <div class="panelsWrap">
         <transition name="slide-right" mode="out-in">
           <OverviewPanel v-if="activePanel === 'overview'" :key="'overview'"/>
-          <div v-else-if="activePanel === 'calendar'" :key="'calendar'">Calendar Panel (Coming Soon)</div>
+          <VendorCalendarPanel v-else-if="activePanel === 'calendar'" :key="'calendar'"/>
           <OpeningsPanel v-else-if="activePanel === 'openings'" :key="'openings'"/>
           <TimeOffPanel v-else-if="activePanel === 'timeoff'" :key="'timeoff'"/>
           <VendorReservationsPanel v-else-if="activePanel === 'reservations'" :key="'reservations'"/>

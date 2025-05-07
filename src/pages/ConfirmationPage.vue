@@ -6,8 +6,9 @@ import TransitionPanel from "@/components/panels/TransitionPanel.vue";
 import Map from "@/components/Map.vue";
 
 import { useRoute } from 'vue-router'
+import type {Reservation} from "@/interfaces";
 
-const fetchedData = ref(null);
+const fetchedData = ref<Reservation | null>(null);
 const imageUrl = ref(null);
 
 const route = useRoute()
@@ -23,7 +24,7 @@ const fetchData = async function (){
   console.log(data);
 }
 
-const formatDate = function(dateString) {
+const formatDate = function(dateString:string) {
   if (!dateString) return '';
   const date = new Date(dateString);
   const day = date.toLocaleString('en-US', { weekday: 'long' });
@@ -33,7 +34,7 @@ const formatDate = function(dateString) {
   return `${day} ${dateNum}, ${month} ${year}`;
 }
 
-const formatTime = function(dateString) {
+const formatTime = function(dateString:string) {
   if (!dateString) return '';
   const date = new Date(dateString);
   const formatter = new Intl.DateTimeFormat('en-US', {

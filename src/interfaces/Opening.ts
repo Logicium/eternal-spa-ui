@@ -1,7 +1,7 @@
 export interface Opening {
-  id: number | string;
+  id: string;
   serviceType: string;
-  serviceId: number | string;
+  serviceId: string;
   vendorId: string;
   timeStart: string;
   timeEnd: string;

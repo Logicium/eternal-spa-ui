@@ -19,7 +19,7 @@ const showDetailView = ref(false);
 
 // Form data
 const serviceType = ref("");
-const serviceId = ref(0);
+const serviceId = ref("");
 const timeStart = ref("");
 const timeEnd = ref("");
 const isSeriesOpening = ref(false);
@@ -43,7 +43,7 @@ const selectedDays = ref({
 });
 
 // Get services for dropdown
-const services = computed<{ id: number | string; name: string }[]>(() => {
+const services = computed<{ id: string; name: string }[]>(() => {
   if (!servicesStore.services) return [];
   return servicesStore.services.map(service => ({
     id: service.id,
@@ -52,7 +52,7 @@ const services = computed<{ id: number | string; name: string }[]>(() => {
 });
 
 // Handle service selection
-const handleServiceChange = (event) => {
+const handleServiceChange = (event:any) => {
   const selectedService = services.value.find(s => s.name === event.target.value);
   if (selectedService) {
     serviceType.value = event.target.value;
@@ -61,7 +61,7 @@ const handleServiceChange = (event) => {
 };
 
 // Show status message
-const showStatusMessage = (message, type = "success") => {
+const showStatusMessage = (message:string, type = "success") => {
   utils.ui.showStatusMessage(message, type, 3000, statusMessage, statusType, showStatus);
 };
 
@@ -81,7 +81,7 @@ const refreshVendorData = async () => {
 };
 
 // Open detail view for an opening
-const openDetailView = (opening) => {
+const openDetailView = (opening:Opening) => {
   selectedOpening.value = opening;
   showDetailView.value = true;
 };
@@ -111,16 +111,16 @@ onMounted(async () => {
 });
 
 // Round time to nearest 15-minute interval
-const roundToNearest15Minutes = (dateTimeStr) => {
+const roundToNearest15Minutes = (dateTimeStr:string) => {
   return utils.date.roundToNearest15Minutes(dateTimeStr);
 };
 
 // Handle time input changes
-const handleTimeStartChange = (event) => {
+const handleTimeStartChange = (event:any) => {
   timeStart.value = roundToNearest15Minutes(event.target.value);
 };
 
-const handleTimeEndChange = (event) => {
+const handleTimeEndChange = (event:any) => {
   timeEnd.value = roundToNearest15Minutes(event.target.value);
 };
 
@@ -136,7 +136,7 @@ const validateForm = () => {
 };
 
 // Handle form submission
-const onSubmit = async function(e) {
+const onSubmit = async function(e:any) {
   e.preventDefault();
 
   // Validate form
@@ -149,7 +149,7 @@ const onSubmit = async function(e) {
   try {
     // Create opening object
     const opening: Opening = {
-      id: 0, // Backend will assign real ID
+      id: "", // Backend will assign real ID
       serviceType: serviceType.value,
       serviceId: serviceId.value,
       vendorId: vendorStore.vendor?.id || '',
@@ -178,7 +178,7 @@ const onSubmit = async function(e) {
     if (response.ok) {
       // Reset form
       serviceType.value = "";
-      serviceId.value = 0;
+      serviceId.value = "";
       timeStart.value = "";
       timeEnd.value = "";
       isSeriesOpening.value = false;

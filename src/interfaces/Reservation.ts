@@ -2,7 +2,7 @@ import type { Service } from './Service';
 import type { Package } from './Package';
 
 export interface Reservation {
-  id: number | string;
+  id: string;
   name: string;
   service?: Service;
   package?: Package;
@@ -14,4 +14,5 @@ export interface Reservation {
   confirmed: boolean;
   vendorId?: string;
   guestId?: string;
+  orderId?: string;
 }

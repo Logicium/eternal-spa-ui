@@ -44,26 +44,26 @@ onMounted(() => {
 });
 
 // Format date for datetime-local input (YYYY-MM-DDTHH:MM)
-const formatDateForInput = (date) => {
+const formatDateForInput = (date:Date) => {
   return utils.date.formatDateForInput(date);
 };
 
 // Round time to nearest 15-minute interval
-const roundToNearest15Minutes = (dateTimeStr) => {
+const roundToNearest15Minutes = (dateTimeStr:string) => {
   return utils.date.roundToNearest15Minutes(dateTimeStr);
 };
 
 // Handle time input changes
-const handleTimeStartChange = (event) => {
+const handleTimeStartChange = (event:any) => {
   timeStart.value = roundToNearest15Minutes(event.target.value);
 };
 
-const handleTimeEndChange = (event) => {
+const handleTimeEndChange = (event:any) => {
   timeEnd.value = roundToNearest15Minutes(event.target.value);
 };
 
 // Show status message
-const showStatusMessage = (message, type = "success") => {
+const showStatusMessage = (message:string, type = "success") => {
   utils.ui.showStatusMessage(message, type, 3000, statusMessage, statusType, showStatus);
 };
 

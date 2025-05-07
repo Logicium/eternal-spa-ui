@@ -47,7 +47,7 @@ const compareServiceTypes = function(serviceName:string,searchedName:string|null
 
 const selectedService = ref(null);
 const allBookings = ref<Booking[]>();
-const selectedBooking = ref<Booking | null>();
+const selectedBooking = ref<Booking | null>(null);
 const searchedBookings = ref(Array(0));
 const allServiceBookings = ref(Array(0));
 const isLoading = ref(true);
