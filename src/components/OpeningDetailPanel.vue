@@ -193,7 +193,7 @@ const closeDetailView = () => {
           <div class="detail-item">
             <span class="detail-label">Duration:</span>
             <span class="detail-value">
-              {{ Math.round((new Date(timeEnd) - new Date(timeStart)) / (1000 * 60)) }} minutes
+              {{ Math.round((Number(new Date(timeEnd)) - Number(new Date(timeStart))) / (1000 * 60)) }} minutes
             </span>
           </div>
         </div>

@@ -5,3 +5,4 @@ export * from './Opening';
 export * from './Reservation';
 export * from './Package';
 export * from './Guest';
+export * from './cms';

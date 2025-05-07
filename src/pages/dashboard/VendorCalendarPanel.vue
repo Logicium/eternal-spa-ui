@@ -6,7 +6,7 @@ import { VCalendar } from 'vuetify/labs/VCalendar'
 
 
 const vendorStore = useVendorStore();
-const viewType = ref('month'); // 'day', 'week', or 'month'
+const viewType = ref<'month' | 'week' | 'day'>('month'); // 'day', 'week', or 'month'
 const selectedDate = ref([new Date()]);
 
 // Get all reservations
@@ -43,7 +43,7 @@ const handleReservationClick = (event:any) => {
 };
 
 // Change view type
-const setViewType = (type:any) => {
+const setViewType = (type: 'month' | 'week' | 'day') => {
   viewType.value = type;
 };
 </script>
@@ -87,7 +87,7 @@ const setViewType = (type:any) => {
           :type="viewType"
           v-model="selectedDate"
           :hide-week-number="true"
-          @click:date="selectedDate = date"
+          @click:date="(date:any) => selectedDate = [date]"
           @click:event="handleReservationClick"
           class="vuetify-calendar"
         >

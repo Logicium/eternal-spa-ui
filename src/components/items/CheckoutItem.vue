@@ -7,8 +7,8 @@ import api from "@/router/api.ts";
 const props = defineProps({
   guestId:{type:[String,null]},
   vendorId:{type:String},
-  timeStart:{type:String},
-  timeEnd:{type:String},
+  timeStart:{type:[String,Date]},
+  timeEnd:{type:[String,Date]},
   totalDuration:{type:Number},
   serviceId:{type:String},
   packageId:{type:String},
@@ -25,7 +25,6 @@ async function redirectToCheckout() {
   errorOccurred.value = false;
 
   try {
-    console.log("Addons:",JSON.stringify(props.addons));
     const response = await fetch(api.payment.checkout, {
       method: 'POST',
       headers: {
@@ -34,8 +33,8 @@ async function redirectToCheckout() {
       body: JSON.stringify({
         guestId: props.guestId,
         vendorId: props.vendorId,
-        timeStart: props.timeStart instanceof Date ? props.timeStart.toISOString() : props.timeStart,
-        timeEnd: props.timeEnd instanceof Date ? props.timeEnd.toISOString() : props.timeEnd,
+        timeStart: props.timeStart instanceof Date ? (props.timeStart as Date).toISOString() : props.timeStart,
+        timeEnd: props.timeEnd instanceof Date ? (props.timeEnd as Date).toISOString() : props.timeEnd,
         totalDuration: props.totalDuration,
         serviceId: props.serviceId,
         packageId: props.packageId,
