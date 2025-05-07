@@ -21,7 +21,9 @@ export const useVendorStore = defineStore({
         const fetchUser = createFetch({
           options: {
             async beforeFetch({ options }) {
-              options.headers.Authorization = `Bearer ${token}`
+              const headers = new Headers(options.headers);
+              headers.set('Authorization', `Bearer ${token}`);
+              options.headers = headers;
               return { options }
             },
           }
