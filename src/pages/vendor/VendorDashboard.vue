@@ -12,12 +12,12 @@ import ListIcon from "@/assets/icons/ListIcon.vue";
 import CalendarIcon from "@/assets/icons/cal/CalendarIcon.vue";
 import CalAvailableIcon from "@/assets/icons/cal/CalAvailableIcon.vue";
 import CalBusyIcon from "@/assets/icons/cal/CalBusyIcon.vue";
-import OverviewPanel from "@/pages/dashboard/OverviewPanel.vue";
-import OpeningsPanel from "@/pages/dashboard/OpeningsPanel.vue";
-import TimeOffPanel from "@/pages/dashboard/TimeOffPanel.vue";
-import VendorSettingsPanel from "@/pages/dashboard/VendorSettingsPanel.vue";
-import VendorReservationsPanel from "@/pages/dashboard/VendorReservationsPanel.vue";
-import VendorCalendarPanel from "@/pages/dashboard/VendorCalendarPanel.vue";
+import OverviewPanel from "@/pages/vendor/OverviewPanel.vue";
+import OpeningsPanel from "@/pages/vendor/OpeningsPanel.vue";
+import TimeOffPanel from "@/pages/vendor/TimeOffPanel.vue";
+import VendorSettingsPanel from "@/pages/vendor/VendorSettingsPanel.vue";
+import VendorReservationsPanel from "@/pages/vendor/VendorReservationsPanel.vue";
+import VendorCalendarPanel from "@/pages/vendor/VendorCalendarPanel.vue";
 
 const authStore = useAuthStore();
 const vendorStore = useVendorStore();

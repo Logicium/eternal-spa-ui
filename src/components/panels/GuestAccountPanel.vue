@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits, ref } from 'vue';
+import api from '@/router/api';
+import utils from '@/utils/utils';
 
 const props = defineProps({
   guest: {
@@ -13,6 +15,17 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['logout', 'changePanel']);
+
+// Status message variables
+const statusMessage = ref("");
+const showStatus = ref(false);
+const statusType = ref("success"); // success or error
+const saveButtonText = ref("Save Settings");
+
+// Show status message
+const showStatusMessage = (message:string, type = "success") => {
+  utils.ui.showStatusMessage(message, type, 3000, statusMessage, statusType, showStatus);
+};
 
 const logoutClick = function() {
   emit('logout');
@@ -29,10 +42,46 @@ const bookingsClick = function() {
 const rewardsClick = function() {
   emit('changePanel', 'rewards');
 }
+
+const saveSettings = async function() {
+  saveButtonText.value = "Saving...";
+
+  try {
+    const response = await fetch(api.guest.settings, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id: props.guest.id,
+        firstName: props.guest.firstName,
+        lastName: props.guest.lastName,
+        phone: props.guest.phone,
+        email: props.guest.email
+      })
+    });
+
+    if (response.ok) {
+      showStatusMessage("Settings saved successfully!");
+    } else {
+      showStatusMessage("Failed to save settings. Please try again.", "error");
+    }
+  } catch (error) {
+    console.error("Error saving settings:", error);
+    showStatusMessage("An error occurred. Please try again.", "error");
+  }
+
+  saveButtonText.value = "Save Settings";
+}
 </script>
 
 <template>
   <div class="panelFull">
+    <!-- Status message -->
+    <div v-if="showStatus" class="status-message" :class="statusType">
+      {{ statusMessage }}
+    </div>
+
     <div class="filled summary">
       <div class="title">Hi {{guest.firstName}}</div>
       <div class="empty center"><div>No upcoming reservations.</div></div>
@@ -76,11 +125,11 @@ const rewardsClick = function() {
           <div><input type="checkbox"/> SMS Notifications</div>
           <div><input type="checkbox"/> Newsletter Signup</div>
           <div class="buttons">
-            <div class="row">
+            <div class="col">
               <div class="button underline rev" @click="securityClick">Security & Data</div>
               <div class="button underline rev" @click="logoutClick">Logout</div>
             </div>
-            <div class="button mt-a">Save Settings</div>
+            <div class="button mt-a" @click="saveSettings">{{ saveButtonText }}</div>
           </div>
         </div>
       </div>
@@ -189,5 +238,26 @@ const rewardsClick = function() {
 
 input{
   margin-bottom: 1vw;
+}
+
+.status-message {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1rem;
+  border-radius: 6px;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  &.success {
+    background-color: rgba(0, 128, 0, 0.1);
+    color: green;
+  }
+
+  &.error {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: red;
+  }
 }
 </style>

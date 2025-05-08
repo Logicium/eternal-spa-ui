@@ -13,7 +13,8 @@ const api = {
   guest:{
     account:baseUrl+'/guest/account',
     login:baseUrl+'/guest/login',
-    signup:baseUrl+'/guest/signup'
+    signup:baseUrl+'/guest/signup',
+    settings:baseUrl+'/guest/settings'
   },
   vendor:{
     account:baseUrl+'/vendor/account',

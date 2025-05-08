@@ -12,7 +12,7 @@ import PrivacyPage from "@/pages/PrivacyPage.vue";
 import LoginPage from "@/pages/LoginPage.vue";
 import AccountPage from "@/pages/guest/AccountPage.vue";
 import ConfirmationPage from "@/pages/ConfirmationPage.vue";
-import VendorDashboard from "@/pages/dashboard/VendorDashboard.vue";
+import VendorDashboard from "@/pages/vendor/VendorDashboard.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -87,7 +87,7 @@ const router = createRouter({
     },
     {
       path: '/vendor/account',
-      name: 'dashboard',
+      name: 'vendor',
       component: VendorDashboard,
     },
 
