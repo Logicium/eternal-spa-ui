@@ -10,7 +10,7 @@ import BookingsPage from "@/pages/BookingsPage.vue";
 import TosPage from "@/pages/TosPage.vue";
 import PrivacyPage from "@/pages/PrivacyPage.vue";
 import LoginPage from "@/pages/LoginPage.vue";
-import AccountPage from "@/pages/AccountPage.vue";
+import AccountPage from "@/pages/guest/AccountPage.vue";
 import ConfirmationPage from "@/pages/ConfirmationPage.vue";
 import VendorDashboard from "@/pages/dashboard/VendorDashboard.vue";
 

@@ -154,12 +154,6 @@ const active = ref(false);
   z-index: 1;
 }
 
-.serviceTitle{
-  color: $primary;
-  height: 15vw;
-  font-size: 3vw;
-}
-
 .serviceName{
   padding-left: 2vw;
   font-size: 3vw;
@@ -193,7 +187,6 @@ const active = ref(false);
 .optionName{
   font-weight: 500;
   margin-bottom: 1vw;
-
 }
 
 .bookBtn{
@@ -209,14 +202,6 @@ const active = ref(false);
   color: $primary;
   background-color: $quaternary;
   border-radius: 6px;
-}
-
-.serviceImage{
-  border-radius: 6px;
-  background-size: cover;
-  background-position: 100% 50%;
-  background-image: v-bind(imageUrl);
-  animation: collapse 1s forwards;
 }
 
 .expand{

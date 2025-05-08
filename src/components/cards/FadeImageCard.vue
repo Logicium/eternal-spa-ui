@@ -82,16 +82,4 @@ onMounted(()=>{
   align-items: center;
 }
 
-.button{
-  display: flex;
-  height: 45px;
-  border-radius: 6px;
-  color: $primary;
-  background-color: $quaternary;
-  width: 12vw;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
 </style>

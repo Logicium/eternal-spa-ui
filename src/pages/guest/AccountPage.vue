@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
 import router from "@/router";
-import {useAuthStore} from "../stores/AuthStore";
-import {useAccountStore} from "../stores/AccountStore";
+import {useAuthStore} from "../../stores/AuthStore.ts";
+import {useAccountStore} from "../../stores/AccountStore.ts";
 import { computed } from 'vue';
 import LoadingPage from "@/pages/LoadingPage.vue";
 
@@ -27,6 +27,7 @@ const logoutClick = function(){
   <LoadingPage v-if="!accountStore.guest"/>
   <div v-else-if="authStore.token && accountStore.guest && accountStore.guest.reservations">
     <div class="header">ACCOUNT</div>
+
     <div class="panelFull">
 
       <div class="filled summary">
@@ -59,7 +60,6 @@ const logoutClick = function(){
         </div>
 
         <div class="outline span">
-
           <div class="settings">
             <div class="title">Settings</div>
             <div>Contact Info</div>
@@ -96,7 +96,7 @@ const logoutClick = function(){
 
 <style scoped lang="scss">
 
-@import "../assets/Library";
+@import "../../assets/Library";
 
 .header{
   background-image: url("/spa/spa5.jpg");

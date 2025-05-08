@@ -182,12 +182,6 @@ const backPanelClick = function(){
   text-align: right;
 }
 
-.panelHidden{
-  transform: translateX(5%);
-  display: none !important;
-  position: absolute;
-}
-
 .slideIn{
   animation: 0.5s slidein ease;
 }
