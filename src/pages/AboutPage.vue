@@ -34,28 +34,22 @@ fetchData();
 
             <div class="subtitle">{{fetchedData.data.aboutFull[0].children[0].text}}</div>
 
-
             <div class="imageCardA">
-
               <div class="image img1"></div>
               <div class="imageInfo">
                 <div class="title3">The Sanctuary</div>
                 {{fetchedData.data.aboutSpaceFull[0].children[0].text}}
               </div>
-
             </div>
 
             <div class="imageCardB">
-
               <div class="imageInfo">
                 <div class="title2">The Human Touch</div>
                 {{fetchedData.data.aboutTeamFull[0].children[0].text}}
               </div>
               <div class="imageB img2"></div>
-
             </div>
 
-            <div class="title2"></div>
           </div>
         </template>
       </transition-group>
@@ -73,20 +67,6 @@ fetchData();
   overflow: hidden;
   display: flex;
   flex-direction: column;
-}
-
-.imageGrid{
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  grid-gap: 2rem;
-  width: 80%;
-}
-
-.imageCard{
-  display: flex;
-  background-color: $secondary;
-  border-radius: 6px;
-  aspect-ratio: 2/1;
 }
 
 .imageCardA{
@@ -136,33 +116,6 @@ fetchData();
   background-image: url("/team/team2.jpg");
 }
 
-.img3{
-  background-image: url("/spa/spa3.jpg");
-}
-
-.team{
-  background-color: $secondary;
-  border-radius: 6px;
-  width: 80%;
-  padding: 2rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 20vh);
-  grid-gap: 2rem;
-}
-
-.info{
-  font-size: 18px;
-}
-
-.desc{
-  padding: 2rem;
-  font-size: calc(12px + 3vw);
-  align-self: end;
-  grid-column: span 4;
-  background-color: $secondary;
-  border-radius: 6px;
-}
 
 .about{
   display: flex;

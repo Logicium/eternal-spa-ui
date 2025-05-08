@@ -48,22 +48,11 @@ const expand = ref(false);
           <div class="download">Spotify</div>
         </div>
 
-<!--        <div class="links">-->
-<!--          <div class="title">Links</div>-->
-<!--          <div class="socials">-->
-<!--            <div class="icon"><YTIcon/></div>-->
-<!--            <div class="icon"></div>-->
-<!--            <div class="icon"></div>-->
-<!--          </div>-->
-<!--        </div>-->
-
         <div class="stats">
           <div class="title">Downloads</div>
           <div class="link">Download Podcast</div>
           <div class="link">Download Transcript</div>
         </div>
-
-
 
       </div>
 
@@ -111,12 +100,6 @@ const expand = ref(false);
   opacity: 0;
   visibility: hidden;
   transition: all 0.5s ease;
-}
-
-.links{
-  display: flex;
-  flex-direction: column;
-  text-align: center;
 }
 
 .transcript{
@@ -177,11 +160,6 @@ const expand = ref(false);
   padding: 1vw;
   margin-bottom: 2rem;
 }
-.controls{
-  min-height: 30vh;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
 
 .headerLarge{
   display: flex;
@@ -196,28 +174,6 @@ const expand = ref(false);
   align-items: center;
   padding: 2rem;
 }
-
-.socials{
-  padding-bottom: 2rem;
-  display: flex;
-  width: 25rem;
-  justify-content: space-evenly;
-
-}
-
-.icon{
-  cursor: pointer;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 45px;
-  width: 45px;
-  background-color: $secondary;
-  color: $quaternary;
-  transition: 0.5s;
-}
-
 
 .podcastName{
   text-align: center;

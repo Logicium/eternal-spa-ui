@@ -187,12 +187,6 @@ const attributes = ref([
   transition: 0.5s;
 }
 
-.control .active{
-  background-color: $quaternary;
-  color: $primary;
-  border-radius: 6px;
-  transition: 0.5s;
-}
 
 .controls{
   padding: 2rem 0;

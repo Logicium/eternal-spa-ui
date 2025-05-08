@@ -125,7 +125,6 @@ const endTime = new Date(loadedData.end_time).toLocaleString('en-US', { hour: 'n
   margin-bottom: 2rem;
 }
 
-
 .cards{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -168,37 +167,6 @@ const endTime = new Date(loadedData.end_time).toLocaleString('en-US', { hour: 'n
   justify-self: center;
 }
 
-.locationInfo{
-  display: flex;
-}
-
-.locationInfo2{
-  min-width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.eventInfo{
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.locationName{
-
-}
-
-.eventCard{
-  height: 20vh;
-  border: 4px solid $secondary;
-  border-radius: 6px;
-  display: flex;
-}
-
 .headerLarge{
   display: flex;
   flex-direction: column;
@@ -231,22 +199,6 @@ const endTime = new Date(loadedData.end_time).toLocaleString('en-US', { hour: 'n
 
 .map{
   height: 30vh;
-}
-
-.date{
-  width: 50%;
-  margin-right: 1vw;
-  background-color: $secondary;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-}
-
-.num{
-  font-size: $fontMed;
-  font-weight: 500;
 }
 
 .cta{

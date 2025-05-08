@@ -106,11 +106,6 @@ const togglePwResetPanelClick = function (){
   border-bottom-left-radius: 6px;
 }
 
-.loginInfo{
-  display: grid;
-  grid-gap: 1vw;
-}
-
 .loginWrap{
   height: 100vh;
   display: grid;

@@ -442,14 +442,6 @@ watch(selectedPackageName,(newValue,oldValue)=>{
   padding: 1vw;
 }
 
-.searchIcon{
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: $secondary;
-}
-
 .buttons{
   display: flex;
   margin-top: 1vw;
@@ -505,18 +497,6 @@ watch(selectedPackageName,(newValue,oldValue)=>{
 
 .header{
   background-image: url("/events/event2.jpg");
-}
-
-.filters{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 45px;
-  min-width: 45px;
-  background-color: $secondary;
-  color: $quaternary;
-  border-radius: 6px;
-  cursor: pointer;
 }
 
 </style>

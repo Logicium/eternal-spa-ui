@@ -35,9 +35,6 @@ import data from "../data/data.ts";
   margin: 2rem;
 }
 
-.tos{
-  white-space: break-spaces;
-}
 
 .title{
   font-size: $fontMed;
