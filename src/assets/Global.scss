@@ -4,11 +4,6 @@
  * This file contains reusable CSS classes that can be applied throughout the application.
  * Using these classes helps maintain consistency and reduces redundant CSS.
  * 
- * HOW TO USE:
- * 1. Import this file in your component: @import "../assets/Global";
- * 2. Apply classes to your elements: <div class="card flex-center p-1 rounded">
- * 3. You can combine multiple classes to achieve the desired styling
- * 
  * AVAILABLE CATEGORIES:
  * - Layout Classes: For flex, grid, and general layout
  * - UI Element Classes: For cards, buttons, and form elements
@@ -51,6 +46,10 @@
 
 .top{
   margin-bottom: $sp-vw-sm;
+}
+
+.bottom{
+  margin-top: $sp-vw-sm;
 }
 
 /* Flex layouts */

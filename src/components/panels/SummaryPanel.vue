@@ -123,7 +123,7 @@ const backPanelClick = function(){
                 </div><div>Time: {{time}}</div>
                 <div>Duration: {{calcDuration()}} minutes</div>
                 <div>Total Price: ${{calcPrice()}}</div>
-                <div class="backBtn" @click="backPanelClick"><BackIcon/>Back: Package Selection</div>
+                <div class="button rev bottom" @click="backPanelClick"><BackIcon/>Back: Package Selection</div>
               </div>
 
               <div class="image"></div>
@@ -196,19 +196,6 @@ const backPanelClick = function(){
   font-size: $fontMed;
 }
 
-.backBtn{
-  height: $h-btn;
-  width: fit-content;
-  background-color: $secondary;
-  border-radius: $br-md;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: $sp-vw-sm;
-  margin-top: $sp-vw-sm;
-}
-
 .summaryArea{
   display: flex;
   width: $w-full;
@@ -217,20 +204,6 @@ const backPanelClick = function(){
   border: $bw-md solid $secondary;
   border-radius: $br-md;
   padding: $sp-vw-sm;
-}
-
-.confirmBtn{
-  background-color: $quaternary;
-  color: $primary;
-  border-radius: $br-md;
-  height: $h-btn;
-  display: flex;
-  align-items: center;
-  margin-top: $sp-vw-sm;
-  padding: $sp-vw-sm;
-  justify-content: center;
-  cursor: pointer;
-  width: fit-content;
 }
 
 .summaryWrap{
