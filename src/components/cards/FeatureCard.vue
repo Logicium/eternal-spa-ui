@@ -18,7 +18,7 @@ const imageUrl = computed(()=> 'url("'+props.data.image+'")').value;
 
     <div class="info">
       <RouterLink :to="'/podcast/'+data.id">
-        <div class="playBtn"><PlayIcon/></div>
+        <div class="button round"><PlayIcon/></div>
       </RouterLink>
       <div class="name">{{data.name}}</div>
     </div>
@@ -31,17 +31,8 @@ const imageUrl = computed(()=> 'url("'+props.data.image+'")').value;
 
 @import "../../assets/Library";
 
-.playBtn{
-  height: 45px;
-  width: 45px;
-  background-color: $quaternary;
-  color: $primary;
-  border-radius: 50%;
+.button{
   margin-left: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
 }
 
 .name{
@@ -63,7 +54,7 @@ const imageUrl = computed(()=> 'url("'+props.data.image+'")').value;
 
 .image{
   background-image: v-bind(imageUrl);
-  min-width: 170px;
+  min-width: 50%;
   border-radius: 6px;
   aspect-ratio: 1/1;
   padding: 1vw;

@@ -1,0 +1,20 @@
+@import "Dimensions";
+@import "Colors";
+
+.page{
+
+}
+
+.panel{
+
+}
+
+.card{
+  border-radius: $br-md;
+  background-color: $secondary;
+}
+
+.card.outline{
+  background-color: transparent;
+  border: $bw-md solid $secondary;
+}

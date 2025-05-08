@@ -39,10 +39,6 @@ import data from "../data/data.ts";
   white-space: break-spaces;
 }
 
-.bold{
-  font-weight: 600;
-}
-
 .title{
   font-size: $fontMed;
 }

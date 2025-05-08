@@ -17,7 +17,7 @@ const imageUrl = computed(()=> 'url("'+props.data.image+'")').value;
     <div class="image"></div>
 
     <div class="info">
-      <div class="name">{{data.name}}</div>
+      <div class="bold">{{data.name}}</div>
       <div class="desc">{{data.desc}}</div>
       <div class="tags">
         <div class="tag" v-for="tag in data.tags">{{tag}}</div>
@@ -25,7 +25,7 @@ const imageUrl = computed(()=> 'url("'+props.data.image+'")').value;
     </div>
 
     <RouterLink :to="'/podcast/'+data.id">
-      <div class="playBtn"><PlayIcon/></div>
+      <div class="button round"><PlayIcon/></div>
     </RouterLink>
 
   </div>
@@ -67,22 +67,5 @@ const imageUrl = computed(()=> 'url("'+props.data.image+'")').value;
   margin-bottom: 2rem;
   color: $quaternary;
 }
-
-.name{
-  font-weight: 500;
-}
-
-.playBtn{
-  height: 45px;
-  min-width: 45px;
-  background-color: $quaternary;
-  color: $primary;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
 
 </style>

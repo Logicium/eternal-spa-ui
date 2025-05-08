@@ -112,8 +112,8 @@ const backPanelClick = function(){
         <div class="summaryArea">
           <template v-if="serviceData">
 
-            <div class="row">
-              <div class="col">
+            <div class="row between">
+              <div class="col between">
                 <div class="title">Booking Summary</div>
                 <div>Service: {{serviceData.name}} | {{selectedPackage.name}}</div>
                 <div>Add ons: {{selectedAddonsNames?.toString()}}
@@ -153,17 +153,6 @@ const backPanelClick = function(){
 <style scoped lang="scss">
 
 @import "../../assets/Library";
-
-.row{
-  display: flex;
-  justify-content: space-between;
-}
-
-.col{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
 
 .controls{
   display: flex;

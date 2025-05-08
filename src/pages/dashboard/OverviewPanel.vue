@@ -175,7 +175,6 @@ const sampleChartData = {
 
 .center{
   justify-self: center;
-  text-align: center;
 }
 
 .right{

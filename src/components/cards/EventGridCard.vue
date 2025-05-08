@@ -71,6 +71,7 @@ const time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
   width: 100px;
   aspect-ratio: 1/1;
   background-color: $secondary;
+  color: $quaternary;
   display: flex;
   height: fit-content;
   flex-direction: column;

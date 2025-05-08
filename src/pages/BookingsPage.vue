@@ -499,12 +499,6 @@ watch(selectedPackageName,(newValue,oldValue)=>{
   transition: 0.5s;
 }
 
-.hidden{
-  opacity: 0;
-  visibility: hidden;
-  transition: 0.5s;
-}
-
 .title{
   font-size: $fontMed;
 }

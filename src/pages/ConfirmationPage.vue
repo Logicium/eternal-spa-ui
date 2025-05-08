@@ -120,13 +120,10 @@ fetchData();
 }
 
 .row {
-  display: flex;
   justify-content: space-between;
 }
 
 .col {
-  display: flex;
-  flex-direction: column;
   width: 100%;
 }
 

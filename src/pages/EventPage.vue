@@ -119,10 +119,6 @@ const endTime = new Date(loadedData.end_time).toLocaleString('en-US', { hour: 'n
   font-size: $fontMed;
 }
 
-.bold{
-  font-weight: 500;
-}
-
 .infoRow{
   display: grid;
   grid-template-columns: repeat(2,1fr);

@@ -31,7 +31,7 @@ const logoutClick = function(){
 
       <div class="filled summary">
         <div class="title">Hi {{accountStore.guest.firstName}}</div>
-        <div class="empty"><div>No upcoming reservations.</div></div>
+        <div class="empty center"><div>No upcoming reservations.</div></div>
       </div>
 
       <div class="accountGrid">
@@ -117,10 +117,7 @@ const logoutClick = function(){
   position: absolute;
   align-self: center;
   justify-self: center;
-  text-align: center;
   height: 100%;
-  display: flex;
-  align-items: center;
 }
 
 .settings{

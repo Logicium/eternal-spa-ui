@@ -44,10 +44,6 @@ import data from "../data/data.ts";
   font-size: $fontMed;
 }
 
-.bold{
-  font-weight: 600;
-}
-
 .header{
   background-image: url("/events/event2.jpg");
 }

@@ -26,6 +26,11 @@
   color: $quaternary;
 }
 
+.button.round{
+  border-radius: 50%;
+  width: $h-btn;
+}
+
 .ghost.rev{
   border: 4px solid $quaternary;
   color: $quaternary;

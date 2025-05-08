@@ -54,31 +54,26 @@
 }
 
 /* Flex layouts */
-.flex {
-  display: flex;
-}
 
-.flex-col {
+.col {
   display: flex;
   flex-direction: column;
 }
 
-.flex-center {
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.center,.col.center,.row.center {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
-.flex-between {
-  display: flex;
+.col.between,.row.between{
   justify-content: space-between;
-  align-items: center;
-}
-
-.flex-end {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
 }
 
 /* Grid layouts */
@@ -96,24 +91,6 @@
 
 .grid-gap-lg {
   grid-gap: $sp-xl;
-}
-
-/* ===== UI Element Classes ===== */
-.card {
-  border-radius: $br-md;
-  padding: $sp-vw-sm;
-}
-
-.card-bordered {
-  border-radius: $br-md;
-  padding: $sp-vw-sm;
-  border: $bw-md solid $secondary;
-}
-
-.card-filled {
-  border-radius: $br-md;
-  padding: $sp-vw-sm;
-  background-color: $secondary;
 }
 
 /* ===== Spacing Classes ===== */
@@ -230,20 +207,11 @@
 }
 
 /* ===== Display Classes ===== */
-.block {
-  display: block;
-}
-
-.inline-block {
-  display: inline-block;
-}
 
 .hidden {
-  display: none;
-}
-
-.invisible {
+  opacity: 0;
   visibility: hidden;
+  transition: 0.5s;
 }
 
 /* ===== Width & Height Classes ===== */
