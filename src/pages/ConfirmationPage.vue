@@ -58,7 +58,7 @@ fetchData();
       <div class="header">CONFIRMATION</div>
       <div class="confirmation">
         <div class="summaryArea">
-          <div class="row">
+          <div class="row between">
             <div class="col half-width">
               <div class="title">Booking Confirmation</div>
               <div class="infoRow"><span class="label">Service:</span> {{ fetchedData.name }}</div>
@@ -117,10 +117,6 @@ fetchData();
   border-radius: 6px;
   padding: 2vw;
   margin-top: 2rem;
-}
-
-.row {
-  justify-content: space-between;
 }
 
 .col {

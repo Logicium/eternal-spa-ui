@@ -75,7 +75,7 @@ const sampleChartData = {
   <div class="overview">
 
     <div class="overviewCard">
-      <div class="row">
+      <div class="row between">
         <div class="">Upcoming Reservations</div>
         <div class="icon right"><CalEventIcon/></div>
       </div>
@@ -83,7 +83,7 @@ const sampleChartData = {
     </div>
 
     <div class="overviewCard">
-      <div class="row">
+      <div class="row between">
         <div class="">Monthly Guests</div>
         <div class="icon right"><PersonIcon/></div>
       </div>
@@ -99,7 +99,7 @@ const sampleChartData = {
     </div>
 
     <div class="overviewCard filled">
-      <div class="row">
+      <div class="row between">
         <div class="">Monthly Earnings</div>
         <div class="icon right"><WalletIcon/></div>
       </div>
@@ -168,9 +168,7 @@ const sampleChartData = {
 }
 
 .row{
-  display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 .center{
