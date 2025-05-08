@@ -86,7 +86,7 @@ watch(() => route.fullPath,
 </template>
 
 <style lang="scss" scoped>
-@import "../assets/Colors";
+@import "../assets/Library";
 
 .heroImage{
   width: 100%;
@@ -207,14 +207,6 @@ watch(() => route.fullPath,
 input{
   background-color: $primary;
   width: 80%;
-  border-radius: 6px;
-  border: none;
-  font-family: "Outfit", sans-serif;
-  font-size: 16px;
-}
-
-input:focus{
-  outline: none;
 }
 
 a{

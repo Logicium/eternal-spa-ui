@@ -1,0 +1,57 @@
+@import "Dimensions";
+@import "Colors";
+@import "Fonts";
+
+
+input{
+  height: $h-input;
+  width: $w-full;
+  font-size: $fontNormal;
+  font-family: "Outfit", sans-serif;
+  background-color: $secondary;
+  color: $quaternary;
+  border-radius: $br-md;
+  border: none;
+}
+
+input:focus{
+  outline: none;
+}
+
+input.underline{
+  background-color: $primary;
+  border-bottom: 4px solid $secondary;
+  transition: 0.5s;
+}
+
+input.underline:focus{
+  border-bottom: 4px solid $quaternary;
+  transition: 0.5s;
+}
+
+input.underline::placeholder{
+  color: $secondary;
+  transition: 0.5s;
+}
+
+input[type="checkbox"]{
+  margin-right:  $sp-vw-sm;
+  width: fit-content;
+  height: fit-content;
+}
+
+select{
+  height: $h-input;
+  background-color: $secondary;
+  border: none;
+  color: $quaternary;
+  width: $w-full;
+  font-family: "Outfit", sans-serif;
+  font-size: $fontNormal;
+  transition: 0.5s;
+  border-radius: $br-md;
+}
+
+select:focus{
+  outline: none;
+}

@@ -210,8 +210,6 @@ const attributes = ref([
 }
 
 input{
-  height:45px;
-  width: 100%;
   margin-right: 2rem;
 }
 

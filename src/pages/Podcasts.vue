@@ -27,7 +27,7 @@ console.log("Featured podcasts: ",featuredPodcasts);
 
     <div class="controls">
       <div class="searchIcon"><SearchIcon/></div>
-      <input class="text" placeholder="Search Podcasts">
+      <input class="underline text" placeholder="Search Podcasts">
       <div class="filters"><TuneIcon/></div>
     </div>
 
@@ -121,32 +121,9 @@ console.log("Featured podcasts: ",featuredPodcasts);
   justify-self: center;
 }
 
-
 input{
-  height: 45px;
   padding-left: 24px;
-  background-color: $primary;
-  border: none;
-  color: $quaternary;
-  border-bottom: 4px solid $secondary;
-  width: 100%;
-  font-family: "Outfit", sans-serif;
   margin-right: 1vw;
-  font-size: 16px;
-  transition: 0.5s;
 }
-
-input:focus{
-  outline: none;
-  border-bottom: 4px solid $quaternary;
-  color: $quaternary;
-  transition: 0.5s;
-}
-
-::placeholder{
-  color: $secondary;
-  transition: 0.5s;
-}
-
 
 </style>

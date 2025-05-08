@@ -65,21 +65,6 @@ const loginClick = function (){
   align-items: center;
 }
 
-input{
-  height: 45px;
-  background-color: $secondary;
-  border-radius: 6px;
-  border: none;
-  width: 100%;
-  font-family: "Outfit", sans-serif;
-  font-size: $fontNormal;
-}
-
-input[type="checkbox"]{
-  margin-right: 1vw;
-  width: fit-content;
-}
-
 .link{
   cursor: pointer;
   transition: 0.5s;

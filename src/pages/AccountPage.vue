@@ -64,11 +64,11 @@ const logoutClick = function(){
             <div class="title">Settings</div>
             <div>Contact Info</div>
             <div class="names">
-              <input class="gap" type="text" v-model="accountStore.guest.firstName" placeholder="First Name"/>
-              <input type="text" v-model="accountStore.guest.lastName" placeholder="Last Name"/>
+              <input class="underline gap" type="text" v-model="accountStore.guest.firstName" placeholder="First Name"/>
+              <input class="underline" type="text" v-model="accountStore.guest.lastName" placeholder="Last Name"/>
             </div>
-            <input type="text" placeholder="Phone" v-model="accountStore.guest.phone">
-            <input type="email" placeholder="Email" v-model="accountStore.guest.email"/>
+            <input class="underline" type="text" placeholder="Phone" v-model="accountStore.guest.phone">
+            <input class="underline" type="email" placeholder="Email" v-model="accountStore.guest.email"/>
             <div class="top">Contact Preferences</div>
             <div><input type="checkbox" /> Email Notifications</div>
             <div><input type="checkbox"/> SMS Notifications</div>
@@ -202,19 +202,7 @@ const logoutClick = function(){
 }
 
 input{
-  height: 45px;
-  background-color: $primary;
-  border: none;
-  border-bottom: 4px solid $secondary;
-  width: 100%;
-  font-family: "Outfit", sans-serif;
-  font-size: $fontNormal;
   margin-bottom: 1vw;
 }
 
-input[type="checkbox"]{
-  margin-right: 1vw;
-  width: fit-content;
-  height: fit-content;
-}
 </style>

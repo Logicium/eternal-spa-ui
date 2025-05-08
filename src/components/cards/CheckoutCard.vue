@@ -157,17 +157,4 @@ async function redirectToCheckout() {
   color: $primary;
 }
 
-input{
-  background-color: $secondary;
-  border: none;
-  height: $h-input;
-  font-size: $fontNormal;
-  border-radius: $br-md;
-  font-family: "Outfit", sans-serif;
-}
-
-input[type="checkbox"]{
-  margin-right: $sp-vw-sm;
-}
-
 </style>

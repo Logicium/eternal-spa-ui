@@ -525,16 +525,4 @@ watch(selectedPackageName,(newValue,oldValue)=>{
   cursor: pointer;
 }
 
-select{
-  height: 45px;
-  font-size: $fontNormal;
-  border: none;
-  color: $quaternary;
-  background-color: $secondary;
-  border-radius: 6px;
-  width: 100%;
-  font-family: "Outfit", sans-serif;
-  transition: 0.5s;
-}
-
 </style>

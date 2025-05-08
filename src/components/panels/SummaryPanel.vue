@@ -256,22 +256,6 @@ const backPanelClick = function(){
 }
 
 
-select{
-  height: $h-input;
-  background-color: $secondary;
-  border: none;
-  color: $quaternary;
-  width: $w-full;
-  font-family: "Outfit", sans-serif;
-  font-size: $fontNormal;
-  transition: 0.5s;
-  border-radius: $br-md;
-}
-
-select:focus{
-  outline: none;
-}
-
 
 
 </style>
