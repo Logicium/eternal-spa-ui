@@ -1,12 +1,14 @@
 @import "Colors";
+@import "Dimensions";
 
 .button{
   display: flex;
   justify-content: center;
   align-items: center;
+  min-width: 45px;
   width: fit-content;
   padding: 1vw;
-  height: 45px;
+  height: $h-btn;
   border-radius: 6px;
   cursor: pointer;
   background-color: $quaternary;
@@ -42,4 +44,38 @@
   color: $quaternary;
   border-radius: 0;
   padding: 0;
+}
+
+.icon{
+  height: $h-btn;
+  width: $h-btn;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $quaternary;
+  color: $primary;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.icon:hover{
+  background-color: $primary;
+  color: $quaternary;
+  transition: 0.5s;
+}
+
+.icon.rev{
+  background-color: $primary;
+  color: $quaternary;
+}
+
+.icon.rev:hover{
+  background-color: $quaternary;
+  color: $primary;
+  transition: 0.5s;
+}
+
+.icon.square{
+  border-radius: 6px;
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import Footer from "@/components/Footer.vue";
-import NavMenu from "@/components/NavMenu.vue";
+import Navigation from "@/components/Navigation.vue";
 import {useServicesStore} from "./stores/ServiceStore";
 
 const servicesStore = useServicesStore();
@@ -14,7 +14,7 @@ servicesStore.fill();
 
     <div class="wrapper">
 
-      <NavMenu/>
+      <Navigation/>
 
       <RouterView />
 

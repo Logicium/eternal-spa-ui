@@ -31,11 +31,11 @@ watch(() => route.fullPath,
 
 <div class="footer" v-if="showFooter">
 
-  <div class="heroImage" v-if="showFull">
+  <div class="image" v-if="showFull">
     <div class="ctaWrap">
       <div class="ctaText">Sign up to earn reward points and manage your bookings.</div>
       <div class="cta">
-        <input type="email" placeholder="Email">
+        <input class="gap" type="email" placeholder="Email">
         <div class="button">Sign Up</div>
       </div>
     </div>
@@ -88,7 +88,7 @@ watch(() => route.fullPath,
 <style lang="scss" scoped>
 @import "../assets/Library";
 
-.heroImage{
+.image{
   width: 100%;
   display: flex;
   justify-content: center;
@@ -96,9 +96,6 @@ watch(() => route.fullPath,
   padding-bottom: 2rem;
   background-image: url("/salt1.jpg");
   border-radius: 6px;
-  color: $primary;
-  background-size: cover;
-  background-position: 100% 100%;
 }
 
 .policy{
@@ -191,17 +188,7 @@ watch(() => route.fullPath,
 
 
 .button{
-  cursor: pointer;
-  color: $primary;
   width: 20%;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: $quaternary;
-  border-radius: 6px;
-  padding: 1vw;
-  margin-left: 1vw;
 }
 
 input{

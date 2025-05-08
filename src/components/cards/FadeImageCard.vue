@@ -6,7 +6,7 @@ const props = defineProps(['name','image']);
 
 const imageUrl = computed(()=> 'url("'+props.image+'")').value;
 
- const serviceRef = useTemplateRef('serviceRef');
+const serviceRef = useTemplateRef('serviceRef');
 
 const reveal = ref(false);
 
@@ -31,7 +31,7 @@ onMounted(()=>{
 
 <template>
   <div class="service">
-    <div class="serviceImg" ref="serviceRef" :class=" reveal ? 'reveal':'' "/>
+    <div class="image" ref="serviceRef" :class=" reveal ? 'reveal':'' "/>
     <div class="serviceInfo">
 
       <div class="nameWrap">
@@ -45,7 +45,7 @@ onMounted(()=>{
 
 <style lang="scss" scoped>
 
-@import "../../assets/Colors";
+@import "../../assets/Library";
 
 .nameWrap{
   display: flex;
@@ -62,9 +62,7 @@ onMounted(()=>{
   font-size: 3vw;
 }
 
-.serviceImg{
-  background-size: cover;
-  background-position: 100% 100%;
+.image{
   background-image: v-bind(imageUrl);
   height: 80%;
   opacity: 0;
@@ -96,5 +94,4 @@ onMounted(()=>{
   cursor: pointer;
 }
 
-//$ROSE: #B59194;
 </style>

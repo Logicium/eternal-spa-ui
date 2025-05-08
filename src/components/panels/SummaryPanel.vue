@@ -126,7 +126,7 @@ const backPanelClick = function(){
                 <div class="backBtn" @click="backPanelClick"><BackIcon/>Back: Package Selection</div>
               </div>
 
-              <div class="serviceImg"></div>
+              <div class="image"></div>
 
             </div>
 
@@ -183,17 +183,14 @@ const backPanelClick = function(){
   transition-behavior: allow-discrete;
 }
 
-.serviceImg{
+.image{
   background-image: v-bind(serviceImage);
-  background-size: cover;
-  background-position: 100% 100%;
   aspect-ratio: 3/2;
   min-width: 30%;
   max-width: 30%;
   border-radius: $br-md;
   margin-left: $sp-vw-sm;
   text-align: right;
-  color: $primary;
 }
 
 .panelHidden{
@@ -254,8 +251,5 @@ const backPanelClick = function(){
   margin-bottom: $sp-xl;
   overflow: hidden;
 }
-
-
-
 
 </style>

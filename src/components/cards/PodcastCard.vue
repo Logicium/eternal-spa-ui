@@ -33,7 +33,7 @@ const imageUrl = computed(()=> 'url("'+props.data.image+'")').value;
 
 <style scoped lang="scss">
 
-@import "../../assets/Colors";
+@import "../../assets/Library";
 
 .tags{
   margin-top: 1vw;
@@ -53,8 +53,6 @@ const imageUrl = computed(()=> 'url("'+props.data.image+'")').value;
 
 .image{
   background-image: v-bind(imageUrl);
-  background-size: cover;
-  background-position: 100% 100%;
   min-width: 140px;
   aspect-ratio: 1/1;
   border-radius: 6px;

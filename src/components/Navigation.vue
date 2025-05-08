@@ -55,9 +55,9 @@ const resetMenu = function (){
         </div>
 
         <div class="socials">
-          <div class="icon"><FacebookIcon/></div>
-          <div class="icon"><InstaIcon/></div>
-          <div class="icon"><YTIcon/></div>
+          <div class="icon rev"><FacebookIcon/></div>
+          <div class="icon rev"><InstaIcon/></div>
+          <div class="icon rev"><YTIcon/></div>
         </div>
 
         <div class="disclaimers">
@@ -73,11 +73,11 @@ const resetMenu = function (){
     </RouterLink>
 
     <div class="buttons">
-      <div class="menuBtn"  @click="toggleMenu=!toggleMenu">
+      <div class="button gap"  @click="toggleMenu=!toggleMenu">
         <div :class=" !toggleMenu ? 'menuIcon rotateIn' : 'menuIcon'"><MenuIcon/></div>
         <div :class=" toggleMenu ? 'menuIcon rotateIn' : 'menuIcon'"><CloseIcon/></div>
       </div>
-      <RouterLink to="/bookings" class="cta" @click="resetMenu">Book Appointment</RouterLink>
+      <RouterLink to="/bookings" class="button" @click="resetMenu">Book Appointment</RouterLink>
     </div>
 
   </nav>
@@ -86,7 +86,7 @@ const resetMenu = function (){
 
 <style scoped lang="scss">
 
-@import "../assets/Colors";
+@import "../assets/Library";
 
 .disclaimers{
   font-size: 18px;
@@ -103,19 +103,6 @@ const resetMenu = function (){
   display: flex;
   width: 25rem;
   justify-content: space-evenly;
-}
-
-.icon{
-  cursor: pointer;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 45px;
-  width: 45px;
-  background-color: $primary;
-  color: $quaternary;
-  transition: 0.5s;
 }
 
 .fullWrap{
@@ -173,28 +160,11 @@ nav{
   border-bottom-right-radius: 6px;
 }
 
-nav a{
-  color: $primary;
-}
-
 .buttons{
   z-index: 3;
   padding: 2rem;
   display: flex;
   justify-content: space-between;
-}
-
-.menuBtn{
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 45px;
-  width: 45px;
-  color: $primary;
-  background-color: $quaternary;
-  border-radius: 6px;
-  margin-right: 2vw;
 }
 
 .menuIcon{
@@ -213,17 +183,6 @@ nav a{
   opacity: 1;
 }
 
-
-.cta{
-  border-radius: 6px;
-  padding: 1vw;
-  display: flex;
-  align-items: center;
-  height: 45px;
-  color: $primary !important;
-  background-color: $quaternary;
-}
-
 .colorChange{
   background-color: $secondary;
   transition: 0.5s;
@@ -235,6 +194,7 @@ nav a{
 }
 
 .links a{
+  color: $primary;
   transition: 0.5s;
 }
 
@@ -242,16 +202,5 @@ nav a{
   color: $quaternary;
   transition: 0.5s;
 }
-
-.icon:hover{
-  background-color: $quaternary;
-  color: $primary;
-  transition: 0.5s;
-}
-
-//
-//.colorChange a{
-//  color: $quaternary;
-//}
 
 </style>

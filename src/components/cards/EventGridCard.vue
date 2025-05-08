@@ -38,7 +38,7 @@ const time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
 
 <style scoped lang="scss">
 
-@import "../../assets/Colors";
+@import "../../assets/Library";
 
 .event{
   display: flex;
@@ -51,8 +51,6 @@ const time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
 
 .image{
   background-image: v-bind(imageUrl);
-  background-size: cover;
-  background-position: 100% 100%;
   width: 100%;
   aspect-ratio: 1/1;
   display: flex;

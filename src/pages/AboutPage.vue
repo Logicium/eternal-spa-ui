@@ -113,7 +113,6 @@ fetchData();
 
 .image{
   width: 50%;
-  background-size: cover;
   background-position: 20% 100%;
   border-radius: 6px;
   aspect-ratio: 3/2;
