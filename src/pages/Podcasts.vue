@@ -2,9 +2,9 @@
 
 import TuneIcon from "@/assets/icons/TuneIcon.vue";
 import SearchIcon from "@/assets/icons/SearchIcon.vue";
-import FeatureItem from "@/components/items/FeatureItem.vue";
+import FeatureCard from "@/components/cards/FeatureCard.vue";
 import data from "@/data/data.ts";
-import PodcastItem from "@/components/items/PodcastItem.vue";
+import PodcastCard from "@/components/cards/PodcastCard.vue";
 
 const featuredPodcasts = data.podcasts.filter(podcast => {
   console.log(podcast.featured);
@@ -34,13 +34,13 @@ console.log("Featured podcasts: ",featuredPodcasts);
     <div class="featuresWrap">
       <div class="title">Featured Podcasts</div>
       <div class="featuredGrid">
-        <FeatureItem v-for="podcast in featuredPodcasts" :data="podcast"/>
+        <FeatureCard v-for="podcast in featuredPodcasts" :data="podcast"/>
       </div>
     </div>
 
     <div class="podcastList">
       <div class="title2">All Podcasts</div>
-      <PodcastItem v-for="podcast in data.podcasts" :data="podcast"/>
+      <PodcastCard v-for="podcast in data.podcasts" :data="podcast"/>
     </div>
 
   </div>

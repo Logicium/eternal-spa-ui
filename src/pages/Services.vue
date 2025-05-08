@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import ServiceFull from "@/components/ServiceFull.vue";
+import ServiceFull from "@/components/cards/ServiceFull.vue";
 import LoadingPage from "@/pages/LoadingPage.vue";
 import {computed, ref, watch} from "vue";
 import api from "@/router/api.ts";

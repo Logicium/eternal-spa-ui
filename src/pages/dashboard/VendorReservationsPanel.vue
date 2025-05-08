@@ -3,7 +3,7 @@ import { ref, onMounted, computed } from "vue";
 import { useVendorStore } from "../../stores/VendorStore";
 import { useAuthStore } from "../../stores/AuthStore";
 import api from "../../router/api";
-import ReservationDetailPanel from "../../components/ReservationDetailPanel.vue";
+import ReservationDetailPanel from "../../components/panels/ReservationDetailPanel.vue";
 import utils from "@/utils/utils";
 import type { Reservation } from "@/interfaces";
 

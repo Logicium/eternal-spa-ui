@@ -71,7 +71,7 @@ const data = {
       },
       {
         "name":"4. Information Sharing and Disclosure",
-        "policy":"We value your privacy and handle your information with care. We do not sell your personal information. We may share your information only in the following limited circumstances:\n\n* **Internally:** With our therapists and staff who need the information to provide services to you. Access to sensitive health information is limited to relevant personnel.\n* **Third-Party Service Providers:** With trusted third parties who perform essential functions on our behalf, such as appointment scheduling software providers, payment processors, and email service providers (for marketing, if applicable). These providers are contractually obligated to protect your information and use it only for the services they provide to us.\n* **Legal Requirements:** If required by law, regulation, subpoena, court order, or other governmental request.\n* **Safety & Security:** To protect the rights, property, or safety of Eternal Spa, our clients, or others."
+        "policy":"We value your privacy and handle your information with care. We do not sell your personal information. We may share your information only in the following limited circumstances:\n\n* **Internally:** With our therapists and staff who need the information to provide services to you. Access to sensitive health information is limited to relevant personnel.\n* **Third-Party HomeCard Providers:** With trusted third parties who perform essential functions on our behalf, such as appointment scheduling software providers, payment processors, and email service providers (for marketing, if applicable). These providers are contractually obligated to protect your information and use it only for the services they provide to us.\n* **Legal Requirements:** If required by law, regulation, subpoena, court order, or other governmental request.\n* **Safety & Security:** To protect the rights, property, or safety of Eternal Spa, our clients, or others."
       },
       {
         "name":"5. Data Security",
@@ -351,9 +351,9 @@ const data = {
         ]
       },
       {
-        "name": "Float Tank Service",
+        "name": "Float Tank HomeCard",
         "image": "/float-tank1.jpg",
-        "desc": "Float Tank Service involves floating in a sensory deprivation tank filled with Epsom salt water, promoting deep relaxation and stress reduction.",
+        "desc": "Float Tank HomeCard involves floating in a sensory deprivation tank filled with Epsom salt water, promoting deep relaxation and stress reduction.",
         "id": 6,
         "packages": [
           {

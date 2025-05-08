@@ -3,7 +3,7 @@
 import data from "@/data/data.ts";
 import {useRoute} from "vue-router";
 import {computed, ref} from "vue";
-import AudioControls from "@/components/AudioControls.vue";
+import AudioControls from "@/components/cards/AudioControls.vue";
 import FacebookIcon from "@/assets/icons/socials/FacebookIcon.vue";
 import YTIcon from "@/assets/icons/socials/YTIcon.vue";
 import InstaIcon from "@/assets/icons/socials/InstaIcon.vue";

@@ -4,7 +4,7 @@ import { useVendorStore } from "@/stores/VendorStore";
 import { useAuthStore } from "@/stores/AuthStore";
 import { useServicesStore } from "@/stores/ServiceStore";
 import api from "@/router/api";
-import OpeningDetailPanel from "@/components/OpeningDetailPanel.vue";
+import OpeningDetailPanel from "@/components/panels/OpeningDetailPanel.vue";
 import utils from "@/utils/utils.ts";
 import type { Opening, Service } from "@/interfaces";
 // No longer need to import data as we're using vendor object for openings

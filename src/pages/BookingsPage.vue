@@ -5,7 +5,7 @@ import {DatePicker as VDatePicker} from "v-calendar";
 import data from "@/data/data.ts"; // Keep for fallback
 import SearchIcon from "@/assets/icons/SearchIcon.vue";
 import {computed, onMounted, ref, watch} from "vue";
-import Timeslot from "@/components/items/Timeslot.vue";
+import Timeslot from "@/components/cards/Timeslot.vue";
 import NextIcon from "@/assets/icons/nav/NextIcon.vue";
 import SummaryPanel from "@/components/panels/SummaryPanel.vue";
 import BackIcon from "@/assets/icons/nav/BackIcon.vue";

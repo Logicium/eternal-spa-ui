@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import Service from "@/components/Service.vue";
+import FadeImageCard from "@/components/cards/FadeImageCard.vue";
 import {computed} from "vue";
 
 const props = defineProps(['title','image','desc','parallax'])
@@ -15,7 +15,7 @@ const props = defineProps(['title','image','desc','parallax'])
     <div class="button underline">Learn More</div>
   </div>
 
-  <Service :image="image"/>
+  <FadeImageCard :image="image"/>
 
 </template>
 

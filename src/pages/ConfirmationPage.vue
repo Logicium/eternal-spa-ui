@@ -3,7 +3,7 @@ import {computed, ref, watch} from "vue";
 import api from "@/router/api.ts";
 import LoadingPage from "@/pages/LoadingPage.vue";
 import TransitionPanel from "@/components/panels/TransitionPanel.vue";
-import Map from "@/components/Map.vue";
+import Map from "@/components/cards/Map.vue";
 
 import { useRoute } from 'vue-router'
 import type {Reservation} from "@/interfaces";

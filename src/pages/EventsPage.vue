@@ -4,11 +4,11 @@ import ListIcon from "@/assets/icons/ListIcon.vue";
 import GridIcon from "@/assets/icons/GridIcon.vue";
 import CalendarIcon from "@/assets/icons/cal/CalendarIcon.vue";
 import {ref, watch} from "vue";
-import ListItem from "@/components/items/ListItem.vue";
+import EventListCard from "@/components/cards/EventListCard.vue";
 import data from "@/data/data.ts";
-import GridItem from "@/components/items/GridItem.vue";
+import EventGridCard from "@/components/cards/EventGridCard.vue";
 import {DatePicker as VDatePicker} from "v-calendar";
-import CalItem from "@/components/items/CalItem.vue";
+import CalCard from "@/components/cards/CalCard.vue";
 
 const listActive = ref(true);
 const gridActive = ref(false);
@@ -80,18 +80,18 @@ const attributes = ref([
     <div class="views">
 
       <div v-if="listActive" class="listView">
-        <ListItem v-for="event in data.events" :data="event"/>
+        <EventListCard v-for="event in data.events" :data="event"/>
       </div>
 
       <div v-if="gridActive" class="gridView">
-        <GridItem v-for="event in data.events" :data="event"/>
+        <EventGridCard v-for="event in data.events" :data="event"/>
       </div>
 
       <div v-if="calActive" class="calendarView">
         <div class="eventView">
 <!--          {{date}}-->
           <div class="eventSearch">
-            <CalItem v-for="event in searchedEvents" :data="event"/>
+            <CalCard v-for="event in searchedEvents" :data="event"/>
             <div class="empty" v-if="searchedEvents.length===0">No Events on {{date.toDateString()}}.</div>
           </div>
         </div>

@@ -71,8 +71,8 @@ const active = ref(false);
 
 <style lang="scss" scoped>
 
-@import "../assets/Colors";
-@import "../assets/Keyframes";
+@import "../../assets/Colors";
+@import "../../assets/Keyframes";
 
 .plus,.minus{
   position: absolute;

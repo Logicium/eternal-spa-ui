@@ -88,8 +88,8 @@ const skipSeconds = (seconds: number) => {
 
 <style scoped lang="scss">
 
-@import "../assets/Colors";
-@import "../assets/Fonts";
+@import "../../assets/Colors";
+@import "../../assets/Fonts";
 
 .controls{
   display: flex;

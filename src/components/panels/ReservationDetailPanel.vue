@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineProps, defineEmits } from 'vue';
-import utils from "@/utils/utils";
+import utils from "@/utils/utils.ts";
 
 // Define props
 const props = defineProps({
@@ -118,7 +118,7 @@ const closeDetailView = () => {
 </template>
 
 <style scoped lang="scss">
-@import "../assets/Library";
+@import "../../assets/Library";
 
 .reservation-detail-panel {
   position: absolute !important;

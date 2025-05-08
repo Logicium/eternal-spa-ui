@@ -45,7 +45,7 @@ onMounted(()=>{
 
 <style lang="scss" scoped>
 
-@import "../assets/Colors";
+@import "../../assets/Colors";
 
 .nameWrap{
   display: flex;

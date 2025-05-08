@@ -3,7 +3,7 @@
 import LocationIcon from "@/assets/icons/LocationIcon.vue";
 import TimeIcon from "@/assets/icons/TimeIcon.vue";
 import {ref} from "vue";
-import utils from "@/utils/utils";
+import utils from "@/utils/utils.ts";
 
 const props = defineProps({
   data: { type: Object, default: ()=>{}},

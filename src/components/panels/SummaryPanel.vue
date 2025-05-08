@@ -3,7 +3,7 @@
 import {computed, ref, watch} from "vue";
 import BackIcon from "@/assets/icons/nav/BackIcon.vue";
 import NextIcon from "@/assets/icons/nav/NextIcon.vue";
-import CheckoutItem from "@/components/items/CheckoutItem.vue";
+import CheckoutCard from "@/components/cards/CheckoutCard.vue";
 import {useServicesStore} from "@/stores/ServiceStore.ts";
 import utils from "@/utils/utils.ts";
 import type {Booking} from "@/interfaces/Booking.ts";
@@ -133,7 +133,7 @@ const backPanelClick = function(){
           </template>
         </div>
 
-        <CheckoutItem
+        <CheckoutCard
           :guest-id="null"
           :vendor-id="data.vendorId || ''"
           :time-start="dateTime.toString()"

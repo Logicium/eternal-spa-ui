@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { defineProps, defineEmits, ref, onMounted } from 'vue';
-import { useAuthStore } from "@/stores/AuthStore";
-import api from "@/router/api";
-import utils from "@/utils/utils";
+import { useAuthStore } from "@/stores/AuthStore.ts";
+import api from "@/router/api.ts";
+import utils from "@/utils/utils.ts";
 
 const authStore = useAuthStore();
 
@@ -221,7 +221,7 @@ const closeDetailView = () => {
 </template>
 
 <style scoped lang="scss">
-@import "../assets/Library";
+@import "../../assets/Library";
 
 .opening-detail-panel {
   position: absolute !important;
