@@ -8,6 +8,7 @@ import InstaIcon from "@/assets/icons/socials/InstaIcon.vue";
 import ShareIcon from "@/assets/icons/socials/ShareIcon.vue";
 import CloseIcon from "@/assets/icons/CloseIcon.vue";
 import YTIcon from "@/assets/icons/socials/YTIcon.vue";
+import IconToggle from "@/components/IconToggle.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -73,9 +74,15 @@ const resetMenu = function (){
     </RouterLink>
 
     <div class="buttons">
-      <div class="button gap"  @click="toggleMenu=!toggleMenu">
-        <div :class=" !toggleMenu ? 'menuIcon rotateIn' : 'menuIcon'"><MenuIcon/></div>
-        <div :class=" toggleMenu ? 'menuIcon rotateIn' : 'menuIcon'"><CloseIcon/></div>
+      <div class="button gap" @click="toggleMenu=!toggleMenu">
+        <IconToggle :is-active="toggleMenu">
+          <template #inactive>
+            <MenuIcon/>
+          </template>
+          <template #active>
+            <CloseIcon/>
+          </template>
+        </IconToggle>
       </div>
       <RouterLink to="/bookings" class="button" @click="resetMenu">Book Appointment</RouterLink>
     </div>
@@ -167,21 +174,6 @@ nav{
   justify-content: space-between;
 }
 
-.menuIcon{
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transform:rotate(0deg);
-  transition: transform 1s ease,opacity 1s ease;
-}
-
-.rotateIn{
-  transform:rotate(180deg);
-  transition: transform 1s ease,opacity 1s ease;
-  opacity: 1;
-}
 
 .colorChange{
   background-color: $secondary;

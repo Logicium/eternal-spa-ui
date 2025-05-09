@@ -7,7 +7,13 @@ const props = defineProps({
   data: { type: Object, default: ()=>{}},
 })
 
+const emit = defineEmits(['tagClick']);
+
 const imageUrl = computed(()=> 'url("'+props.data.image+'")').value;
+
+const handleTagClick = (tag: string) => {
+  emit('tagClick', tag);
+}
 
 </script>
 
@@ -20,7 +26,7 @@ const imageUrl = computed(()=> 'url("'+props.data.image+'")').value;
       <div class="bold">{{data.name}}</div>
       <div class="desc">{{data.desc}}</div>
       <div class="tags">
-        <div class="tag" v-for="tag in data.tags">{{tag}}</div>
+        <div class="tag" v-for="tag in data.tags" @click="handleTagClick(tag)">{{tag}}</div>
       </div>
     </div>
 
@@ -38,7 +44,6 @@ const imageUrl = computed(()=> 'url("'+props.data.image+'")').value;
 .tags{
   margin-top: 1vw;
   display: flex;
-  cursor: default;
 }
 
 .tag{
@@ -49,6 +54,12 @@ const imageUrl = computed(()=> 'url("'+props.data.image+'")').value;
   height: 45px;
   border-radius: 45px;
   background-color: $secondary;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    background-color: darken($secondary, 5%);
+  }
 }
 
 .image{
