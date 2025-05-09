@@ -16,6 +16,11 @@
     "lint": "eslint . --fix"
   },
   "dependencies": {
+    "@fullcalendar/core": "^6.1.17",
+    "@fullcalendar/daygrid": "^6.1.17",
+    "@fullcalendar/interaction": "^6.1.17",
+    "@fullcalendar/timegrid": "^6.1.17",
+    "@fullcalendar/vue3": "^6.1.17",
     "@meersagor/wavesurfer-vue": "^1.0.0",
     "@popperjs/core": "^2.11.8",
     "@vueuse/core": "^13.1.0",

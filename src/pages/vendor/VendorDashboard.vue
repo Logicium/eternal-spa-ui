@@ -17,7 +17,8 @@ import OpeningsPanel from "@/pages/vendor/OpeningsPanel.vue";
 import TimeOffPanel from "@/pages/vendor/TimeOffPanel.vue";
 import VendorSettingsPanel from "@/pages/vendor/VendorSettingsPanel.vue";
 import VendorReservationsPanel from "@/pages/vendor/VendorReservationsPanel.vue";
-import VendorCalendarPanel from "@/pages/vendor/VendorCalendarPanel.vue";
+
+import CalendarPanel from "@/pages/vendor/CalendarPanel.vue";
 
 const authStore = useAuthStore();
 const vendorStore = useVendorStore();
@@ -35,6 +36,10 @@ const logoutClick = function(){
   authStore.token = null;
   router.push('/login')
 }
+
+watch(activePanel, (newValue, oldValue) => {
+  console.log("New value: ",newValue);
+})
 
 </script>
 
@@ -77,14 +82,14 @@ const logoutClick = function(){
         </div>
       </nav>
       <div class="panelsWrap">
-        <transition name="slide-right" mode="out-in">
+        <transition-group name="slide-right" mode="out-in">
           <OverviewPanel v-if="activePanel === 'overview'" :key="'overview'" @navigate-to-reservations="activePanel = 'reservations'"/>
-          <VendorCalendarPanel v-else-if="activePanel === 'calendar'" :key="'calendar'"/>
+          <CalendarPanel v-else-if="activePanel === 'calendar'" :key="'calendar'"/>
           <OpeningsPanel v-else-if="activePanel === 'openings'" :key="'openings'"/>
           <TimeOffPanel v-else-if="activePanel === 'timeoff'" :key="'timeoff'"/>
           <VendorReservationsPanel v-else-if="activePanel === 'reservations'" :key="'reservations'"/>
           <VendorSettingsPanel v-else-if="activePanel === 'settings'" :key="'settings'"/>
-        </transition>
+        </transition-group>
       </div>
     </div>
   </TransitionPanel>
