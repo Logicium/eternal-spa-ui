@@ -5,11 +5,15 @@ import PersonIcon from "@/assets/icons/PersonIcon.vue";
 import CalRangeIcon from "@/assets/icons/cal/CalRangeIcon.vue";
 import WalletIcon from "@/assets/icons/WalletIcon.vue";
 import ChartCard from "@/components/cards/ChartCard.vue";
+import DonutChart from "@/components/cards/DonutChart.vue";
 import { useVendorStore } from "../../stores/VendorStore";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import utils from "@/utils/utils.ts";
 
 const vendorStore = useVendorStore();
+
+// Define emits
+const emit = defineEmits(['navigateToReservations']);
 
 // Function to format price
 const formatPrice = (price:number) => {
@@ -58,15 +62,89 @@ const upcomingReservationsCount = computed(() => {
   }).length;
 });
 
-const sampleChartData = {
-  monday:1,
-  tuesday:2,
-  wednesday:0,
-  thursday:2,
-  friday:3,
-  saturday:5,
-  sunday:3
-}
+// Computed property to get vendor reservations or empty array if not available
+const vendorReservations = computed(() => {
+  return vendorStore.vendor?.reservations || [];
+});
+
+// Get upcoming reservations sorted by date (nearest first)
+const upcomingReservations = computed(() => {
+  if (!vendorStore.vendor || !vendorStore.vendor.reservations) {
+    return [];
+  }
+
+  const now = new Date();
+
+  // Filter confirmed reservations that are in the future
+  const upcoming = vendorStore.vendor.reservations.filter(reservation => {
+    if (!reservation.confirmed) return false;
+
+    const reservationDate = new Date(reservation.timeStart);
+    return reservationDate > now;
+  });
+
+  // Sort by date (nearest first)
+  return upcoming.sort((a, b) => {
+    return new Date(a.timeStart).getTime() - new Date(b.timeStart).getTime();
+  }); // Return all upcoming reservations
+});
+
+// Calculate service popularity based on number of reservations
+const servicePopularity = computed(() => {
+  if (!vendorStore.vendor || !vendorStore.vendor.reservations || !vendorStore.vendor.services) {
+    return [];
+  }
+
+  const serviceMap = new Map();
+
+  // Initialize map with all services
+  vendorStore.vendor.services.forEach(service => {
+    serviceMap.set(service.id, {
+      id: service.id,
+      name: service.name,
+      count: 0,
+      price: service.price || 0
+    });
+  });
+
+  // Count reservations for each service
+  vendorStore.vendor.reservations.forEach(reservation => {
+    if (reservation.confirmed) {
+      let serviceId = null;
+
+      // Try to get serviceId from reservation.service
+      if (reservation.service && reservation.service.id) {
+        serviceId = reservation.service.id;
+      }
+      // If not found, try to get serviceId from reservation.package
+      else if (reservation.package && reservation.package.serviceId) {
+        serviceId = reservation.package.serviceId;
+      }
+
+      if (serviceId && serviceMap.has(serviceId)) {
+        const service = serviceMap.get(serviceId);
+        service.count += 1;
+      }
+    }
+  });
+
+  // Convert map to array and sort by count (descending)
+  return Array.from(serviceMap.values())
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 5); // Get top 5 services
+});
+
+// Format date for display
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+};
 
 </script>
 
@@ -77,7 +155,7 @@ const sampleChartData = {
     <div class="overviewCard">
       <div class="row between">
         <div class="">Upcoming Reservations</div>
-        <div class="icon right"><CalEventIcon/></div>
+        <div class="badge right"><CalEventIcon/></div>
       </div>
       <div class="number">{{ upcomingReservationsCount }}</div>
     </div>
@@ -85,7 +163,7 @@ const sampleChartData = {
     <div class="overviewCard">
       <div class="row between">
         <div class="">Monthly Guests</div>
-        <div class="icon right"><PersonIcon/></div>
+        <div class="badge right"><PersonIcon/></div>
       </div>
       <div class="number">5</div>
     </div>
@@ -93,7 +171,7 @@ const sampleChartData = {
     <div class="overviewCard filled">
       <div class="row">
         <div class="">Monthly Bookings</div>
-        <div class="icon right"><CalRangeIcon/></div>
+        <div class="badge right"><CalRangeIcon/></div>
       </div>
       <div class="number">7</div>
     </div>
@@ -101,15 +179,42 @@ const sampleChartData = {
     <div class="overviewCard filled">
       <div class="row between">
         <div class="">Monthly Earnings</div>
-        <div class="icon right"><WalletIcon/></div>
+        <div class="badge right"><WalletIcon/></div>
       </div>
       <div class="number">{{ formatPrice(monthlyEarnings) }}</div>
     </div>
 
     <div class="overviewRow">
-      <ChartCard :raw-data="sampleChartData"/>
+      <ChartCard :raw-data="{ reservations: vendorReservations }" chartTitle="Current Week Reservations" datasetLabel="Reservations"/>
     </div>
-    <div class="overviewRow"></div>
+
+
+    <div class="overviewHalf">
+      <div class="halfTitle">Upcoming Reservations</div>
+      <div class="reservationsList">
+        <div v-if="upcomingReservations.length === 0" class="noData">
+          No upcoming reservations
+        </div>
+        <div v-for="reservation in upcomingReservations" :key="reservation.id" class="reservationItem">
+          <div class="reservationHeader">
+            <div class="reservationName">{{ reservation.name }}</div>
+            <div class="reservationPrice">{{ formatPrice(reservation.totalPrice) }}</div>
+          </div>
+          <div class="reservationDetails">
+            <div class="reservationService">{{ reservation.package?.name || 'No package specified' }}</div>
+            <div class="reservationTime">{{ formatDate(reservation.timeStart) }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="overviewHalf">
+      <DonutChart
+        :raw-data="{ reservations: vendorReservations }"
+        chartTitle="Popular Packages"
+        datasetLabel="Bookings"
+      />
+    </div>
 
   </div>
 
@@ -123,15 +228,14 @@ const sampleChartData = {
 .overview{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: $h-vh-sm;
-  grid-auto-rows: 1fr;
+  grid-template-rows: 1fr 1fr minmax(0,2fr);
   background-color: $tertiary;
   grid-gap: $sp-xl;
-  height: $h-vh-full;
+  max-height: $h-vh-full;
   padding: $sp-xl;
 }
 
-.icon{
+.badge{
   min-height: $h-icon-lg;
   max-height: $h-icon-lg;
   min-width: $w-icon-lg;
@@ -167,6 +271,15 @@ const sampleChartData = {
   border-radius: $br-md;
 }
 
+.overviewHalf{
+  background-color: $primary;
+  grid-column: span 2;
+  border-radius: $br-md;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .row{
   align-items: center;
 }
@@ -181,8 +294,82 @@ const sampleChartData = {
 
 .number{
   justify-self: center;
-  font-size: $fontBig;
-  line-height: $fontBig;
+  font-size: $fontMed;
+  line-height: $fontMed;
+}
+
+.halfTitle {
+  font-size: $fontSm;
+  font-weight: bold;
+  padding: $sp-md;
+  flex-shrink: 0;
+}
+
+.reservationsList, .servicesList {
+  display: flex;
+  flex-direction: column;
+  gap: $sp-md;
+  padding: 0 $sp-md;
+  overflow-y: auto;
+  flex: 1;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}
+
+.reservationItem, .serviceItem {
+  background-color: $tertiary;
+  border-radius: $br-sm;
+  padding: $sp-md;
+}
+
+.reservationHeader, .serviceHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: $sp-sm;
+}
+
+.reservationName, .serviceName {
+  font-weight: bold;
+}
+
+.reservationPrice, .serviceCount {
+  color: $quaternary;
+}
+
+.reservationDetails {
+  display: flex;
+  justify-content: space-between;
+  font-size: $fontXs;
+  color: $quaternary;
+}
+
+.serviceBar {
+  height: 8px;
+  background-color: $primary;
+  border-radius: $br-full;
+  margin-top: $sp-sm;
+  overflow: hidden;
+}
+
+.serviceBarFill {
+  height: 100%;
+  background-color: $quaternary;
+  border-radius: $br-full;
+}
+
+.noData {
+  text-align: center;
+  color: $quaternary;
+  padding: $sp-xl;
+}
+
+.viewAllContainer {
+  padding: $sp-md;
+  text-align: center;
+  flex-shrink: 0;
 }
 
 </style>

@@ -78,7 +78,7 @@ const logoutClick = function(){
       </nav>
       <div class="panelsWrap">
         <transition name="slide-right" mode="out-in">
-          <OverviewPanel v-if="activePanel === 'overview'" :key="'overview'"/>
+          <OverviewPanel v-if="activePanel === 'overview'" :key="'overview'" @navigate-to-reservations="activePanel = 'reservations'"/>
           <VendorCalendarPanel v-else-if="activePanel === 'calendar'" :key="'calendar'"/>
           <OpeningsPanel v-else-if="activePanel === 'openings'" :key="'openings'"/>
           <TimeOffPanel v-else-if="activePanel === 'timeoff'" :key="'timeoff'"/>
