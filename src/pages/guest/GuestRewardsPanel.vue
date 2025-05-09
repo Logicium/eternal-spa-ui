@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineProps, defineEmits } from 'vue';
+import BackIcon from "@/assets/icons/nav/BackIcon.vue";
 
 const props = defineProps({
   activePanel: {
@@ -19,7 +20,7 @@ const backToAccount = function() {
   <div class="panelFull">
     <div class="filled header-bar">
       <div class="back-button" @click="backToAccount">
-        <span class="arrow">←</span> Back to Account
+        <BackIcon/> Back to Account
       </div>
       <div class="title">Rewards</div>
     </div>

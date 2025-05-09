@@ -2,6 +2,8 @@
 import { defineProps, defineEmits, ref } from 'vue';
 import api from '@/router/api';
 import utils from '@/utils/utils';
+import { useAuthStore } from "@/stores/AuthStore";
+import TransitionPanel from "@/components/panels/TransitionPanel.vue";
 
 const props = defineProps({
   guest: {
@@ -15,6 +17,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['logout', 'changePanel']);
+
+const authStore = useAuthStore();
 
 // Status message variables
 const statusMessage = ref("");
@@ -50,14 +54,18 @@ const saveSettings = async function() {
     const response = await fetch(api.guest.settings, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${authStore.token}`
       },
       body: JSON.stringify({
         id: props.guest.id,
         firstName: props.guest.firstName,
         lastName: props.guest.lastName,
         phone: props.guest.phone,
-        email: props.guest.email
+        email: props.guest.email,
+        emailBookingAlerts: props.guest.emailBookingAlerts,
+        smsBookingAlerts: props.guest.smsBookingAlerts,
+        newsletterAlerts: props.guest.newsletterAlerts
       })
     });
 
@@ -77,10 +85,6 @@ const saveSettings = async function() {
 
 <template>
   <div class="panelFull">
-    <!-- Status message -->
-    <div v-if="showStatus" class="status-message" :class="statusType">
-      {{ statusMessage }}
-    </div>
 
     <div class="filled summary">
       <div class="title">Hi {{guest.firstName}}</div>
@@ -112,24 +116,33 @@ const saveSettings = async function() {
 
       <div class="outline span">
         <div class="settings">
-          <div class="title">Settings</div>
-          <div>Contact Info</div>
-          <div class="names">
-            <input class="underline gap" type="text" v-model="guest.firstName" placeholder="First Name"/>
-            <input class="underline" type="text" v-model="guest.lastName" placeholder="Last Name"/>
-          </div>
-          <input class="underline" type="text" placeholder="Phone" v-model="guest.phone">
-          <input class="underline" type="email" placeholder="Email" v-model="guest.email"/>
-          <div class="top">Contact Preferences</div>
-          <div><input type="checkbox" /> Email Notifications</div>
-          <div><input type="checkbox"/> SMS Notifications</div>
-          <div><input type="checkbox"/> Newsletter Signup</div>
-          <div class="buttons">
-            <div class="col">
-              <div class="button underline rev" @click="securityClick">Security & Data</div>
-              <div class="button underline rev" @click="logoutClick">Logout</div>
+          <transition-group name="fadefast">
+            <div v-if="showStatus" class="statusWrap">
+              <div class="status-message" :class="statusType">
+                {{ statusMessage }}
+              </div>
             </div>
-            <div class="button mt-a" @click="saveSettings">{{ saveButtonText }}</div>
+          </transition-group>
+          <div class="blurWrap" :class="{blur: showStatus}">
+            <div class="title">Settings</div>
+            <div>Contact Info</div>
+            <div class="names">
+              <input class="underline gap" type="text" v-model="guest.firstName" placeholder="First Name"/>
+              <input class="underline" type="text" v-model="guest.lastName" placeholder="Last Name"/>
+            </div>
+            <input class="underline" type="text" placeholder="Phone" v-model="guest.phone">
+            <input class="underline" type="email" placeholder="Email" v-model="guest.email"/>
+            <div class="top">Contact Preferences</div>
+            <div><input type="checkbox" v-model="guest.emailBookingAlerts" /> Email Notifications</div>
+            <div><input type="checkbox" v-model="guest.smsBookingAlerts" /> SMS Notifications</div>
+            <div><input type="checkbox" v-model="guest.newsletterAlerts" /> Newsletter Signup</div>
+            <div class="buttons">
+              <div class="col">
+                <div class="button underline rev" @click="securityClick">Security & Data</div>
+                <div class="button underline rev" @click="logoutClick">Logout</div>
+              </div>
+              <div class="button mt-a" @click="saveSettings">{{ saveButtonText }}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -159,10 +172,20 @@ const saveSettings = async function() {
 }
 
 .settings{
+  position: relative;
   display: flex;
   height: 100%;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.blurWrap{
+  transition: 1s;
+}
+
+.blur{
+  filter: blur(2px);
+  transition: 1s;
 }
 
 .names{
@@ -240,23 +263,28 @@ input{
   margin-bottom: 1vw;
 }
 
+.statusWrap{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
 .status-message {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
   padding: 1rem;
   border-radius: 6px;
-  z-index: 1000;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   &.success {
-    background-color: rgba(0, 128, 0, 0.1);
+    background-color: rgba(0, 128, 0, 0.3);
     color: green;
   }
 
   &.error {
-    background-color: rgba(255, 0, 0, 0.1);
+    background-color: rgba(255, 0, 0, 0.3);
     color: red;
   }
 }

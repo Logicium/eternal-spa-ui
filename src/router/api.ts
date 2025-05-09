@@ -14,7 +14,8 @@ const api = {
     account:baseUrl+'/guest/account',
     login:baseUrl+'/guest/login',
     signup:baseUrl+'/guest/signup',
-    settings:baseUrl+'/guest/settings'
+    settings:baseUrl+'/guest/settings',
+    password:baseUrl+'/guest/password'
   },
   vendor:{
     account:baseUrl+'/vendor/account',
