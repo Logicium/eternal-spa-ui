@@ -86,52 +86,7 @@ const upcomingReservations = computed(() => {
   // Sort by date (nearest first)
   return upcoming.sort((a, b) => {
     return new Date(a.timeStart).getTime() - new Date(b.timeStart).getTime();
-  }); // Return all upcoming reservations
-});
-
-// Calculate service popularity based on number of reservations
-const servicePopularity = computed(() => {
-  if (!vendorStore.vendor || !vendorStore.vendor.reservations || !vendorStore.vendor.services) {
-    return [];
-  }
-
-  const serviceMap = new Map();
-
-  // Initialize map with all services
-  vendorStore.vendor.services.forEach(service => {
-    serviceMap.set(service.id, {
-      id: service.id,
-      name: service.name,
-      count: 0,
-      price: service.price || 0
-    });
-  });
-
-  // Count reservations for each service
-  vendorStore.vendor.reservations.forEach(reservation => {
-    if (reservation.confirmed) {
-      let serviceId = null;
-
-      // Try to get serviceId from reservation.service
-      if (reservation.service && reservation.service.id) {
-        serviceId = reservation.service.id;
-      }
-      // If not found, try to get serviceId from reservation.package
-      else if (reservation.package && reservation.package.serviceId) {
-        serviceId = reservation.package.serviceId;
-      }
-
-      if (serviceId && serviceMap.has(serviceId)) {
-        const service = serviceMap.get(serviceId);
-        service.count += 1;
-      }
-    }
-  });
-
-  // Convert map to array and sort by count (descending)
-  return Array.from(serviceMap.values())
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 5); // Get top 5 services
+  }) // Get only the 3 nearest reservations
 });
 
 // Format date for display
@@ -205,6 +160,9 @@ const formatDate = (dateString: string) => {
             <div class="reservationTime">{{ formatDate(reservation.timeStart) }}</div>
           </div>
         </div>
+      </div>
+      <div v-if="upcomingReservationsCount > 3" class="viewAllContainer">
+        <div class="button underline" @click="emit('navigateToReservations')">View All</div>
       </div>
     </div>
 
