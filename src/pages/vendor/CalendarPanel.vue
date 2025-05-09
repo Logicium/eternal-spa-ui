@@ -185,7 +185,6 @@ onMounted(() => {
     </div>
 
     <div class="calendar-container">
-       FullCalendar for all views
       <FullCalendar
         ref="calendarRef"
         :options="calendarOptions"

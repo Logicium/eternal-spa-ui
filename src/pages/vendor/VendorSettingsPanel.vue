@@ -99,11 +99,17 @@ const onSubmit = async () => {
   <div class="settings-panel">
     <h2>Account Settings</h2>
 
-    <div v-if="showStatus" class="status-message" :class="statusType">
-      {{ statusMessage }}
-    </div>
+    <div class="settings-container">
+      <transition-group name="fadefast">
+        <div v-if="showStatus" class="statusWrap" key="status">
+          <div class="status-message" :class="statusType">
+            {{ statusMessage }}
+          </div>
+        </div>
+      </transition-group>
 
-    <form @submit.prevent="onSubmit">
+      <div class="blurWrap" :class="{blur: showStatus}">
+        <form @submit.prevent="onSubmit">
       <div class="form-section">
         <h3>Personal Information</h3>
 
@@ -152,6 +158,8 @@ const onSubmit = async () => {
         <button type="submit" class="button primary">{{ buttonText }}</button>
       </div>
     </form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -234,10 +242,35 @@ input {
   }
 }
 
+.settings-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.statusWrap {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.blurWrap {
+  transition: 1s;
+}
+
+.blur {
+  filter: blur(2px);
+  transition: 1s;
+}
+
 .status-message {
   padding: 1rem;
   border-radius: 6px;
-  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   &.success {
     background-color: rgba(76, 175, 80, 0.2);
