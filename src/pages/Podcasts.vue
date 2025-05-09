@@ -4,13 +4,37 @@ import TuneIcon from "@/assets/icons/TuneIcon.vue";
 import CloseIcon from "@/assets/icons/CloseIcon.vue";
 import SearchIcon from "@/assets/icons/SearchIcon.vue";
 import FeatureCard from "@/components/cards/FeatureCard.vue";
-import data from "@/data/data.ts";
 import PodcastCard from "@/components/cards/PodcastCard.vue";
 import IconToggle from "@/components/IconToggle.vue";
 import { ref, computed } from "vue";
+import api from "@/router/api.ts";
+import LoadingPage from "@/pages/LoadingPage.vue";
+import type { PodcastsPageResponse, PodcastsPageData } from "@/interfaces";
 
-const featuredPodcasts = data.podcasts.filter(podcast => {
-  return podcast.featured
+const fetchedData = ref<PodcastsPageResponse | null>(null);
+const fetchData = async function (){
+  const response = await fetch(`${api.podcasts}?populate=*`, {});
+  const data = await response.json();
+  fetchedData.value = data;
+  console.log(data);
+}
+
+fetchData();
+
+// Computed property for featured podcasts from CMS data
+const featuredPodcasts = computed(() => {
+  if (!fetchedData.value) return [];
+
+  return fetchedData.value.data.filter(podcast => podcast.isFeatured === true);
+});
+
+// Adapter function to transform CMS podcast data to the format expected by FeatureCard
+const adaptedFeaturedPodcasts = computed(() => {
+  return featuredPodcasts.value.map(podcast => ({
+    id: podcast.id,
+    name: podcast.name,
+    image: `https://strapi-8w04.onrender.com${podcast.image.formats.medium?.url || podcast.image.url}`
+  }));
 });
 
 // Search and filter state
@@ -22,14 +46,14 @@ const sortBy = ref('newest');
 
 // Filter podcasts based on search text and tags
 const filteredPodcasts = computed(() => {
-  if (!data.podcasts.length) return [];
+  if (!fetchedData.value) return [];
 
-  return data.podcasts.filter(podcast => {
+  return fetchedData.value.data.filter(podcast => {
     // Text search filter
     if (searchText.value) {
       const searchLower = searchText.value.toLowerCase();
       const titleMatch = podcast.name?.toLowerCase().includes(searchLower);
-      const descriptionMatch = podcast.desc?.toLowerCase().includes(searchLower);
+      const descriptionMatch = podcast.description?.toLowerCase().includes(searchLower);
 
       if (!(titleMatch || descriptionMatch)) {
         return false;
@@ -40,7 +64,7 @@ const filteredPodcasts = computed(() => {
     if (tagFilters.value.length > 0) {
       // Check if any of the podcast's tags match any of the selected tags
       const hasMatchingTag = podcast.tags.some(tag =>
-        tagFilters.value.some(filter => tag.toLowerCase().includes(filter.toLowerCase()))
+        tagFilters.value.some(filter => tag.tagName.toLowerCase().includes(filter.toLowerCase()))
       );
       if (!hasMatchingTag) {
         return false;
@@ -50,14 +74,25 @@ const filteredPodcasts = computed(() => {
     return true;
   }).sort((a, b) => {
     if (sortBy.value === 'newest') {
-      return new Date(b.uploadDate).getTime() - new Date(a.uploadDate).getTime();
+      return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
     } else if (sortBy.value === 'oldest') {
-      return new Date(a.uploadDate).getTime() - new Date(b.uploadDate).getTime();
+      return new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime();
     } else if (sortBy.value === 'title') {
       return a.name.localeCompare(b.name);
     }
     return 0;
   });
+});
+
+// Adapter function to transform CMS podcast data to the format expected by PodcastCard
+const adaptedFilteredPodcasts = computed(() => {
+  return filteredPodcasts.value.map(podcast => ({
+    id: podcast.id,
+    name: podcast.name,
+    desc: podcast.description,
+    tags: podcast.tags.map(tag => tag.tagName),
+    image: `https://strapi-8w04.onrender.com${podcast.image.formats.medium?.url || podcast.image.url}`
+  }));
 });
 
 // Add tag to filters
@@ -118,7 +153,9 @@ const handleTagClick = (tag: string) => {
     PODCAST
   </div>
 
-  <div class="podcasts">
+  <transition-group name="fade" appear>
+    <LoadingPage v-if="fetchedData===null" :big="true"/>
+    <div v-else class="podcasts">
 
     <div class="controls">
       <div class="searchIcon"><SearchIcon/></div>
@@ -183,16 +220,17 @@ const handleTagClick = (tag: string) => {
     <div class="featuresWrap" v-if="!searchText && tagFilters.length === 0">
       <div class="title">Featured Podcasts</div>
       <div class="featuredGrid">
-        <FeatureCard v-for="podcast in featuredPodcasts" :key="podcast.id" :data="podcast"/>
+        <FeatureCard v-for="podcast in adaptedFeaturedPodcasts" :key="podcast.id" :data="podcast"/>
       </div>
     </div>
 
     <div class="podcastList">
       <div class="title2">All Podcasts</div>
-      <PodcastCard v-for="podcast in filteredPodcasts" :key="podcast.id" :data="podcast" @tag-click="handleTagClick"/>
+      <PodcastCard v-for="podcast in adaptedFilteredPodcasts" :key="podcast.id" :data="podcast" @tag-click="handleTagClick"/>
     </div>
 
   </div>
+  </transition-group>
 
 
 

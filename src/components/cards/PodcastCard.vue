@@ -56,7 +56,8 @@ const handleTagClick = (tag: string) => {
   background-color: $secondary;
   cursor: pointer;
   transition: all 0.3s;
-
+  text-align: center;
+  line-height: 1;
   &:hover {
     background-color: darken($secondary, 5%);
   }

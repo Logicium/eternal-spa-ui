@@ -28,6 +28,7 @@ const api = {
   email:{
     contact:baseUrl+'/email/contact'
   },
-  about_page:cmsUrl+'/api/about'
+  about_page:cmsUrl+'/api/about',
+  podcasts:cmsUrl+'/api/podcasts'
 }
 export default api
