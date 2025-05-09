@@ -1,3 +1,5 @@
+import type { ImageFormat } from './SharedInterfaces';
+
 export interface PodcastsPageResponse {
   data: PodcastsPageData[];
   meta: {
@@ -63,18 +65,6 @@ export interface ImageData {
   publishedAt: string;
 }
 
-export interface ImageFormat {
-  ext: string;
-  url: string;
-  hash: string;
-  mime: string;
-  name: string;
-  path: string | null;
-  size: number;
-  width: number;
-  height: number;
-  sizeInBytes: number;
-}
 
 export interface AudioFileData {
   id: number;
