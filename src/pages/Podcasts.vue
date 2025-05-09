@@ -31,7 +31,7 @@ const featuredPodcasts = computed(() => {
 // Adapter function to transform CMS podcast data to the format expected by FeatureCard
 const adaptedFeaturedPodcasts = computed(() => {
   return featuredPodcasts.value.map(podcast => ({
-    id: podcast.id,
+    id: podcast.documentId,
     name: podcast.name,
     image: `https://strapi-8w04.onrender.com${podcast.image.formats.medium?.url || podcast.image.url}`
   }));
@@ -87,7 +87,7 @@ const filteredPodcasts = computed(() => {
 // Adapter function to transform CMS podcast data to the format expected by PodcastCard
 const adaptedFilteredPodcasts = computed(() => {
   return filteredPodcasts.value.map(podcast => ({
-    id: podcast.id,
+    id: podcast.documentId,
     name: podcast.name,
     desc: podcast.description,
     tags: podcast.tags.map(tag => tag.tagName),
@@ -148,88 +148,89 @@ const handleTagClick = (tag: string) => {
 </script>
 
 <template>
-
-  <div class="header">
-    PODCAST
-  </div>
-
   <transition-group name="fade" appear>
-    <LoadingPage v-if="fetchedData===null" :big="true"/>
-    <div v-else class="podcasts">
 
-    <div class="controls">
-      <div class="searchIcon"><SearchIcon/></div>
-      <input class="underline text" v-model="searchText" placeholder="Search Podcasts" type="text">
-      <div class="filters" @click="toggleFilters">
-        <IconToggle :is-active="showFilters">
-          <template #inactive>
-            <TuneIcon/>
-          </template>
-          <template #active>
-            <CloseIcon/>
-          </template>
-        </IconToggle>
+    <LoadingPage v-if="fetchedData===null" :big="false"/>
+    <template v-else>
+      <div class="header">
+        PODCAST
       </div>
-    </div>
+      <div  class="podcasts">
 
-    <!-- Filter Section -->
-    <div class="filter-section" :class="{ 'show-filters': showFilters }">
-      <div class="filter-options">
-        <div class="filter-group">
-          <label class="filter-label">Tags:</label>
-          <div class="tag-input-container">
-            <input
-              type="text"
-              v-model="tagInput"
-              placeholder="Type tags separated by commas..."
-              class="tag-input"
-              @keyup.enter="addTag"
-            />
-            <button @click="addTag" class="add-tag-button">Add</button>
-          </div>
-          <div class="tags-container" v-if="tagFilters.length > 0">
-            <div class="tag" v-for="tag in tagFilters" :key="tag" @click="removeTag(tag)">
-              {{ tag }}
-              <span class="remove-tag">×</span>
+      <div class="controls">
+        <div class="searchIcon"><SearchIcon/></div>
+        <input class="underline text" v-model="searchText" placeholder="Search Podcasts" type="text">
+        <div class="filters" @click="toggleFilters">
+          <IconToggle :is-active="showFilters">
+            <template #inactive>
+              <TuneIcon/>
+            </template>
+            <template #active>
+              <CloseIcon/>
+            </template>
+          </IconToggle>
+        </div>
+      </div>
+
+      <!-- Filter Section -->
+      <div class="filter-section" :class="{ 'show-filters': showFilters }">
+        <div class="filter-options">
+          <div class="filter-group">
+            <label class="filter-label">Tags:</label>
+            <div class="tag-input-container">
+              <input
+                type="text"
+                v-model="tagInput"
+                placeholder="Type tags separated by commas..."
+                class="tag-input"
+                @keyup.enter="addTag"
+              />
+              <button @click="addTag" class="add-tag-button">Add</button>
+            </div>
+            <div class="tags-container" v-if="tagFilters.length > 0">
+              <div class="tag" v-for="tag in tagFilters" :key="tag" @click="removeTag(tag)">
+                {{ tag }}
+                <span class="remove-tag">×</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="filter-group">
-          <label class="filter-label">Sort By:</label>
-          <div class="radio-group">
-            <label class="radio-label">
-              <input type="radio" v-model="sortBy" value="newest" />
-              Newest First
-            </label>
-            <label class="radio-label">
-              <input type="radio" v-model="sortBy" value="oldest" />
-              Oldest First
-            </label>
-            <label class="radio-label">
-              <input type="radio" v-model="sortBy" value="name" />
-              Title (A-Z)
-            </label>
+          <div class="filter-group">
+            <label class="filter-label">Sort By:</label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" v-model="sortBy" value="newest" />
+                Newest First
+              </label>
+              <label class="radio-label">
+                <input type="radio" v-model="sortBy" value="oldest" />
+                Oldest First
+              </label>
+              <label class="radio-label">
+                <input type="radio" v-model="sortBy" value="name" />
+                Title (A-Z)
+              </label>
+            </div>
           </div>
+
+          <button @click="resetFilters" class="reset-button">Reset Filters</button>
         </div>
-
-        <button @click="resetFilters" class="reset-button">Reset Filters</button>
       </div>
-    </div>
 
-    <div class="featuresWrap" v-if="!searchText && tagFilters.length === 0">
-      <div class="title">Featured Podcasts</div>
-      <div class="featuredGrid">
-        <FeatureCard v-for="podcast in adaptedFeaturedPodcasts" :key="podcast.id" :data="podcast"/>
+      <div class="featuresWrap" v-if="!searchText && tagFilters.length === 0">
+        <div class="title">Featured Podcasts</div>
+        <div class="featuredGrid">
+          <FeatureCard v-for="podcast in adaptedFeaturedPodcasts" :key="podcast.id" :data="podcast"/>
+        </div>
       </div>
-    </div>
 
-    <div class="podcastList">
-      <div class="title2">All Podcasts</div>
-      <PodcastCard v-for="podcast in adaptedFilteredPodcasts" :key="podcast.id" :data="podcast" @tag-click="handleTagClick"/>
-    </div>
+      <div class="podcastList">
+        <div class="title2">All Podcasts</div>
+        <PodcastCard v-for="podcast in adaptedFilteredPodcasts" :key="podcast.id" :data="podcast" @tag-click="handleTagClick"/>
+      </div>
 
-  </div>
+    </div>
+    </template>
   </transition-group>
 
 

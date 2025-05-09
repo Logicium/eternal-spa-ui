@@ -96,6 +96,7 @@ const skipSeconds = (seconds: number) => {
   flex-direction: column;
   padding: 2rem;
   justify-content: center;
+  margin: 2rem 0;
 }
 
 .times{

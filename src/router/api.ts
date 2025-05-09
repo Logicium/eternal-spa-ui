@@ -29,6 +29,7 @@ const api = {
     contact:baseUrl+'/email/contact'
   },
   about_page:cmsUrl+'/api/about',
-  podcasts:cmsUrl+'/api/podcasts'
+  podcasts:cmsUrl+'/api/podcasts',
+  podcast: (documentId: string) => `${cmsUrl}/api/podcasts/${documentId}`
 }
 export default api

@@ -1,79 +1,100 @@
 <script setup lang="ts">
 
-import data from "@/data/data.ts";
 import {useRoute} from "vue-router";
 import {computed, ref} from "vue";
 import AudioControls from "@/components/cards/AudioControls.vue";
 import FacebookIcon from "@/assets/icons/socials/FacebookIcon.vue";
 import YTIcon from "@/assets/icons/socials/YTIcon.vue";
 import InstaIcon from "@/assets/icons/socials/InstaIcon.vue";
+import api from "@/router/api.ts";
+import LoadingPage from "@/pages/LoadingPage.vue";
+import type { PodcastsPageData } from "@/interfaces";
 
 const route = useRoute();
-const id = Number(route.params.id);
-console.log("ID: ",id);
-const loadedData = data.podcasts[id];
+const documentId = route.params.id as string;
+console.log("DocumentID: ", documentId);
 
-const imageUrl = computed(()=> 'url("'+loadedData.image+'")').value;
+const fetchedData = ref<PodcastsPageData | null>(null);
+const imageUrl = ref('');
+
+const fetchData = async function() {
+  try {
+    const response = await fetch(`${api.podcast(documentId)}?populate=*`, {});
+    const data = await response.json();
+    fetchedData.value = data.data;
+    console.log("Fetched podcast data:", data);
+
+    // Set the image URL
+    if (fetchedData.value && fetchedData.value.image) {
+      const imageUrlBase = 'https://strapi-8w04.onrender.com';
+      const imageUrlPath = fetchedData.value.image.formats.medium?.url || fetchedData.value.image.url;
+      imageUrl.value = computed(() => 'url("' + imageUrlBase + imageUrlPath + '")').value;
+    }
+  } catch (error) {
+    console.error("Error fetching podcast data:", error);
+  }
+};
+
+fetchData();
 
 const expand = ref(false);
 
 </script>
 
 <template>
-
-  <div class="headerLarge">
-    <div class="podcastName">{{loadedData.name}}</div>
-    <div class="tags">
-      <div class="tag" v-for="tag in loadedData.tags">{{tag}}</div>
-    </div>
-  </div>
-
-  <div class="podcast">
-
-    <AudioControls class="fill" :url="loadedData.file"/>
-
-
-    <div class="outline">
-
-      <div class="title">About Podcast</div>
-      <div class="published">Published: {{new Date(loadedData.uploadDate).toDateString()}}</div>
-      <div class="desc">{{loadedData.desc}}</div>
-
-      <div class="infoRow">
-
-        <div class="downloads">
-          <div class="title">Links</div>
-          <div class="download">Youtube Music</div>
-          <div class="download">Apple Podcasts</div>
-          <div class="download">Spotify</div>
+  <transition-group name="fade" appear>
+    <LoadingPage v-if="fetchedData===null" :big="true"/>
+    <template v-else>
+      <div class="headerLarge">
+        <div class="podcastName">{{fetchedData.name}}</div>
+        <div class="tags">
+          <div class="tag" v-for="tag in fetchedData.tags">{{tag.tagName}}</div>
         </div>
-
-        <div class="stats">
-          <div class="title">Downloads</div>
-          <div class="link">Download Podcast</div>
-          <div class="link">Download Transcript</div>
-        </div>
-
       </div>
 
-    </div>
+      <div class="podcast">
 
-    <div class="outline">
+        <AudioControls class="fill" :url="`https://strapi-8w04.onrender.com${fetchedData.audioFile.url}`"/>
 
-      <div class="title">Transcript</div>
-      <div :class="expand? 'transcript expand' : 'transcript'">{{loadedData.transcript}}</div>
+        <div class="outline">
+          <div class="title">About Podcast</div>
+          <div class="published">Published: {{new Date(fetchedData.publishedAt).toDateString()}}</div>
+          <div class="desc">{{fetchedData.description}}</div>
 
-      <div class="expandBtn" @click="expand=!expand">
-        <div :class="expand? 'btn hide':'btn' ">View All</div>
-        <div :class="!expand? 'btn hide':'btn'">View Less</div>
+          <div class="infoRow">
+            <div class="downloads">
+              <div class="title">Links</div>
+              <div class="download">Youtube Music</div>
+              <div class="download">Apple Podcasts</div>
+              <div class="download">Spotify</div>
+            </div>
+
+            <div class="stats">
+              <div class="title">Downloads</div>
+              <div class="link">Download Podcast</div>
+              <div class="link">Download Transcript</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="outline">
+          <div class="title">Transcript</div>
+          <div :class="expand? 'transcript expand' : 'transcript'">
+            <template v-for="(item, index) in fetchedData.transcript" :key="index">
+              <div v-for="(child, childIndex) in item.children" :key="`${index}-${childIndex}`">
+                {{child.text}}
+              </div>
+            </template>
+          </div>
+
+          <div class="expandBtn" @click="expand=!expand">
+            <div :class="expand? 'btn hide':'btn' ">View All</div>
+            <div :class="!expand? 'btn hide':'btn'">View Less</div>
+          </div>
+        </div>
       </div>
-
-    </div>
-
-
-
-  </div>
-
+    </template>
+  </transition-group>
 </template>
 
 <style scoped lang="scss">
