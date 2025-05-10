@@ -24,6 +24,7 @@ const api = {
     timeoff:baseUrl+'/vendor/timeoff',
     settings:baseUrl+'/vendor/settings',
     reservations:baseUrl+'/vendor/reservations',
+    bookings:baseUrl+'/vendor/bookings',
   },
   email:{
     contact:baseUrl+'/email/contact'

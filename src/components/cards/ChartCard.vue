@@ -14,6 +14,8 @@ import {
 } from 'chart.js';
 
 import { Line } from 'vue-chartjs';
+import BackIcon from "@/assets/icons/nav/BackIcon.vue";
+import NextIcon from "@/assets/icons/nav/NextIcon.vue";
 
 ChartJS.register(Title, Tooltip, Legend, LineElement, PointElement, CategoryScale, LinearScale);
 
@@ -230,9 +232,9 @@ const weekDateRange = computed(() => {
     <div class="chartHeader">
       <div class="chartTitle">{{ props.chartTitle }}</div>
       <div class="weekNavigation">
-        <button class="navButton" @click="goToPreviousWeek">←</button>
+        <button class="navButton" @click="goToPreviousWeek"><BackIcon/></button>
         <span class="dateRange">{{ weekDateRange }}</span>
-        <button class="navButton" @click="goToNextWeek">→</button>
+        <button class="navButton" @click="goToNextWeek"><NextIcon/></button>
       </div>
     </div>
     <div class="chartContainer">

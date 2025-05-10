@@ -5,11 +5,16 @@ import FullCalendar from '@fullcalendar/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import api from '../../router/api';
+import type { Booking } from '../../interfaces/Booking';
+import {useAuthStore} from "@/stores/AuthStore.ts";
 
 const vendorStore = useVendorStore();
 const viewType = ref<'dayGridMonth' | 'timeGridWeek' | 'timeGridDay'>('dayGridMonth');
 const calendarRef = ref();
+const bookingLabelTemplateRef = ref();
 const selectedDate = ref(new Date());
+const authStore = useAuthStore();
 
 // Sidebar state
 const showSidebar = ref(false);
@@ -25,6 +30,31 @@ const tooltipState = reactive({
   service: ''
 });
 
+// Vendor bookings state
+const vendorBookings = ref<Booking[]>([]);
+
+// Fetch vendor bookings
+const fetchVendorBookings = async () => {
+  try {
+
+    const response = await fetch(api.vendor.bookings, {
+      headers: {
+        'Authorization': `Bearer ${authStore.token}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch vendor bookings: ${response.status}`);
+    }
+
+    const data = await response.json();
+    vendorBookings.value = data;
+    console.log('Vendor bookings fetched:', vendorBookings.value);
+  } catch (error) {
+    console.error('Error fetching vendor bookings:', error);
+  }
+};
+
 // Get all reservations
 const reservations = computed(() => {
   if (!vendorStore.vendor || !vendorStore.vendor.reservations) {
@@ -35,7 +65,8 @@ const reservations = computed(() => {
 
 // Format reservations for FullCalendar display
 const calendarEvents = computed(() => {
-  return reservations.value.map(reservation => {
+  // Regular reservation events
+  const reservationEvents = reservations.value.map(reservation => {
     const startDate = new Date(reservation.timeStart);
     const endDate = new Date(reservation.timeEnd);
 
@@ -51,6 +82,22 @@ const calendarEvents = computed(() => {
       }
     };
   });
+
+  // Background events from vendor bookings
+  const bookingEvents = vendorBookings.value.map(booking => {
+    return {
+      start: booking.timeStart,
+      end: booking.timeEnd,
+      display: 'background',
+      backgroundColor: 'rgba(200, 200, 200, 0.3)', // Light gray with transparency
+      extendedProps: {
+        booking: booking
+      }
+    };
+  });
+
+  // Combine both types of events
+  return [...reservationEvents, ...bookingEvents];
 });
 
 // Calendar options
@@ -75,70 +122,143 @@ const calendarOptions = computed(() => {
     height: '100%',
     eventClick: handleReservationClick,
     eventDidMount: (info:any) => {
-      // Add custom tooltip showing full event name and time
       const eventEl = info.el;
-      const startTime = info.event.start ? new Date(info.event.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
-      const endTime = info.event.end ? new Date(info.event.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
-      const timeText = startTime && endTime ? `${startTime} - ${endTime}` : '';
-      const serviceName = info.event.extendedProps?.serviceName || '';
 
-      // Format tooltip text with event title, time, and service name
-      const tooltipTitle = `${info.event.title}`;
-      const tooltipTime = timeText ? `Time: ${timeText}` : '';
-      const tooltipService = serviceName ? `Service: ${serviceName}` : '';
+      // Check if this is a background event (vendor booking)
+      const isBackgroundEvent = info.event.display === 'background';
 
-      // Show tooltip on mouseover
-      eventEl.addEventListener('mouseover', (e:any) => {
-        tooltipState.title = tooltipTitle;
-        tooltipState.time = tooltipTime;
-        tooltipState.service = tooltipService;
+      if (isBackgroundEvent) {
+        // For background events, add a subtle pattern or label
+        const booking = info.event.extendedProps?.booking;
+        if (booking && bookingLabelTemplateRef.value) {
+          // Clone the booking label from the template ref
+          const bookingLabel = bookingLabelTemplateRef.value.querySelector('.booking-label').cloneNode(true);
+          eventEl.appendChild(bookingLabel);
 
-        // Get the calendar panel element
-        const calendarPanel = document.querySelector('.calendar-panel');
-        if (calendarPanel) {
-          // Get the panel's bounding rectangle
-          const panelRect = calendarPanel.getBoundingClientRect();
+          // Add tooltip for background events
+          const startTime = info.event.start ? new Date(info.event.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+          const endTime = info.event.end ? new Date(info.event.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+          const timeText = startTime && endTime ? `${startTime} - ${endTime}` : '';
 
-          // Calculate position relative to the panel
-          tooltipState.x = e.clientX - panelRect.left;
-          tooltipState.y = e.clientY - panelRect.top;
-        } else {
-          // Fallback to viewport coordinates if panel not found
-          tooltipState.x = e.clientX;
-          tooltipState.y = e.clientY;
+          // Show tooltip on mouseover
+          eventEl.addEventListener('mouseover', (e:any) => {
+            tooltipState.title = 'Open Time Slot';
+            tooltipState.time = timeText ? `Time: ${timeText}` : '';
+            tooltipState.service = booking.service ? `Service: ${booking.service.name}` : '';
+
+            // Get the calendar panel element
+            const calendarPanel = document.querySelector('.calendar-panel');
+            if (calendarPanel) {
+              // Get the panel's bounding rectangle
+              const panelRect = calendarPanel.getBoundingClientRect();
+
+              // Calculate position relative to the panel
+              tooltipState.x = e.clientX - panelRect.left;
+              tooltipState.y = e.clientY - panelRect.top;
+            } else {
+              // Fallback to viewport coordinates if panel not found
+              tooltipState.x = e.clientX;
+              tooltipState.y = e.clientY;
+            }
+
+            tooltipState.show = true;
+          });
+
+          // Update tooltip position on mousemove
+          eventEl.addEventListener('mousemove', (e:any) => {
+            // Get the calendar panel element
+            const calendarPanel = document.querySelector('.calendar-panel');
+            if (calendarPanel) {
+              // Get the panel's bounding rectangle
+              const panelRect = calendarPanel.getBoundingClientRect();
+
+              // Calculate position relative to the panel
+              tooltipState.x = e.clientX - panelRect.left;
+              tooltipState.y = e.clientY - panelRect.top;
+            } else {
+              // Fallback to viewport coordinates if panel not found
+              tooltipState.x = e.clientX;
+              tooltipState.y = e.clientY;
+            }
+          });
+
+          // Hide tooltip on mouseout
+          eventEl.addEventListener('mouseout', () => {
+            tooltipState.show = false;
+          });
         }
+      } else {
+        // For regular events, use the original tooltip behavior
+        const startTime = info.event.start ? new Date(info.event.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+        const endTime = info.event.end ? new Date(info.event.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+        const timeText = startTime && endTime ? `${startTime} - ${endTime}` : '';
+        const serviceName = info.event.extendedProps?.serviceName || '';
 
-        tooltipState.show = true;
-      });
+        // Format tooltip text with event title, time, and service name
+        const tooltipTitle = `${info.event.title}`;
+        const tooltipTime = timeText ? `Time: ${timeText}` : '';
+        const tooltipService = serviceName ? `Service: ${serviceName}` : '';
 
-      // Update tooltip position on mousemove
-      eventEl.addEventListener('mousemove', (e:any) => {
-        // Get the calendar panel element
-        const calendarPanel = document.querySelector('.calendar-panel');
-        if (calendarPanel) {
-          // Get the panel's bounding rectangle
-          const panelRect = calendarPanel.getBoundingClientRect();
+        // Show tooltip on mouseover
+        eventEl.addEventListener('mouseover', (e:any) => {
+          tooltipState.title = tooltipTitle;
+          tooltipState.time = tooltipTime;
+          tooltipState.service = tooltipService;
 
-          // Calculate position relative to the panel
-          tooltipState.x = e.clientX - panelRect.left;
-          tooltipState.y = e.clientY - panelRect.top;
-        } else {
-          // Fallback to viewport coordinates if panel not found
-          tooltipState.x = e.clientX;
-          tooltipState.y = e.clientY;
-        }
-      });
+          // Get the calendar panel element
+          const calendarPanel = document.querySelector('.calendar-panel');
+          if (calendarPanel) {
+            // Get the panel's bounding rectangle
+            const panelRect = calendarPanel.getBoundingClientRect();
 
-      // Hide tooltip on mouseout
-      eventEl.addEventListener('mouseout', () => {
-        tooltipState.show = false;
-      });
+            // Calculate position relative to the panel
+            tooltipState.x = e.clientX - panelRect.left;
+            tooltipState.y = e.clientY - panelRect.top;
+          } else {
+            // Fallback to viewport coordinates if panel not found
+            tooltipState.x = e.clientX;
+            tooltipState.y = e.clientY;
+          }
+
+          tooltipState.show = true;
+        });
+
+        // Update tooltip position on mousemove
+        eventEl.addEventListener('mousemove', (e:any) => {
+          // Get the calendar panel element
+          const calendarPanel = document.querySelector('.calendar-panel');
+          if (calendarPanel) {
+            // Get the panel's bounding rectangle
+            const panelRect = calendarPanel.getBoundingClientRect();
+
+            // Calculate position relative to the panel
+            tooltipState.x = e.clientX - panelRect.left;
+            tooltipState.y = e.clientY - panelRect.top;
+          } else {
+            // Fallback to viewport coordinates if panel not found
+            tooltipState.x = e.clientX;
+            tooltipState.y = e.clientY;
+          }
+        });
+
+        // Hide tooltip on mouseout
+        eventEl.addEventListener('mouseout', () => {
+          tooltipState.show = false;
+        });
+      }
     },
    };
 });
 
 // Handle reservation click
 const handleReservationClick = (info: any) => {
+  // Check if this is a background event (vendor booking)
+  if (info.event.display === 'background') {
+    // Don't show sidebar for background events
+    console.log('background booking clicked - ignoring');
+    return;
+  }
+
   // Store the clicked event details and show the sidebar
   console.log('reservation clicked');
   selectedEvent.value = {
@@ -163,10 +283,16 @@ const handleDateClick = (info: any) => {
 // Listen to view changes from FullCalendar
 const handleViewChange = (info: any) => {
   viewType.value = info.view.type;
+
+  // Refresh vendor bookings when view changes
+  fetchVendorBookings();
 };
 
 // Trigger resize after component is mounted
 onMounted(() => {
+  // Fetch vendor bookings
+  fetchVendorBookings();
+
   // Use setTimeout to ensure DOM is fully rendered
   setTimeout(() => {
     if (calendarRef.value) {
@@ -192,6 +318,11 @@ onMounted(() => {
         @viewDidMount="handleViewChange"
         class="fullcalendar"
       />
+    </div>
+
+    <!-- Template for booking label -->
+    <div ref="bookingLabelTemplateRef" style="display: none;">
+      <div class="booking-label">Opening</div>
     </div>
 
     <!-- Event Details Sidebar -->
@@ -461,6 +592,21 @@ onMounted(() => {
   .tooltip-time, .tooltip-service {
     font-size: $fontXs;
     margin-top: $sp-xs;
+  }
+}
+
+// Background event styles
+:deep(.fc-bg-event) {
+  opacity: 0.6;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  .booking-label {
+    opacity: 0.8;
+    font-size: $fontXs;
+    pointer-events: none;
   }
 }
 </style>
