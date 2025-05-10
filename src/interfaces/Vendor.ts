@@ -17,5 +17,6 @@ export interface Vendor {
   profileImage?: string;
   services?: Service[];
   openings?: Opening[];
+  timeOff?: Opening[];
   reservations?: Reservation[];
 }

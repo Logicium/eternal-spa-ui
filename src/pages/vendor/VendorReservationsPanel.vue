@@ -160,6 +160,16 @@ onMounted(() => {
 
 <template>
   <div class="reservations-panel">
+
+    <!-- Reservation Detail Panel -->
+    <transition name="slide-right">
+      <ReservationDetailPanel
+        v-if="showDetailPanel && selectedReservation"
+        :reservation="selectedReservation"
+        @close="closeDetailPanel"
+      />
+    </transition>
+
     <h2>Confirmed Reservations</h2>
 
     <div v-if="errorMessage" class="error-message">
@@ -277,12 +287,6 @@ onMounted(() => {
       <button @click="refreshVendorData" class="button primary">Refresh</button>
     </div>
 
-    <!-- Reservation Detail Panel -->
-    <ReservationDetailPanel
-      v-if="showDetailPanel && selectedReservation"
-      :reservation="selectedReservation"
-      @close="closeDetailPanel"
-    />
   </div>
 </template>
 
@@ -290,6 +294,7 @@ onMounted(() => {
 @import "../../assets/Library";
 
 .reservations-panel {
+  position: relative;
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;

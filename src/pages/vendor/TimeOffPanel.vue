@@ -3,7 +3,6 @@ import { ref, computed, onMounted } from "vue";
 import { useVendorStore } from "@/stores/VendorStore";
 import { useAuthStore } from "@/stores/AuthStore";
 import api from "@/router/api";
-import data from "@/data/data.ts";
 import utils from "@/utils/utils";
 
 const vendorStore = useVendorStore();
@@ -93,7 +92,8 @@ const onSubmit = async function(e:any) {
       reason: reason.value,
       isSeries: isSeriesTimeOff.value,
       repeatWeeks : 0,
-      selectedDays: {}
+      selectedDays: {},
+      type: 'timeoff'
     };
 
     // Add series properties if it's a series time off
@@ -253,9 +253,8 @@ const onSubmit = async function(e:any) {
     <div class="current-timeoffs">
       <h3>Current Time Off</h3>
       <div class="timeoffs-list">
-        <!-- TODO: Update to use actual time off data when available -->
-        <div v-if="data.timeoffs && data.timeoffs.length > 0">
-          <div v-for="timeoff in data.timeoffs" :key="timeoff.id" class="timeoff-item">
+        <div v-if="vendorStore.vendor && vendorStore.vendor.timeOff && vendorStore.vendor.timeOff.filter(item => item.type === 'timeoff').length > 0">
+          <div v-for="timeoff in vendorStore.vendor.timeOff.filter(item => item.type === 'timeoff')" :key="timeoff.id" class="timeoff-item">
             <div class="timeoff-reason">{{ timeoff.reason }}</div>
             <div class="timeoff-time">
               {{ new Date(timeoff.timeStart).toLocaleString() }} -

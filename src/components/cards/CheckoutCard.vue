@@ -33,8 +33,8 @@ async function redirectToCheckout() {
       body: JSON.stringify({
         guestId: props.guestId,
         vendorId: props.vendorId,
-        timeStart: props.timeStart instanceof Date ? (props.timeStart as Date).toISOString() : props.timeStart,
-        timeEnd: props.timeEnd instanceof Date ? (props.timeEnd as Date).toISOString() : props.timeEnd,
+        timeStart: new Date(props.timeStart).toISOString(),
+        timeEnd: new Date(props.timeEnd).toISOString(),
         totalDuration: props.totalDuration,
         serviceId: props.serviceId,
         packageId: props.packageId,
