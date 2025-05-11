@@ -5,6 +5,7 @@ import { useServicesStore } from "@/stores/ServiceStore.ts";
 import api from "@/router/api.ts";
 import utils from "@/utils/utils.ts";
 import { DatePicker as VDatePicker } from 'v-calendar';
+import type {Opening} from "@/interfaces";
 
 const authStore = useAuthStore();
 const servicesStore = useServicesStore();
@@ -205,7 +206,7 @@ const updateOpening = async () => {
 
   try {
     // Create updated opening object
-    const updatedOpening = {
+    let updatedOpening : Opening = {
       id: props.opening.id,
       serviceType: serviceType.value,
       serviceId: serviceId.value,

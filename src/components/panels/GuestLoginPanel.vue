@@ -6,6 +6,8 @@ import api from "@/router/api.ts";
 import router from "@/router";
 import {useAccountStore} from "@/stores/AccountStore";
 import {useAuthStore} from "@/stores/AuthStore";
+import GoogleLogin from "@/components/GoogleLogin.vue";
+import { useGoogleAuth } from "@/utils/googleAuth";
 
 const props = defineProps({
   toggleVendorLoginClick:{
@@ -50,6 +52,15 @@ const onSubmit = function (e:any){
   })
 }
 
+// Define the success callback for Google login
+const onGoogleLoginSuccess = async () => {
+  // Redirect to account page
+  await router.push('/guest/account');
+};
+
+// Use the Google authentication utility
+const { googleLoginError, isProcessing, handleGoogleLoginSuccess, handleGoogleLoginError } = useGoogleAuth(onGoogleLoginSuccess);
+
 
 </script>
 
@@ -65,6 +76,18 @@ const onSubmit = function (e:any){
             <div class="link" @click="togglePwResetPanelClick()">Password Reset</div>
             <div class="link" @click="toggleVendorLoginClick()">Vendor Login</div>
           </div>
+
+          <!-- Google Login Button -->
+          <GoogleLogin
+            @login-success="handleGoogleLoginSuccess"
+            @login-error="handleGoogleLoginError"
+          />
+
+          <!-- Display Google login error if any -->
+          <div v-if="googleLoginError" class="error-message">
+            {{ googleLoginError }}
+          </div>
+
           <div class="buttons">
             <input type="submit" class="button gap" :value="buttonText"/>
             <div class="button ghost" @click="toggleSignupPanelClick()">Sign Up <NextIcon/></div>
@@ -110,6 +133,13 @@ const onSubmit = function (e:any){
 .link:hover{
   font-weight: 500;
   transition: 0.5s;
+}
+
+.error-message {
+  color: #d93025;
+  font-size: 14px;
+  margin-top: $sp-vw-sm;
+  text-align: center;
 }
 
 </style>

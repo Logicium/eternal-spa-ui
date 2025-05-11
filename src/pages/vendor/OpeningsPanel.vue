@@ -235,7 +235,7 @@ const onSubmit = async function(e:any) {
       serviceType: serviceType.value,
       serviceId: serviceId.value,
       vendorId: vendorStore.vendor?.id || '',
-      timeStart: timeStart.value,
+      timeStart: new Date(timeStart.value),
       timeEnd: timeEnd.value,
       isSeries: isSeriesOpening.value
     };
@@ -261,8 +261,8 @@ const onSubmit = async function(e:any) {
       // Reset form
       serviceType.value = "";
       serviceId.value = "";
-      timeStart.value = "";
-      timeEnd.value = "";
+      timeStart.value = new Date();
+      timeEnd.value = new Date();
       isSeriesOpening.value = false;
       repeatWeeks.value = 1;
 

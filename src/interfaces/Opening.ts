@@ -3,8 +3,8 @@ export interface Opening {
   serviceType: string;
   serviceId: string;
   vendorId: string;
-  timeStart: string;
-  timeEnd: string;
+  timeStart: string | Date;
+  timeEnd: string | Date;
   isSeries?: boolean;
   repeatWeeks?: number;
   type?: string;

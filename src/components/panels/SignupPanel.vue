@@ -7,6 +7,8 @@ import api from "@/router/api.ts";
 import router from "@/router";
 import {useAccountStore} from "@/stores/AccountStore";
 import {useAuthStore} from "@/stores/AuthStore";
+import GoogleLogin from "@/components/GoogleLogin.vue";
+import { useGoogleAuth } from "@/utils/googleAuth";
 
 const props = defineProps({
   toggleGuestLoginClick:{
@@ -24,7 +26,6 @@ const phone = ref();
 const buttonText = ref('Sign Up');
 const accountStore = useAccountStore();
 const authStore = useAuthStore();
-
 const onSubmit = function (e:any){
   const form = e.target;
   const formData = new FormData(form);
@@ -45,6 +46,15 @@ const onSubmit = function (e:any){
     }
   })
 }
+
+// Define the success callback for Google login
+const onGoogleLoginSuccess = async () => {
+  // Redirect to account page
+  await router.push({ name: 'account' });
+};
+
+// Use the Google authentication utility
+const { googleLoginError, isProcessing, handleGoogleLoginSuccess, handleGoogleLoginError } = useGoogleAuth(onGoogleLoginSuccess);
 
 </script>
 
@@ -70,6 +80,18 @@ const onSubmit = function (e:any){
           <input type="checkbox">
           <div>I agree to the Terms of Service and Privacy Policy.*</div>
         </div>
+
+        <!-- Google Login Button -->
+        <GoogleLogin
+          @login-success="handleGoogleLoginSuccess"
+          @login-error="handleGoogleLoginError"
+        />
+
+        <!-- Display Google login error if any -->
+        <div v-if="googleLoginError" class="error-message">
+          {{ googleLoginError }}
+        </div>
+
         <div class="buttons">
           <div class="button ghost gap" @click="toggleGuestLoginClick()"><BackIcon/>Back</div>
           <input type="submit" class="button gap" :value="buttonText"/>
@@ -124,6 +146,13 @@ const onSubmit = function (e:any){
 .link:hover{
   font-weight: 500;
   transition: 0.5s;
+}
+
+.error-message {
+  color: #d93025;
+  font-size: 14px;
+  margin-top: $sp-vw-sm;
+  text-align: center;
 }
 
 </style>
