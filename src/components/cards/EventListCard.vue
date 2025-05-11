@@ -2,15 +2,13 @@
 
 import LocationIcon from "@/assets/icons/LocationIcon.vue";
 import TimeIcon from "@/assets/icons/TimeIcon.vue";
+import DateCard from "@/components/DateCard.vue";
 
 const props = defineProps({
   data: { type: Object, default: ()=>{}},
 })
 
 const dateTime = new Date(props.data.time);
-const day = dateTime.toLocaleString('en-US', {weekday: 'long'});
-const date = dateTime.getDate();
-const month = dateTime.toLocaleString('en-US', {month: 'long'});
 const time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true });
 
 </script>
@@ -19,11 +17,7 @@ const time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
 
   <div class="event">
 
-    <div class="date">
-      <div>{{month}}</div>
-      <div class="num">{{date}}</div>
-      <div>{{day}}</div>
-    </div>
+    <DateCard :date="data.time" size="big" />
 
     <div class="info">
       <div class="name">{{data.name}}</div>
@@ -32,7 +26,7 @@ const time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
         <div class="location"><LocationIcon/> {{data.location}} </div>
         <div class="time"><TimeIcon/> {{time}}</div>
       </div>
-      <RouterLink :to="'/event/'+data.id"><div class="cta">See More</div></RouterLink>
+      <RouterLink :to="'/event/'+data.id"><div class="button underline">See More</div></RouterLink>
     </div>
 
   </div>
@@ -41,8 +35,7 @@ const time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
 
 <style scoped lang="scss">
 
-@import "../../assets/Colors";
-@import "../../assets/Fonts";
+@import "../../assets/Library";
 
 .event{
   display: flex;
@@ -51,19 +44,7 @@ const time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
   border-bottom: 4px solid $secondary;
 }
 
-.date{
-  min-width: 150px;
-  aspect-ratio: 1/1;
-  margin-right: 1vw;
-  background-color: $secondary;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-}
-
-.num,.name{
+.name{
   font-size: $fontMed;
   font-weight: 500;
 }
@@ -93,12 +74,4 @@ const time = dateTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
   white-space: nowrap;
 }
 
-.cta{
-  border-bottom: 4px solid $secondary;
-  width: fit-content;
-  cursor: pointer;
-}
-a{
-  color: initial;
-}
 </style>
