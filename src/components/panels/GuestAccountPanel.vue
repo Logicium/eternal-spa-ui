@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { defineProps, defineEmits, ref } from 'vue';
+import { defineProps, defineEmits, ref, computed } from 'vue';
 import api from '@/router/api';
 import utils from '@/utils/utils';
 import { useAuthStore } from "@/stores/AuthStore";
 import TransitionPanel from "@/components/panels/TransitionPanel.vue";
+import DateCard from "@/components/DateCard.vue";
+import type {Reservation} from "@/interfaces";
 
 const props = defineProps({
   guest: {
@@ -25,6 +27,45 @@ const statusMessage = ref("");
 const showStatus = ref(false);
 const statusType = ref("success"); // success or error
 const saveButtonText = ref("Save Settings");
+
+// Computed property to find the nearest upcoming reservation
+const nearestReservation = computed(() => {
+  if (!props.guest.reservations || props.guest.reservations.length === 0) {
+    return null;
+  }
+
+  const now = new Date();
+
+  // Filter future reservations
+  const futureReservations = props.guest.reservations.filter((res:Reservation) => {
+    const startTime = new Date(res.timeStart);
+    return startTime > now;
+  });
+
+  if (futureReservations.length === 0) {
+    return null;
+  }
+
+  // Sort by start time (ascending)
+  futureReservations.sort((a:Reservation, b:Reservation) => {
+    return new Date(a.timeStart).getTime() - new Date(b.timeStart).getTime();
+  });
+
+  // Return the nearest upcoming reservation
+  return futureReservations[0];
+});
+
+// Format date for display
+const formatDate = (dateString:string) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+};
 
 // Show status message
 const showStatusMessage = (message:string, type = "success") => {
@@ -87,8 +128,35 @@ const saveSettings = async function() {
   <div class="panelFull">
 
     <div class="filled summary">
-      <div class="title">Hi {{guest.firstName}}</div>
-      <div class="empty center"><div>No upcoming reservations.</div></div>
+
+      <div v-if="!nearestReservation" class="empty center">
+        <div class="title">Hi {{guest.firstName}}</div>
+        <div>No upcoming reservations.</div>
+      </div>
+
+      <div v-else class="reservation-summary">
+
+        <div>
+          <div class="title">Hi {{guest.firstName}}</div>
+          <div class="bold">Your Upcoming Reservation </div>
+          <div class="">
+            Service: {{nearestReservation.service.name}}
+          </div>
+          <div class="packageName">
+            Package: {{nearestReservation.package.name}}
+          </div>
+          <div class="addons">
+            Addons: {{(nearestReservation.addons.length === 0 ? 'None' : nearestReservation.addons.toString())}}
+          </div>
+        </div>
+
+        <div class="serviceTime">
+          {{utils.date.formatTime(new Date(nearestReservation.timeStart))}}
+          -             {{utils.date.formatTime(new Date(nearestReservation.timeEnd))}}
+        </div>
+
+        <DateCard :date="nearestReservation.timeStart" size="big"/>
+      </div>
     </div>
 
     <div class="accountGrid">
@@ -158,6 +226,11 @@ const saveSettings = async function() {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.date{
+  background-color: $quaternary;
+  color: $primary;
 }
 
 .mt-a{
@@ -286,6 +359,33 @@ input{
   &.error {
     background-color: rgba(255, 0, 0, 0.3);
     color: red;
+  }
+}
+
+.reservation-summary {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  .upcoming-title {
+
+  }
+
+  .serviceName {
+    font-weight: 600;
+  }
+
+  .packageName {
+
+  }
+
+  .serviceTime{
+    font-size: $fontMed;
+  }
+
+  .reservation-service {
+
   }
 }
 </style>

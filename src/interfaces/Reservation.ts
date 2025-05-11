@@ -12,6 +12,7 @@ export interface Reservation {
   totalPrice: number;
   receiptUrl?: string;
   confirmed: boolean;
+  status?: string;
   vendorId?: string;
   guestId?: string;
   orderId?: string;
