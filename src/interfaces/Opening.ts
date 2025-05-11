@@ -8,6 +8,7 @@ export interface Opening {
   isSeries?: boolean;
   repeatWeeks?: number;
   type?: string;
+  name?: string;
   selectedDays?: {
     monday: boolean;
     tuesday: boolean;

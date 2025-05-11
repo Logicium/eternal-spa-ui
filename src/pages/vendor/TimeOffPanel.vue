@@ -357,7 +357,7 @@ const onSubmit = async function(e:any) {
       <div class="timeoffs-list">
         <div v-if="vendorStore.vendor && vendorStore.vendor.timeOff && vendorStore.vendor.timeOff.filter(item => item.type === 'timeoff').length > 0">
           <div v-for="timeoff in vendorStore.vendor.timeOff.filter(item => item.type === 'timeoff')" :key="timeoff.id" class="timeoff-item">
-            <div class="timeoff-reason">{{ timeoff.reason }}</div>
+            <div class="timeoff-reason">{{ timeoff.name }}</div>
             <div class="timeoff-time">
               {{ new Date(timeoff.timeStart).toLocaleString() }} -
               {{ new Date(timeoff.timeEnd).toLocaleString() }}
