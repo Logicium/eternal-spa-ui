@@ -13,6 +13,7 @@ import LoginPage from "@/pages/LoginPage.vue";
 import AccountPage from "@/pages/guest/AccountPage.vue";
 import ConfirmationPage from "@/pages/ConfirmationPage.vue";
 import VendorDashboard from "@/pages/vendor/VendorDashboard.vue";
+import PwResetPage from "@/pages/PwResetPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,6 +25,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+    },
+    {
+      path: '/reset-password',
+      name: 'reset-password',
+      component: PwResetPage,
     },
     {
       path: '/about',

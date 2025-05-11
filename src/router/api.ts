@@ -10,6 +10,10 @@ const api = {
   payment:{
     checkout:baseUrl+'/payment/checkout'
   },
+  auth:{
+    forgotPassword: baseUrl+'/auth/forgot-password',
+    resetPassword: baseUrl+'/auth/reset-password'
+  },
   guest:{
     account:baseUrl+'/guest/account',
     login:baseUrl+'/guest/login',

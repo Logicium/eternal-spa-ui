@@ -19,5 +19,3 @@ export interface Opening {
     sunday: boolean;
   };
 }
-
-// Import this interface in files that use Opening objects
