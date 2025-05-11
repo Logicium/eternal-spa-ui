@@ -20,9 +20,10 @@ const props = defineProps({
 // Define emits
 const emit = defineEmits(['close', 'updated', 'deleted']);
 
+console.log("Opening: ", props.opening.service)
 // Form data
 const serviceType = ref("");
-const serviceId = ref("");
+const serviceId = ref(props.opening.service);
 const timeStart = ref(new Date()); // Will be constructed from selectedDate and startTime
 const timeEnd = ref(new Date()); // Will be constructed from selectedDate and endTime
 const selectedDate = ref(new Date()); // Single date for both start and end
@@ -75,7 +76,7 @@ const selectedDays = ref({
 // Initialize form data from opening prop
 onMounted(() => {
   serviceType.value = props.opening.serviceType;
-  serviceId.value = props.opening.serviceId;
+  serviceId.value = props.opening.service;
 
   // Parse dates from timeStart and timeEnd
   const startDate = new Date(props.opening.timeStart);
