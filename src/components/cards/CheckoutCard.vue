@@ -3,12 +3,17 @@
 import router from "@/router";
 import {ref} from "vue";
 import api from "@/router/api.ts";
+import {useAuthStore} from "@/stores/AuthStore";
+import {useAccountStore} from "@/stores/AccountStore";
+import GoogleLogin from "@/components/GoogleLogin.vue";
+
+const authStore = useAuthStore();
+const accountStore = useAccountStore();
 
 const props = defineProps({
-  guestId:{type:[String,null]},
   vendorId:{type:String},
-  timeStart:{type:[String,Date]},
-  timeEnd:{type:[String,Date]},
+  timeStart:{type:String, required:true},
+  timeEnd:{type:String,required:true},
   totalDuration:{type:Number},
   serviceId:{type:String},
   packageId:{type:String},
@@ -18,6 +23,77 @@ const props = defineProps({
 const paymentMessage = ref<string>('Checkout & Rewards Signup');
 const isProcessing = ref<boolean>(false);
 const errorOccurred = ref<boolean>(false);
+const googleLoginError = ref<string>('');
+
+const init = async function (){
+  if(authStore.token) {
+    await accountStore.fill(authStore.token);
+  }
+}
+init();
+
+// Handle successful Google login
+async function handleGoogleLoginSuccess(data:any) {
+  console.log('Google login successful:', data);
+  isProcessing.value = true;
+  googleLoginError.value = '';
+
+  try {
+    // Check if we have an authorization code from Google
+    if (!data.code) {
+      throw new Error('No authorization code received from Google');
+    }
+
+    // In a real implementation, send the code to your backend
+    // Here we'll make a call to your backend API to exchange the code for tokens
+    const response = await fetch(api.guest.googleLogin, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        code: data.code,
+        provider: 'google',
+        redirectUri: import.meta.env.VITE_GOOGLE_REDIRECT_URI
+      })
+    });
+
+    if (!response.ok) {
+      let errorMsg = `Error: ${response.status} ${response.statusText}`;
+      try {
+        const errorBody = await response.json();
+        errorMsg = `Error: ${errorBody.message || errorMsg}`;
+      } catch (e) { /* Ignore */ }
+      throw new Error(errorMsg);
+    }
+
+    // Process the response from your backend
+    const authData = await response.json();
+
+    // Store the JWT token
+    if (authData.token) {
+      authStore.token = authData.token;
+
+      // Load guest data using the token
+      await accountStore.fill(authData.token);
+
+      // Now proceed with checkout
+      redirectToCheckout();
+    } else {
+      throw new Error('No authentication token received from server');
+    }
+  } catch (error) {
+    console.error('Failed to process Google login:', error);
+    googleLoginError.value = 'Failed to process login. Please try again.';
+    isProcessing.value = false;
+  }
+}
+
+// Handle Google login errors
+function handleGoogleLoginError(error:any) {
+  console.error('Google login error:', error);
+  googleLoginError.value = 'Google sign-in failed. Please try again.';
+}
 
 async function redirectToCheckout() {
   isProcessing.value = true;
@@ -31,7 +107,7 @@ async function redirectToCheckout() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        guestId: props.guestId,
+        guestId: accountStore.guest ? accountStore.guest.id : null,
         vendorId: props.vendorId,
         timeStart: new Date(props.timeStart).toISOString(),
         timeEnd: new Date(props.timeEnd).toISOString(),
@@ -76,26 +152,54 @@ async function redirectToCheckout() {
 
 <template>
   <div class="loginItem">
-    <div class="title">Guest Info</div>
-    <div class="inputs">
-      <input type="text" placeholder="Name*" required>
-      <input type="email" placeholder="Email*" required>
-      <input type="text" placeholder="Phone">
-      <div class="notifs">
-        <input type="checkbox">
-        <div>I agree to receive text or email booking updates at the number/email provided.</div>
+    <!-- Show guest info if signed in -->
+    <div v-if="authStore.token && accountStore.guest">
+      <div class="title">Guest Info</div>
+      <div class="guest-info">
+        <div class="info-row">
+          <span class="info-label">Name:</span>
+          <span class="info-value">{{ accountStore.guest.firstName }} {{ accountStore.guest.lastName || '' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Reward Points:</span>
+          <span class="info-value">{{ accountStore.guest.rewardsPoints || 0 }}</span>
+        </div>
       </div>
-      <div class="tos">
-        <input type="checkbox">
-        <div>I agree to the Terms of Service and Privacy Policy.*</div>
+      <div class="buttons">
+        <div class="button fill" @click="redirectToCheckout">{{paymentMessage}}</div>
       </div>
-    </div>
-    <div class="buttons">
-      <div class="button fill" @click="redirectToCheckout">{{paymentMessage}}</div>
-      <div class="or">or</div>
-      <div class="button ghost">Checkout as Guest</div>
     </div>
 
+    <!-- Show login form if not signed in -->
+    <div v-else>
+      <div class="title">Guest Info</div>
+      <div class="inputs">
+        <input type="text" placeholder="Name*" required>
+        <input type="email" placeholder="Email*" required>
+        <input type="text" placeholder="Phone">
+        <div class="notifs">
+          <input type="checkbox">
+          <div>I agree to receive text or email booking updates at the number/email provided.</div>
+        </div>
+        <div class="tos">
+          <input type="checkbox">
+          <div>I agree to the Terms of Service and Privacy Policy.*</div>
+        </div>
+      </div>
+      <GoogleLogin
+        @login-success="handleGoogleLoginSuccess"
+        @login-error="handleGoogleLoginError"
+      />
+      <div class="buttons">
+        <div class="button fill" @click="redirectToCheckout">{{paymentMessage}}</div>
+        <div class="or">or</div>
+        <div class="button ghost" @click="redirectToCheckout">Checkout as Guest</div>
+      </div>
+      <!-- Display Google login error if any -->
+      <div v-if="googleLoginError" class="error-message">
+        {{ googleLoginError }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -155,6 +259,33 @@ async function redirectToCheckout() {
 .button.fill{
   background-color: $quaternary;
   color: $primary;
+}
+
+.guest-info {
+  display: grid;
+  grid-gap: $sp-vw-sm;
+  margin-bottom: $sp-vw-sm;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+}
+
+.info-label {
+  font-weight: bold;
+  margin-right: $sp-vw-sm;
+}
+
+.info-value {
+  flex: 1;
+}
+
+.error-message {
+  color: #d93025;
+  font-size: 14px;
+  margin-top: $sp-vw-sm;
+  text-align: center;
 }
 
 </style>

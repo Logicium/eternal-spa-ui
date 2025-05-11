@@ -15,7 +15,8 @@ const api = {
     login:baseUrl+'/guest/login',
     signup:baseUrl+'/guest/signup',
     settings:baseUrl+'/guest/settings',
-    password:baseUrl+'/guest/password'
+    password:baseUrl+'/guest/password',
+    googleLogin:baseUrl+'/guest/google-login'
   },
   vendor:{
     account:baseUrl+'/vendor/account',

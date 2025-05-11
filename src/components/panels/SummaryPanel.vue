@@ -134,7 +134,6 @@ const backPanelClick = function(){
         </div>
 
         <CheckoutCard
-          :guest-id="null"
           :vendor-id="data.vendorId || ''"
           :time-start="dateTime.toString()"
           :time-end="calcTimeEnd().toString()"

@@ -19,6 +19,7 @@ const init = async function (){
   if(authStore.token) {
     await accountStore.fill(authStore.token);
   }
+  console.log(accountStore.guest);
 }
 init();
 
