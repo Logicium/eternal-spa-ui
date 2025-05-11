@@ -7,6 +7,7 @@ import api from "@/router/api";
 import OpeningDetailPanel from "@/components/panels/OpeningDetailPanel.vue";
 import utils from "@/utils/utils.ts";
 import type { Opening, Service } from "@/interfaces";
+import { DatePicker as VDatePicker } from 'v-calendar';
 // No longer need to import data as we're using vendor object for openings
 
 const vendorStore = useVendorStore();
@@ -20,8 +21,11 @@ const showDetailView = ref(false);
 // Form data
 const serviceType = ref("");
 const serviceId = ref("");
-const timeStart = ref("");
-const timeEnd = ref("");
+const timeStart = ref(new Date()); // Will be constructed from selectedDate and startTime
+const timeEnd = ref(new Date()); // Will be constructed from selectedDate and endTime
+const selectedDate = ref(new Date()); // Single date for both start and end
+const startTime = ref(new Date()); // Time for start
+const endTime = ref(new Date()); // Time for end
 const isSeriesOpening = ref(false);
 const repeatWeeks = ref(1);
 const buttonText = ref("Create Opening");
@@ -30,6 +34,12 @@ const showStatus = ref(false);
 const statusType = ref("success"); // success or error
 const minDate = ref(""); // Minimum date for datetime inputs
 const isLoading = ref(false); // Loading state for openings list
+
+// Time mask for 15-minute intervals
+const timeRules = ref({
+  minutes: { interval: 15 },
+  hours: { min: 0, max: 23 }
+});
 
 // Days of the week for series openings
 const selectedDays = ref({
@@ -95,14 +105,73 @@ const closeDetailView = () => {
   }, 500); // Match transition duration
 };
 
+// Handle date and time input changes
+const handleDateChange = (newDate:Date) => {
+  selectedDate.value = newDate;
+  updateTimeStartEnd();
+};
+
+const handleStartTimeChange = (newTime:Date) => {
+  startTime.value = newTime;
+  updateTimeStartEnd();
+};
+
+const handleEndTimeChange = (newTime:Date) => {
+  endTime.value = newTime;
+  updateTimeStartEnd();
+};
+
+// Construct timeStart and timeEnd from selectedDate, startTime, and endTime
+const updateTimeStartEnd = () => {
+  if (!selectedDate.value || !startTime.value || !endTime.value) return;
+
+  // Create new Date objects for start and end times
+  const startDate = new Date(selectedDate.value);
+  const endDate = new Date(selectedDate.value);
+
+  // Copy hours and minutes from startTime and endTime
+  startDate.setHours(
+    startTime.value.getHours(),
+    startTime.value.getMinutes(),
+    0,
+    0
+  );
+
+  endDate.setHours(
+    endTime.value.getHours(),
+    endTime.value.getMinutes(),
+    0,
+    0
+  );
+
+  // Assign the Date objects directly
+  timeStart.value = new Date(startDate);
+  timeEnd.value = new Date(endDate);
+};
+
 // Initialize minimum date and refresh vendor data on component mount
 onMounted(async () => {
   // Set minimum date to today
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  // Format date using utility function
+  // Format date using utility function for minDate (if still needed)
   minDate.value = utils.date.formatDateToLocalISOString(today);
+
+  // Initialize selectedDate to today
+  selectedDate.value = new Date(today);
+
+  // Initialize startTime and endTime with default values (9:00 AM and 10:00 AM)
+  const defaultStartTime = new Date(today);
+  defaultStartTime.setHours(9, 0, 0, 0);
+  startTime.value = new Date(defaultStartTime);
+
+  const defaultEndTime = new Date(today);
+  defaultEndTime.setHours(10, 0, 0, 0);
+  endTime.value = new Date(defaultEndTime);
+
+  // Update timeStart and timeEnd with the combined date and time
+  updateTimeStartEnd();
 
   // Refresh vendor data if needed
   if (!vendorStore.vendor || !vendorStore.vendor.openings) {
@@ -110,24 +179,34 @@ onMounted(async () => {
   }
 });
 
-// Round time to nearest 15-minute interval
-const roundToNearest15Minutes = (dateTimeStr:string) => {
-  return utils.date.roundToNearest15Minutes(dateTimeStr);
-};
-
-// Handle time input changes
-const handleTimeStartChange = (event:any) => {
-  timeStart.value = roundToNearest15Minutes(event.target.value);
-};
-
-const handleTimeEndChange = (event:any) => {
-  timeEnd.value = roundToNearest15Minutes(event.target.value);
-};
+// These functions are no longer needed as we're using v-calendar DatePicker directly
 
 // Validate form
 const validateForm = () => {
-  // Check if end time is after start time
-  if (!utils.form.validateTimeRange(timeStart.value, timeEnd.value)) {
+  // Ensure we have all required inputs
+  if (!selectedDate.value) {
+    showStatusMessage("Please select a date", "error");
+    return false;
+  }
+
+  if (!startTime.value) {
+    showStatusMessage("Please select a start time", "error");
+    return false;
+  }
+
+  if (!endTime.value) {
+    showStatusMessage("Please select an end time", "error");
+    return false;
+  }
+
+  // Compare times directly using Date objects
+  if (startTime.value >= endTime.value) {
+    showStatusMessage("End time must be after start time", "error");
+    return false;
+  }
+
+  // Also check the constructed timeStart and timeEnd
+  if (timeStart.value >= timeEnd.value) {
     showStatusMessage("End time must be after start time", "error");
     return false;
   }
@@ -143,6 +222,9 @@ const onSubmit = async function(e:any) {
   if (!validateForm()) {
     return;
   }
+
+  // Ensure timeStart and timeEnd are updated with the latest values
+  updateTimeStartEnd();
 
   buttonText.value = "Creating...";
 
@@ -221,6 +303,7 @@ const onSubmit = async function(e:any) {
         :opening="selectedOpening"
         @close="closeDetailView"
         @updated="refreshVendorData"
+        @deleted="refreshVendorData"
       />
     </transition>
     <!-- Use transition to manage visibility of main content -->
@@ -249,35 +332,39 @@ const onSubmit = async function(e:any) {
           </div>
 
           <div class="form-group">
-            <label for="timeStart">Start Time</label>
-            <!-- step="900" restricts time selection to 15-minute intervals (900 seconds = 15 minutes) -->
-            <!-- min attribute restricts selection to current day or later -->
-            <!-- @change event handler rounds manually entered values to nearest 15-minute interval -->
-            <input
-              id="timeStart"
-              type="datetime-local"
-              v-model="timeStart"
-              :min="minDate"
-              step="900"
-              @change="handleTimeStartChange"
-              required
-            >
+            <label for="selectedDate">Date</label>
+            <VDatePicker
+              v-model="selectedDate"
+              @update:model-value="handleDateChange"
+              :min-date="new Date()"
+              is-required
+            />
           </div>
 
           <div class="form-group">
-            <label for="timeEnd">End Time</label>
-            <!-- step="900" restricts time selection to 15-minute intervals (900 seconds = 15 minutes) -->
-            <!-- min attribute restricts selection to current day or later -->
-            <!-- @change event handler rounds manually entered values to nearest 15-minute interval -->
-            <input
-              id="timeEnd"
-              type="datetime-local"
-              v-model="timeEnd"
-              :min="minDate"
-              step="900"
-              @change="handleTimeEndChange"
-              required
-            >
+            <label for="startTime">Start Time</label>
+            <VDatePicker
+              v-model="startTime"
+              mode="time"
+              @update:model-value="handleStartTimeChange"
+              :rules="timeRules"
+              is24hr
+              hide-time-header
+              is-required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="endTime">End Time</label>
+            <VDatePicker
+              v-model="endTime"
+              mode="time"
+              @update:model-value="handleEndTimeChange"
+              :rules="timeRules"
+              is24hr
+              hide-time-header
+              is-required
+            />
           </div>
 
           <div class="form-group checkbox">
