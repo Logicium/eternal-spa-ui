@@ -138,6 +138,7 @@ const backPanelClick = function(){
           :time-start="dateTime.toString()"
           :time-end="calcTimeEnd().toString()"
           :total-duration="calcDuration()"
+          :price="calcPrice()"
           :service-id="serviceData?.id?.toString() || ''"
           :package-id="selectedPackage?.id || ''"
           :addons="selectedAddons"

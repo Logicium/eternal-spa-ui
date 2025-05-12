@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import router from "@/router";
-import {ref} from "vue";
+import {ref, computed, watch} from "vue";
 import api from "@/router/api.ts";
 import {useAuthStore} from "@/stores/AuthStore";
 import {useAccountStore} from "@/stores/AccountStore";
@@ -18,12 +18,32 @@ const props = defineProps({
   totalDuration:{type:Number},
   serviceId:{type:String},
   packageId:{type:String},
+  price:{type:Number, required:true},
   addons:{type:Array}
 })
 
 const paymentMessage = ref<string>('Checkout & Rewards Signup');
 const isProcessing = ref<boolean>(false);
 const errorOccurred = ref<boolean>(false);
+const redeemPoints = ref<number>(0);
+const showRedemptionInput = ref<boolean>(false);
+const confirmedRedeemPoints = ref<number>(0);
+const originalPrice = ref<number>(props.price);
+
+watch(()=>props.price, (newPrice:number) => {
+  console.log(newPrice)
+  originalPrice.value = newPrice;
+})
+
+// Calculate discount based on confirmed points (1 dollar off per 10 points)
+const pointsDiscount = computed(() => {
+  return confirmedRedeemPoints.value / 10;
+});
+
+// Calculate new total after discount
+const newTotal = computed(() => {
+  return Math.max(0, originalPrice.value - pointsDiscount.value);
+});
 
 const init = async function (){
   if(authStore.token) {
@@ -31,6 +51,33 @@ const init = async function (){
   }
 }
 init();
+
+const validateRedeemPoints = () => {
+  const maxPoints = accountStore.guest?.rewardsPoints || 0;
+  // Ensure redeemPoints is not negative
+  if (redeemPoints.value < 0) {
+    redeemPoints.value = 0;
+  }
+  // Ensure redeemPoints is not greater than available points
+  if (redeemPoints.value > maxPoints) {
+    redeemPoints.value = maxPoints;
+  }
+};
+
+// Toggle the redemption input visibility
+const toggleRedemptionInput = () => {
+  showRedemptionInput.value = !showRedemptionInput.value;
+  if (!showRedemptionInput.value) {
+    // Reset the input value when hiding
+    redeemPoints.value = 0;
+  }
+};
+
+// Confirm the redemption amount
+const confirmRedemption = () => {
+  confirmedRedeemPoints.value = redeemPoints.value;
+  showRedemptionInput.value = false;
+};
 
 // Define the success callback for Google login
 const onGoogleLoginSuccess = async () => {
@@ -60,7 +107,8 @@ async function redirectToCheckout() {
         totalDuration: props.totalDuration,
         serviceId: props.serviceId,
         packageId: props.packageId,
-        addons: props.addons
+        addons: props.addons,
+        redeemPoints: accountStore.guest ? confirmedRedeemPoints.value : 0
       })
     });
 
@@ -109,6 +157,54 @@ async function redirectToCheckout() {
         <div class="info-row">
           <span class="info-label">Reward Points:</span>
           <span class="info-value">{{ accountStore.guest.rewardsPoints || 0 }}</span>
+        </div>
+
+        <!-- Redemption rate information -->
+        <div class="info-row redemption-rate">
+          <span class="info-value">Earn 1 point per $1 spent, get $1 off per 10 points redeemed</span>
+        </div>
+
+        <!-- Redemption controls -->
+        <div class="info-row rewards-redemption" v-if="!confirmedRedeemPoints">
+          <div v-if="!showRedemptionInput">
+            <div class="button ghost redeem-button" @click="toggleRedemptionInput">Redeem Points</div>
+          </div>
+          <div v-else class="redemption-input-container">
+            <span class="info-label">Redeem Points:</span>
+            <div class="redemption-controls">
+
+              <div class="redemption-buttons">
+                <input
+                  type="number"
+                  v-model="redeemPoints"
+                  min="0"
+                  :max="accountStore.guest.rewardsPoints || 0"
+                  @input="validateRedeemPoints"
+                >
+                <div class="button" @click="confirmRedemption">Confirm</div>
+                <div class="button ghost" @click="toggleRedemptionInput">Cancel</div>
+
+              </div>
+              <span class="points-available">Available: {{ accountStore.guest.rewardsPoints || 0 }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Show confirmed redemption and price breakdown -->
+        <div v-if="confirmedRedeemPoints > 0" class="price-breakdown">
+          <div class="breakdown-row">
+            <span>Original Price:</span>
+            <span>${{ originalPrice.toFixed(2) }}</span>
+          </div>
+          <div class="breakdown-row discount">
+            <span>Points Discount:</span>
+            <span>-${{ pointsDiscount.toFixed(2) }}</span>
+          </div>
+          <div class="breakdown-row total">
+            <span>New Total:</span>
+            <span>${{ newTotal.toFixed(2) }}</span>
+          </div>
+          <div class="button ghost small reset-button" @click="confirmedRedeemPoints = 0">Reset Redemption</div>
         </div>
       </div>
       <div class="buttons">
@@ -186,21 +282,6 @@ async function redirectToCheckout() {
   align-items: center;
 }
 
-.button{
-  width: fit-content;
-  height: $h-btn;
-  border-radius: $br-md;
-  padding: $sp-vw-sm;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.button.ghost{
-  background-color: transparent;
-  border: $bw-md solid $secondary;
-}
 
 .button.fill{
   background-color: $quaternary;
@@ -225,6 +306,90 @@ async function redirectToCheckout() {
 
 .info-value {
   flex: 1;
+}
+
+.rewards-redemption {
+  margin-top: $sp-vw-sm;
+}
+
+.redemption-controls {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.redemption-controls input {
+  width: 100%;
+  padding: 8px;
+  border: $bw-sm solid $secondary;
+  border-radius: $br-sm;
+}
+
+.points-available {
+  font-size: 12px;
+  color: $secondary;
+  margin-top: 4px;
+}
+
+.redemption-rate {
+  font-style: italic;
+  font-size: 14px;
+  margin-top: $sp-vw-xs;
+  margin-bottom: $sp-vw-xs;
+  color: $secondary;
+}
+
+.redeem-button {
+  margin-top: $sp-vw-xs;
+  margin-bottom: $sp-vw-xs;
+}
+
+.redemption-input-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.redemption-buttons {
+  display: flex;
+  gap: $sp-vw-xs;
+  margin-top: $sp-vw-xs;
+}
+
+.button.small {
+  height: auto;
+  padding: $sp-vw-xs $sp-vw-sm;
+  font-size: 14px;
+}
+
+.price-breakdown {
+  margin-top: $sp-vw-sm;
+  padding: $sp-vw-sm;
+  border: $bw-sm solid $secondary;
+  border-radius: $br-sm;
+  background-color: rgba($secondary, 0.05);
+}
+
+.breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: $sp-vw-xs;
+}
+
+.breakdown-row.discount {
+  color: #d93025;
+}
+
+.breakdown-row.total {
+  font-weight: bold;
+  margin-top: $sp-vw-xs;
+  padding-top: $sp-vw-xs;
+  border-top: $bw-sm solid $secondary;
+}
+
+.reset-button {
+  margin-top: $sp-vw-sm;
+  width: 100%;
 }
 
 .error-message {

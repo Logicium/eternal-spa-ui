@@ -1,4 +1,5 @@
 import type { Reservation } from './Reservation';
+import type { Reward } from './Reward';
 
 export interface Guest {
   id: string;
@@ -12,4 +13,5 @@ export interface Guest {
   zip?: string;
   rewardsPoints?: number;
   reservations?: Reservation[];
+  rewards?: Reward[];
 }

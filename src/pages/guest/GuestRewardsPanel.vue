@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits, computed } from 'vue';
 import BackIcon from "@/assets/icons/nav/BackIcon.vue";
+import RewardCard from "@/components/cards/RewardCard.vue";
+import { useAccountStore } from "@/stores/AccountStore";
+
+const accountStore = useAccountStore();
 
 const props = defineProps({
   activePanel: {
@@ -14,6 +18,26 @@ const emit = defineEmits(['changePanel']);
 const backToAccount = function() {
   emit('changePanel', 'account');
 }
+
+// Get the guest's rewards points
+const rewardsPoints = computed(() => {
+  return accountStore.guest?.rewardsPoints || 0;
+});
+
+// Get the guest's rewards
+const rewards = computed(() => {
+  return accountStore.guest?.rewards || [];
+});
+
+// Get available (not redeemed) rewards
+const availableRewards = computed(() => {
+  return rewards.value.filter(reward => !reward.redeemed);
+});
+
+// Get redeemed rewards
+const redeemedRewards = computed(() => {
+  return rewards.value.filter(reward => reward.redeemed);
+});
 </script>
 
 <template>
@@ -29,37 +53,39 @@ const backToAccount = function() {
       <div class="outline section">
         <div class="title">Your Rewards Points</div>
         <div class="points-display">
-          <div class="points-value">1,250</div>
+          <div class="points-value">{{ rewardsPoints.toLocaleString() }}</div>
           <div class="points-label">Rewards Points</div>
         </div>
       </div>
 
-      <div class="outline section">
+      <!-- Available Rewards -->
+      <div class="outline section" v-if="availableRewards.length > 0">
         <div class="title">Available Rewards</div>
         <div class="rewards-list">
-          <div class="reward-item">
-            <div class="reward-info">
-              <div class="reward-title">Free Massage Session</div>
-              <div class="reward-description">Redeem 2,000 points for a complimentary 60-minute massage session.</div>
-            </div>
-            <div class="reward-points">2,000 pts</div>
-          </div>
+          <RewardCard
+            v-for="reward in availableRewards"
+            :key="reward.id"
+            :reward="reward"
+          />
+        </div>
+      </div>
 
-          <div class="reward-item">
-            <div class="reward-info">
-              <div class="reward-title">Spa Product Discount</div>
-              <div class="reward-description">Redeem 1,000 points for 15% off any spa product.</div>
-            </div>
-            <div class="reward-points">1,000 pts</div>
-          </div>
+      <!-- Redeemed Rewards -->
+      <div class="outline section" v-if="redeemedRewards.length > 0">
+        <div class="title">Redeemed Rewards</div>
+        <div class="rewards-list">
+          <RewardCard
+            v-for="reward in redeemedRewards"
+            :key="reward.id"
+            :reward="reward"
+          />
+        </div>
+      </div>
 
-          <div class="reward-item">
-            <div class="reward-info">
-              <div class="reward-title">VIP Treatment Upgrade</div>
-              <div class="reward-description">Redeem 500 points to upgrade any treatment to VIP status.</div>
-            </div>
-            <div class="reward-points">500 pts</div>
-          </div>
+      <!-- No Rewards Message -->
+      <div class="outline section" v-if="rewards.length === 0">
+        <div class="no-rewards-message">
+          You don't have any rewards yet. Make a reservation to start earning rewards!
         </div>
       </div>
     </div>
@@ -181,5 +207,12 @@ const backToAccount = function() {
 .filled {
   background-color: $secondary;
   border-radius: 6px;
+}
+
+.no-rewards-message {
+  text-align: center;
+  padding: 2vw;
+  color: #888;
+  font-style: italic;
 }
 </style>
